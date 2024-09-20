@@ -1,0 +1,91 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+<!-- <div class="container-header">
+    <h1>Student's Requirements</h1>
+</div> -->
+
+<div class="container">
+    <div class="left-content">
+        <div class="upload">
+            <div class="upload-content">
+                <div class="back-btn" [routerLink]="['../../list']">
+                    <span class="back-icon">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </span>
+                    <span>
+                        Back
+                    </span>
+                </div>
+
+                <p>Upload Documents</p>
+                 
+                <div class="files" *ngIf="applicationDetails">
+                    <div class="items" *ngFor="let item of applicationDetails.application_documents">
+                        <div class="name">
+                            <span class="material-symbols-outlined">
+                                picture_as_pdf
+                            </span>
+                            <p>{{ item.file_name }}</p>
+                        </div>
+                        <!-- <i class="fa-solid fa-magnifying-glass" (click)="previewDocument(item)"></i> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="comment">
+            <p>This is a comment from me. Cause everday's my birthday. You got me losing my mind the way you got me fired up. you had my heart like a beat</p>
+        </div> -->
+
+        <div class="comment-log-container" *ngIf="comments.length > 0">
+            <div class="comment-log">
+                <div class="message-container" *ngFor="let comment of comments">
+                    <i class="fa-regular fa-circle-user"></i>
+                    <div class="message">
+                        <h5> {{ comment.user.first_name }} {{ comment.user.last_name }}</h5>
+                        <p> {{ comment.message }}</p>  
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="right-content">
+        <div class="content">
+            <div *ngIf="applicationDetails">
+                <div class="image">
+                    <img src="/assets/images/LOGO.png">
+                </div>
+    
+                <div class="content-info">
+                    <h2 style="font-weight: 600; margin-bottom: 10px;">{{ applicationDetails.industry_partner.company_name }}</h2>
+                    <p>{{ applicationDetails.industry_partner.description }}</p>
+    
+                    <h3 style="margin: 0; font-weight: 600;" >Company Head:</h3>
+                    <p> {{ applicationDetails.industry_partner.company_head }}, {{ applicationDetails.industry_partner.head_position }}</p>
+
+                    <h3 style="margin: 0; font-weight: 600;" >Immediate Supervisor :</h3>
+                    <p> {{ applicationDetails.industry_partner.immediate_supervisor }}, {{ applicationDetails.industry_partner.supervisor_position }}</p>
+
+                    <ul>
+                        <li>
+                        <b>Company Address: </b>
+                        {{  applicationDetails.industry_partner.street }}
+                        {{  applicationDetails.industry_partner.barangay }}
+                        {{  applicationDetails.industry_partner.municipality }}
+                    </li>
+                    <li><b>Official Email Address:</b> {{ applicationDetails.industry_partner.email }}</li>
+                    <li *ngIf="applicationDetails.industry_partner.telephone_number"><b>Telephone Number:</b> {{ applicationDetails.industry_partner.telephone_number }}</li>
+                    <li *ngIf="applicationDetails.industry_partner.fax_number"><b>Fax Number:</b> {{ applicationDetails.industry_partner.fax_number }}</li>
+                    <li><b>Contact Number:</b> {{ applicationDetails.industry_partner.mobile_number }}</li>
+                    <li *ngIf="applicationDetails.industry_partner.website"><b>Website:</b> {{ applicationDetails.industry_partner.website }}</li>
+                    </ul>
+    
+                    <!-- <div class="slots">
+                        <p>Available Slots: <p>
+                    </div>   -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

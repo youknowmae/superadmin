@@ -1,0 +1,35 @@
+<main>
+  <div class="container">
+    <div class="content">
+      <div class="project-details">
+        <!-- PROJECT HEADER -->
+        <div class="detailsheader">
+          <h1>Announcement</h1>
+          <button class="exit-button" (click)="closeDialog()">&times;</button>
+        </div>
+
+        <div class="detailsbody">
+          <div class="body">
+            <div class="details">
+              <!-- PROJECT IMAGE -->
+              <div class="mat-image">
+                <img class="cover" [src]="(data.image) ? data.image : '/assets/images/LOGO.png'" alt="project image">
+              </div>
+
+              <!-- TITLE AND DATE -->
+              <div class="text-details">
+                <h2>{{ data.title }}</h2>
+                <p><i class="fa-regular fa-calendar"></i> {{ data.created_at | date:'MMMM d, y'  }}</p>
+                <p>{{ data.description }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="button-container">
+            <button class="close-btn" (click)="closeDialog()">Close</button>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

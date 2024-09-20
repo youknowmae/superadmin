@@ -1,0 +1,62 @@
+<div class="container">
+  <div class="details-content">
+    <div class="header">
+      <h1>Add Seminar</h1>
+      <i class="fa-solid fa-xmark" (click)="closepopup()"></i>
+    </div>
+    <div class="content">
+      <form [formGroup]="formDetails" (submit)="submit()">
+        <div class="form-content">
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field [hideRequiredMarker]="true">
+                <mat-label>Title of Seminar</mat-label>
+                <input matInput formControlName="title">
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-4">
+              <mat-form-field [hideRequiredMarker]="true">
+                <mat-label>Date Covered</mat-label>
+                <input matInput [matDatepicker]="pickers" formControlName="date" readonly>
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="pickers"></mat-datepicker-toggle>
+                <mat-datepicker #pickers></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-5">
+              <mat-form-field [hideRequiredMarker]="true">
+                <mat-label>Venue</mat-label>
+                <input matInput formControlName="venue">
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-3">
+              <mat-form-field [hideRequiredMarker]="true">
+                <mat-label>No. of Hours</mat-label>
+                <input matInput formControlName="total_hours">
+              </mat-form-field>
+            </div>
+          </div> <!-- End of row -->
+
+          <div class="row">
+            <div class="col-md-4">
+              <div class="file-input-container">
+                <div class="label">Upload Certificate</div>
+                <input class="file-input" type="file" accept=".jpeg, .png, .jpg, .svg" (change)="uploadFile($event)">
+              </div>
+            </div>
+          </div> <!-- End of row -->
+        </div> <!-- End of form-content -->
+
+        <div class="btn">
+          <button type="submit" [disabled]="formDetails.invalid">Add</button>
+        </div>
+      </form>
+    </div> <!-- End of content -->
+  </div> <!-- End of details-content -->
+</div> <!-- End of container -->
+

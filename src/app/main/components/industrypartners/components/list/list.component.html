@@ -1,0 +1,17 @@
+<main>
+  <div class="container-header">
+      <h1>Industry Partners</h1>
+  </div>
+
+  <div class="card-container">
+      <div class="card" *ngFor="let industryPartner of industryPartners; let i = index" [ngStyle]="{'animation-delay': (i * 0.1) + 's'} ">
+        <img [src]="(industryPartner.image) ? industryPartner.image : '/assets/images/LOGO.png'" alt="logo image" class="card-image">
+        <h2>{{ industryPartner.company_name }}</h2>
+        <p>{{ industryPartner.municipality }}</p>
+
+          <div class="view-button">
+              <button class="view" (click)="getIndustryPartner(industryPartner.id)" ><b>View</b></button>
+          </div>
+      </div>
+  </div>
+</main>

@@ -1,0 +1,60 @@
+<main>
+  <div class="container-header">
+    <h1>Templates</h1>
+  </div>
+
+  <div class="content">
+    <div class="bar">
+      <div class="select">
+        <mat-form-field>
+          <mat-label>Select a Template</mat-label>
+          <mat-select disableRipple (selectionChange)="onTemplateChange()" [(value)]="selectedTemplate">
+            <mat-option *ngFor="let template of templates" [value]="template.id">{{ template.name }}</mat-option>
+            <!-- <mat-option value="1">Notice to Practicum Industry Partners</mat-option>
+            <mat-option value="2">Letter of Application</mat-option>
+            <mat-option value="3">Letter of Endorsement</mat-option>
+            <mat-option value="4">Sample of Memorandum of Agreement (1)</mat-option>
+            <mat-option value="5">Sample of Memorandum of Agreement (2)</mat-option>
+            <mat-option value="6">Acknowledgement</mat-option>
+            <mat-option value="7">Sample Parent/Guardian Waiver (1)</mat-option>
+            <mat-option value="8">Sample Parent/Guardian Waiver (2)</mat-option>
+            <mat-option value="9">DOLE Letter</mat-option>
+            <mat-option value="10">Summary Report Format</mat-option>
+            <mat-option value="11">Final Report</mat-option> -->
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+      <div class="download">
+        <div class="icon" (click)="downloadDocx()"> <!--(click)="toggleDownloadOptions($event)"-->
+          <i class='bx bxs-download' title="Download"></i>
+        </div>
+        <!-- <div class="filter-dropdown-list" [ngClass]="{'active': downloadOptionOpen }">
+            <li class="filter-dropdown-list-item" (click)="downloadDocx()">
+                <span class="filter-name">Docx</span>
+            </li>
+            <li class="filter-dropdown-list-item" (click)="downloadPrefilledDocx()">
+                <span class="filter-name">Prefilled</span>
+            </li>
+        </div> -->
+      </div>
+    </div>
+  
+    
+    <div class="preview-content" *ngIf="pdfSource">
+      <iframe [src]="pdfSource"></iframe>
+    </div>
+  </div>
+</main>
+
+
+<!-- <h2>Templates</h2>
+
+<mat-form-field>
+  <mat-label>Select an option</mat-label>
+  <mat-select disableRipple>
+    <mat-option value="1">Option 1</mat-option>
+    <mat-option value="2">Option 2</mat-option>
+    <mat-option value="3">Option 3</mat-option>
+  </mat-select>
+</mat-form-field> -->

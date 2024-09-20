@@ -1,0 +1,73 @@
+<div class="container">
+  <div class="details-content">
+    <div class="header">
+      <h1>Add Accomplishment</h1>
+      <i class="fa-solid fa-xmark" (click)="closepopup()"></i>
+    </div>
+    <div class="content">
+      <form [formGroup]="formDetails" (submit)="submit()">
+        <div class="form-content">
+          <div class="row">
+            <div class="col-md-5">
+              <mat-form-field [hideRequiredMarker]="true">
+                <mat-label>Week Number</mat-label>
+                <input matInput formControlName="week_number">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-10">
+              <mat-form-field [hideRequiredMarker]="true">
+                <mat-label>Date</mat-label>
+                <textarea matInput formControlName="date"></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4">
+              <mat-form-field [hideRequiredMarker]="true">
+                <mat-label>Description of Activities</mat-label>
+                <input matInput formControlName="description_acitivities">
+              </mat-form-field>
+            </div>
+            <div class="col-md-2">
+              <mat-form-field [hideRequiredMarker]="true">
+                <mat-label>Time of Work</mat-label>
+                <input matInput formControlName="time_work">
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-4">
+              <mat-form-field [hideRequiredMarker]="true">
+                <mat-label>No. of Hours</mat-label>
+                <input matInput formControlName="number_hours">
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-4">
+              <mat-form-field [hideRequiredMarker]="true">
+                <mat-label>Total Hours:</mat-label>
+                <input matInput formControlName="total_hours">
+              </mat-form-field>
+            </div>
+          </div> <!-- End of row -->
+
+          <div class="row">
+            <div class="col-md-4">
+              <div class="file-input-container">
+                <div class="label">Upload File</div>
+                <input class="file-input" type="file" accept=".jpeg, .png, .jpg, .svg" (change)="uploadFile($event)">
+              </div>
+            </div>
+          </div> <!-- End of row -->
+        </div> <!-- End of form-content -->
+
+        <div class="btn">
+          <button type="submit" [disabled]="formDetails.invalid">Add</button>
+        </div>
+      </form>
+    </div> <!-- End of content -->
+  </div> <!-- End of details-content -->
+</div> <!-- End of container -->

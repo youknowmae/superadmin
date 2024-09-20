@@ -1,0 +1,487 @@
+<main>
+  <div class="page-content">
+    <div class="tabbed">
+      <input type="radio" id="tab1" name="css-tabs" checked="checked">
+      <input type="radio" id="tab2" name="css-tabs">
+
+      <ul class="tabs">
+        <li class="tab"><label for="tab1">Student Profile</label></li>
+        <li class="tab"><label for="tab2">Industry Partner Profile</label></li>
+      </ul>
+
+      <div class="tab-content">
+        <div class="container">
+          <div class="content">
+            <h3>Personal Information</h3>
+            <div class="row">
+              <div class="col-md-4">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>Domain Email</mat-label>
+                  <input matInput [(ngModel)]="student.email" readonly>
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>Student Number</mat-label>
+                  <input matInput [(ngModel)]="student.student_profile.student_number" readonly>
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>Mobile Number</mat-label>
+                  <input matInput [(ngModel)]="student.student_profile.contact_number" readonly>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>First Name</mat-label>
+                  <input matInput [(ngModel)]="student.first_name" placeholder="None" readonly>
+                  <mat-icon matSuffix>lock</mat-icon>
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>Middle Name</mat-label>
+                  <input matInput [(ngModel)]="student.middle_name" placeholder="None" readonly>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>Last Name</mat-label>
+                  <input matInput [(ngModel)]="student.last_name" placeholder="None" readonly>
+                  <mat-icon matSuffix>lock</mat-icon>
+                </mat-form-field>
+              </div>
+              <div class="col-md-1">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>Ext Name</mat-label>
+                  <input matInput [(ngModel)]="student.ext_name" placeholder="None" readonly>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>Date of Birth</mat-label>
+                  <input matInput [(ngModel)]="student.birth_date" readonly>
+                  <mat-icon matSuffix>lock</mat-icon>
+                </mat-form-field>
+              </div>
+              <div class="col-md-2">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>Civil Status</mat-label>
+                  <input matInput [(ngModel)]="student.student_profile.civil_status" readonly>
+                </mat-form-field>
+              </div>
+              <div class="col-md-2">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>Gender</mat-label>
+                  <input matInput [(ngModel)]="student.gender" readonly>
+                </mat-form-field>
+              </div>
+              <div class="col-md-2">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>Citizenship</mat-label>
+                  <input matInput [(ngModel)]="student.citizenship" readonly>
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>Religion</mat-label>
+                  <input matInput [(ngModel)]="student.religion" readonly>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>Father's name</mat-label>
+                  <input matInput [(ngModel)]="student.student_profile.father_name" readonly>
+                </mat-form-field>
+              </div>
+              <div class="col-md-2">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>Employment</mat-label>
+                  <input matInput [(ngModel)]="student.student_profile.father_employment" readonly>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>Mother's name</mat-label>
+                  <input matInput [(ngModel)]="student.student_profile.mother_name" readonly>
+                </mat-form-field>
+              </div>
+              <div class="col-md-2">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>Employment</mat-label>
+                  <input matInput [(ngModel)]="student.student_profile.mother_employment" readonly>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div class="content">
+            <h3>Address</h3>
+            <div class="row">
+              <div class="col-md-3">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>Region</mat-label>
+                  <input matInput [(ngModel)]="student.region" readonly>
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>Province</mat-label>
+                  <input matInput [(ngModel)]="student.province" readonly>
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>Municipality</mat-label>
+                  <input matInput [(ngModel)]="student.municipality" readonly>
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>Barangay</mat-label>
+                  <input matInput [(ngModel)]="student.barangay" readonly>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>Address</mat-label>
+                  <input matInput [(ngModel)]="student.address" readonly>
+                </mat-form-field>
+              </div>
+              <div class="col-md-2">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>Zip Code</mat-label>
+                  <input matInput [(ngModel)]="student.zip_code" readonly>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div class="content">
+            <h3>Education</h3>
+            <div class="row">
+              <div class="col-md-2">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>Program</mat-label>
+                  <input matInput [(ngModel)]="student.student_profile.program" readonly>
+                </mat-form-field>
+              </div>
+              <div class="col-md-2">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>Year Level</mat-label>
+                  <input matInput [(ngModel)]="student.student_profile.year_level" readonly>
+                </mat-form-field>
+              </div>
+              <div class="col-md-2">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>School Year</mat-label>
+                  <input matInput [(ngModel)]="school_details.school_year" readonly>
+                </mat-form-field>
+              </div>
+              <div class="col-md-2">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>School Name</mat-label>
+                  <input matInput [(ngModel)]="school_details.school_name" readonly>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>School Address</mat-label>
+                  <input matInput [(ngModel)]="school_details.school_address" readonly>
+                </mat-form-field>
+              </div>
+              <div class="col-md-2">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>Zip Code</mat-label>
+                  <input matInput [(ngModel)]="school_details.zip_code" readonly>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div class="content">
+            <h3>Seminars and Training Attended related to IT</h3>
+            <div class="container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Title of Seminar</th>
+                    <th>Venue</th>
+                    <th>Date Covered</th>
+                    <th>Number of Hours</th>
+                    <th>Certificate</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let seminar of seminars">
+                    <td> {{ seminar.seminar_title }} </td>
+                    <td> {{ seminar.venue }} </td>
+                    <td> {{ seminar.date }} </td>
+                    <td> {{ seminar.total_hours }} </td>
+                    <td> 
+                      <div class="actions">
+                        <button class="view" 
+                        mat-raised-button
+                        matTooltip="View"
+                        [matTooltipShowDelay] = "400"
+                        (click)="viewSeminarImage(seminar)">
+                            <i class='bx bx-detail' ></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="totalhours">
+                <p>Total Hours: {{ seminar_total_hours }} </p>
+              </div>
+            </div>
+            <div class="btn">
+              <button (click)="Openaddseminar()">Add Seminar</button>
+            </div>
+          </div>
+
+          <div class="content">
+            <p class="text">I have done a self-evaluation of my abilities  based on my past experiences. Listed below is what I consider my strong and weak skill areas. If i work in your company, I would like an opportunity to increase my proficiency in weak areas.</p>
+
+            <div class="table">
+              <div class="table-row">
+                <div class="col-md-6">
+                  <h4>Strong Skills Area</h4>
+                </div>
+                <div class="col-md-6">
+                  <h4>Weak Skills Area</h4>
+                </div>
+              </div>
+              <div *ngIf="!isEditingSkills; else skillEdit">
+                <div class="table-row" *ngFor="let skill of skills">
+                  <div class="col-md-6">
+                    <p> {{ skill.strong_skill }} </p>
+                  </div>
+                  <div class="col-md-6">
+                    <p> {{ skill.weak_skill }} </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="btn">
+              <div *ngIf="!isEditingSkills">
+                <button (click)="editSkills()">Edit</button>
+              </div>
+              <div *ngIf="isEditingSkills">
+                <button (click)="cancelEditSkills()">Cancel</button>
+                <button (click)="updateskills()">Save</button>
+              </div>
+            </div>
+            <!-- <p class="text">I have done a self-evaluation of my abilities  based on my past experiences. Listed below is what I consider my strong and weak skill areas. If i work in your company, I would like an opportunity to increase my proficiency in weak areas.</p> -->
+          </div>
+
+
+          <div class="content">
+            <h3>Personality Test</h3>
+            <div class="row">
+              <p class="text">Kindly follow the link provided below to access the personality test. Once you have completed the assessment, ensure to obtain a copy of the results. Please proceed to upload the electronic copy of your results and deliver the hard copy to your designated practicum adviser.</p>
+              <p class="text">Link: <a href="https://www.personalitytest.com" target="_blank">www.personalitytest.com</a> </p>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                  <div class="file-input-container">
+                      <input class="file-input" #fileInput type="file" accept=".jpeg, .png, .jpg, .svg" (change)="uploadFile($event)">
+                      <button (click)="fileInput.click()">Upload</button>
+                      <div class="label"> Personality Test Result </div>
+                      <div class="text">{{ (personality_test) ? personality_test : 'None' }}</div>
+                  </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content">
+        <div class="container">
+          <div class="content">
+            <h3>Industry Partner Profile /  Company Profile</h3>
+            <div class="row">
+              <div class="col-md-4">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>Company Name</mat-label>
+                  <input matInput readonly>
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>Head of the Company</mat-label>
+                  <input matInput  readonly>
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>Position</mat-label>
+                  <input matInput  readonly>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>Immediate Supervisor of the Student Trainee</mat-label>
+                  <input matInput placeholder="None" readonly>
+                  <mat-icon matSuffix>lock</mat-icon>
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>Position</mat-label>
+                  <input matInput placeholder="None" readonly>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div class="content">
+            <h3>Company Address</h3>
+            <div class="row">
+              <div class="col-md-2">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>Region</mat-label>
+                  <input matInput readonly>
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>Province</mat-label>
+                  <input matInput readonly>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>City/Municipality</mat-label>
+                  <input matInput readonly>
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>Barangay</mat-label>
+                  <input matInput readonly>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-7">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>House No./Lot No./Street Name</mat-label>
+                  <input matInput readonly>
+                </mat-form-field>
+              </div>
+              <div class="col-md-2">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>Zip Code</mat-label>
+                  <input matInput readonly>
+                </mat-form-field>
+              </div>
+          </div>
+
+          <div class="content">
+            <h3>Contact Information</h3>
+            <div class="row">
+              <div class="col-md-4">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>Telephone Number</mat-label>
+                  <input matInput readonly>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>Mobile Number</mat-label>
+                  <input matInput readonly>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>Fax Number</mat-label>
+                  <input matInput readonly>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>Email Address</mat-label>
+                  <input matInput readonly>
+                </mat-form-field>
+              </div>
+              <div class="col-md-5">
+                <mat-form-field appearance="outline" floatLabel='always'>
+                  <mat-label>URL/Website</mat-label>
+                  <input matInput readonly>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="btn">
+              <button>Submit</button>
+            </div>
+          </div>
+        </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</main>
+
+
+<!-- for updating skill form -->
+<ng-template #skillEdit>    
+  <form [formGroup]="skillFormDetails">
+    <div formArrayName="skills">
+      <div class="table-row" [formGroupName]="0">
+        <div class="col-md-6">
+          <div class="input">
+            <input formControlName="strong_skill">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input">
+            <input formControlName="weak_skill">
+          </div>
+        </div>
+      </div>
+      <div class="table-row" [formGroupName]="1">
+        <div class="col-md-6">
+          <div class="input">
+            <input formControlName="strong_skill">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input">
+            <input formControlName="weak_skill">
+          </div>
+        </div>
+      </div>
+      <div class="table-row" [formGroupName]="2">
+        <div class="col-md-6">
+          <div class="input">
+            <input formControlName="strong_skill">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input">
+            <input formControlName="weak_skill">
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</ng-template>
+

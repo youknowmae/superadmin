@@ -1,0 +1,87 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<div>
+    <nav class="sidebar-content">
+        <div>
+            <div class="profile">
+                <div class="logo">
+                    <img src="assets/images/profile.png" alt="Image">
+                </div>
+                <h3>{{ user.first_name }} {{ user.last_name }} {{ user.ext_name }}</h3>
+                <p>CCS / {{ user.student_profile.program }}</p>
+            </div>
+
+            <div class="navigation-links">
+                <li class="item" [routerLink]="['industrypartners']" routerLinkActive="router-link-active"  >
+                    <span class="side-link">
+                        <i class="fa-solid fa-handshake-angle"></i> Industry Partners
+                    </span>
+                </li>
+                <li class="item" [routerLink]="['profile']" routerLinkActive="router-link-active" >
+                    <span class="side-link">
+                        <i class="fa-solid fa-user"></i> Profile
+                    </span>
+                </li>
+                <li class="item" [routerLink]="['templates']" routerLinkActive="router-link-active" >
+                    <span class="side-link">
+                        <i class="fa-solid fa-file"></i> Templates
+                    </span>
+                </li>
+                <li class="item" [routerLink]="['applicationstatus']" routerLinkActive="router-link-active" >
+                    <span class="side-link">
+                        <i class="fa-solid fa-clock"></i> Application Status
+                    </span>
+                </li>
+                <!-- <li class="item" [routerLink]="['map']" routerLinkActive="router-link-active" >
+                    <span class="side-link">
+                        <i class="fa-solid fa-map"></i> Map
+                    </span>
+                </li> -->
+                <li class="item" [routerLink]="['accomplishmentform']" routerLinkActive="router-link-active" >
+                    <span class="side-link">
+                        <div style="
+                        display: flex;
+                        align-items: center;">
+                            <i class="fa-solid fa-file"></i>
+                            <div>
+                                <p style="margin: 0;">Accomplishment </p>
+                                <p style="margin: 0;">Form</p>
+                            </div>
+
+                        </div>
+                    </span>
+                </li>
+                <!-- <li class="item" [routerLink]="['performanceeval']" routerLinkActive="router-link-active" >
+                    <span class="side-link">
+                        <i class="fa-solid fa-file"></i> Performance Evaluation
+                    </span>
+                </li> -->
+                <li class="item" [routerLink]="['ojtexitpoll']" routerLinkActive="router-link-active" >
+                    <span class="side-link">
+                        <i class="fa-solid fa-square-poll-horizontal"></i> OJT Exit Poll
+                    </span>
+                </li>
+                <li class="item" [routerLink]="['announcements']" routerLinkActive="router-link-active" >
+                  <span class="side-link">
+                      <i class="fa-solid fa-bullhorn"></i> Announcements
+                  </span>
+                </li>
+            </div>
+        </div>
+
+        <div class="logout">
+            <div class="logout-icon">
+                <i class="fa-solid fa-right-from-bracket" (click)="logout()"></i>
+            </div>
+        </div>
+    </nav>
+
+    <div class="body-content">
+        <div class="container">
+            <div class="notif">
+                <i class="fa-solid fa-bell"></i>
+            </div>
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
