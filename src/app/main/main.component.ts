@@ -22,7 +22,7 @@ export class MainComponent {
   ) {}
 
   ngOnInit() {
-    this.getUser()
+    // this.getUser()
   }
   
   getUser() {

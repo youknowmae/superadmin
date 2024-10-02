@@ -14,6 +14,7 @@ interface User {
 
 export class UserService {
     industryPartner: string = 'industryPartner'
+    studentProfile: string = 'studentProfile'
 
     constructor(
         @Inject(PLATFORM_ID) private platformId: any,
@@ -52,6 +53,23 @@ export class UserService {
         }
 
         return JSON.parse(industryPartner)
+    }
 
+    setStudentProfile(studentProfile: any) {
+        sessionStorage.setItem(this.studentProfile, JSON.stringify(studentProfile))
+    }
+
+    getStudentProfile() {
+        if (!isPlatformBrowser(this.platformId)){
+            return null
+        }
+        
+        let studentProfile = sessionStorage.getItem(this.studentProfile)
+
+        if(!studentProfile) {
+            return null
+        }
+
+        return JSON.parse(studentProfile)
     }
 }

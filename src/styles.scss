@@ -1,4 +1,135 @@
-/* You can add global styles to this file, and also import other style files */
+
+@use '../node_modules/@angular/material' as mat;
+
+@include mat.all-component-densities(-1);
+
+* {
+    font-family: 'Poppins'; 
+    // outline: none;
+    margin: 0;
+    border: none;
+    box-sizing: border-box; 
+    
+}
+
+
+// html, body { height: 100%; }
+// body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+:root {
+    font-size: 100%;
+    --primary-color: #748E63;
+    --main-orange: #F9B572;
+    --semi-transparent-main-orange: #F9B57260;
+    --warning-color: #d11515;
+
+    --main-bg-color: #FEFBE9; 
+    
+    --primary-font-color: #FEFBE9;
+    --font-color: white;
+
+    --secondary-color: #99B080;
+    --secondary-color-semi-transparent: 137, 129, 33, .1;
+
+
+    --main-green: #31A463;
+    --border-color: rgba(0, 0, 0, 0.12);
+    --table-border-color: #e0e0e0;
+    --shadow: 0 4px 8px rgba(0,0,0,0.1);
+    --sidebar-width: 210px;
+}
+
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+body { 
+    margin: 0; 
+    background-color: white;
+    overflow: hidden;
+}
+
+*::-webkit-scrollbar {
+    width: .4rem;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: rgba(232, 117, 26, .3);
+    border-radius: 10px;
+}
+
+html, body { height: 100%; }
+body { 
+    margin: 0; 
+}
+
+
+.col-md-12 {
+    flex: 0 0 auto;
+    width: 100%;
+    padding: 0px 5px;
+}
+
+.col-md-11 {
+    flex: 0 0 auto;
+    width: 91.6666667%;
+    padding: 0px 5px;
+}
+
+.col-md-10 {
+    flex: 0 0 auto;
+    width: 83.3333333%;
+    padding: 0px 5px;
+}
+
+.col-md-8 {
+    flex: 0 0 auto;
+    width: 66.6666666%;
+    padding: 0px 5px;
+}
+
+.col-md-7 {
+    flex: 0 0 auto;
+    width: 58.3333333%;
+    padding: 0px 5px;
+}
+
+.col-md-6 {
+    flex: 0 0 auto;
+    width: 50%;
+    padding: 0px 5px;
+}
+
+.col-md-5 {
+    flex: 0 0 auto;
+    width: 41.66666667%;
+    padding: 0px 5px;
+}
+
+.col-md-4 {
+    flex: 0 0 auto;
+    width: 33.33333333%;
+    padding: 0px 5px;
+}
+
+.col-md-3 {
+    flex: 0 0 auto;
+    width: 25%;
+    padding: 0px 5px;
+}
+
+.col-md-2 {
+    flex: 0 0 auto;
+    width: 16.66666667%;
+    padding: 0px 5px;
+}
+
+.col-md-1 {
+    flex: 0 0 auto;
+    width: 8.33333333%;
+    padding: 0px 5px;
+}
+
+
+mat-form-field {
+    width: 100%;
+}

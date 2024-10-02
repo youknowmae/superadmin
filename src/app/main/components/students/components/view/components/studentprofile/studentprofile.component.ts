@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { UserService } from '../../../../../../../services/user.service';
 import { DataService } from '../../../../../../../services/data.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ViewImageComponent } from '../../../../../../../components/view-image/view-image.component';
+import { ViewImageComponent } from '../../../../../../../components/login/view-image/view-image.component';
 
 @Component({
   selector: 'app-studentprofile',
