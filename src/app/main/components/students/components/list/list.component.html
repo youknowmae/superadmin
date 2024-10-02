@@ -1,0 +1,212 @@
+<div class="header">
+    <h1>Students</h1>
+</div>
+
+<div class="buttons">
+    <div class="filter-container">
+        <div [class.active]="currentFilter == 'all'" class="filter">
+            <button (click)="applyFilter('all')">All Students</button>
+        </div>
+        <div [class.active]="currentFilter == 'completed'" class="filter">
+            <button (click)="applyFilter('completed')">Completed</button>
+        </div>
+        <div [class.active]="currentFilter == 'ongoing'" class="filter">
+            <button (click)="applyFilter('ongoing')">Ongoing</button>
+        </div>
+        <div [class.active]="currentFilter == 'pending'" class="filter">
+            <button (click)="applyFilter('pending')">Pending</button>
+        </div>
+
+    </div>
+    <div class="export">
+        <button>Export</button>
+    </div>
+</div>
+
+<div class="container">
+    <table mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="name" >
+            <th mat-header-cell *matHeaderCellDef class="col-md-2"> Name </th>
+            <td mat-cell *matCellDef="let element" class="col-md-2"> {{ element.full_name }} </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="student_number" >
+            <th mat-header-cell *matHeaderCellDef class="col-md-1"> Student Number </th>
+            <td mat-cell *matCellDef="let element" class="col-md-1"> {{ element.email }} </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="course" >
+            <th mat-header-cell *matHeaderCellDef class="col-md-1"> Course </th>
+            <td mat-cell *matCellDef="let element" class="col-md-1"> {{ element.course }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="mobile" >
+            <th mat-header-cell *matHeaderCellDef class="col-md-2"> Mobile Number </th>
+            <td mat-cell *matCellDef="let element" class="col-md-2"> {{ element.student_profile.contact_number }} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="program">
+            <th mat-header-cell *matHeaderCellDef class="col-md-1"> Program </th>
+            <td mat-cell *matCellDef="let element" class="col-md-1"> {{ element.student_profile.program }} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="year_level">
+            <th mat-header-cell *matHeaderCellDef class="col-md-1"> Year </th>
+            <td mat-cell *matCellDef="let element" class="col-md-1"> {{ element.student_profile.year_level }} </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="time_completion">
+            <th mat-header-cell *matHeaderCellDef class="col-md-2"> Estimated Time of Completion </th>
+            <td mat-cell *matCellDef="let element" class="col-md-2">  {{ (element.status === 'Completed') ? 'Completed' : element.hours_left + ' hrs left'}} </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef class="col-md-1"> Status </th>
+            <td mat-cell *matCellDef="let element" class="col-md-1">  {{ element.status }} </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef class="col-md-1"> Action </th>
+            <td mat-cell *matCellDef="let element" class="col-md-1">
+                <div>
+                    <button (click)="viewStudent(element.id)" >View</button>
+                </div>
+            </td>
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns" class="table-header"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="table-items"></tr>
+    </table>
+    
+    <mat-paginator [pageSizeOptions]="[15]" showFirstLastButtons
+    aria-label="Select page of periodic elements">
+    </mat-paginator>
+</div>
+<!-- <div class="container">
+    <div class="table-container">
+        <div class="table-header">
+            <div>Category</div>
+            <div>Name</div>
+            <div>Mobile</div>
+            <div>Student Number</div>
+            <div>Year/Program</div>
+            <div>Estimated Time of Completion</div>
+            <div>Status</div>
+            <div>Action</div>
+        </div>
+        <div class="table-body">
+            <div class="table-row">
+                <div class="row-content">
+                    <div>Practicum 2</div>
+                    <div>
+                        <div>Raven Andre Legarde</div>
+                    </div>
+                    <div>09955838183</div>
+                    <div>202110187</div>
+                    <div>3rd year/BSIT</div>
+                    <div>200 hours</div>
+                    <div>ongoing</div>
+                    <div>
+                        <button [routerLink]="['../view']" routerLinkActive="router-link-active" >View</button>
+                    </div>
+                </div>
+            </div>
+            <div class="table-row">
+                <div class="row-content">
+                    <div>Practicum 2</div>
+                    <div>
+                        <div>Raven Andre Legarde</div>
+                    </div>
+                    <div>09955838183</div>
+                    <div>202110187</div>
+                    <div>3rd year/BSIT</div>
+                    <div>200 hours</div>
+                    <div>ongoing</div>
+                    <div>
+                        <button>View</button>
+                    </div>
+                </div>
+            </div>
+            <div class="table-row">
+                <div class="row-content">
+                    <div>Practicum 2</div>
+                    <div>
+                        <div>Raven Andre Legarde</div>
+                    </div>
+                    <div>09955838183</div>
+                    <div>202110187</div>
+                    <div>3rd year/BSIT</div>
+                    <div>200 hours</div>
+                    <div>ongoing</div>
+                    <div>
+                        <button>View</button>
+                    </div>
+                </div>
+            </div>
+            <div class="table-row">
+                <div class="row-content">
+                    <div>Practicum 2</div>
+                    <div>
+                        <div>Raven Andre Legarde</div>
+                    </div>
+                    <div>09955838183</div>
+                    <div>202110187</div>
+                    <div>3rd year/BSIT</div>
+                    <div>200 hours</div>
+                    <div>ongoing</div>
+                    <div>
+                        <button>View</button>
+                    </div>
+                </div>
+            </div>
+            <div class="table-row">
+                <div class="row-content">
+                    <div>Practicum 2</div>
+                    <div>
+                        <div>Raven Andre Legarde</div>
+                    </div>
+                    <div>09955838183</div>
+                    <div>202110187</div>
+                    <div>3rd year/BSIT</div>
+                    <div>200 hours</div>
+                    <div>ongoing</div>
+                    <div>
+                        <button>View</button>
+                    </div>
+                </div>
+            </div>
+            <div class="table-row">
+                <div class="row-content">
+                    <div>Practicum 2</div>
+                    <div>
+                        <div>Raven Andre Legarde</div>
+                    </div>
+                    <div>09955838183</div>
+                    <div>202110187</div>
+                    <div>3rd year/BSIT</div>
+                    <div>200 hours</div>
+                    <div>ongoing</div>
+                    <div>
+                        <button>View</button>
+                    </div>
+                </div>
+            </div>
+            <div class="table-row">
+                <div class="row-content">
+                    <div>Practicum 2</div>
+                    <div>
+                        <div>Raven Andre Legarde</div>
+                    </div>
+                    <div>09955838183</div>
+                    <div>202110187</div>
+                    <div>3rd year/BSIT</div>
+                    <div>200 hours</div>
+                    <div>ongoing</div>
+                    <div>
+                        <button>View</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->

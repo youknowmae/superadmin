@@ -1,0 +1,87 @@
+.container {
+    margin: 30px 20px 10px;
+    background-color: none;
+    overflow-y: auto;
+    border: 1px solid var(--primary-color);
+    height: fit-content;
+    padding: 0px 30px;
+    border-radius: 30px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+
+    table {
+        box-shadow: none;
+        margin-bottom: 10px;
+    }
+
+
+    th, td {
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    tr {
+        display: flex;
+    }
+
+    .row {
+        color: red;
+    }
+
+    .table-header {
+        color: var(--primary-color);
+    }
+
+    .table-items{
+        transition: all ease-in-out .2s;
+    }
+    .table-items:hover {
+        background-color: rgba(var(--secondary-color-semi-transparent));
+        transition: all ease-in-out .2s;
+    }
+}
+
+.progress {
+    padding: 2px 10px;
+    font-size: 14px;
+    color: grey;
+}
+
+
+
+// .outer-container {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     width: 100%;
+// }
+
+// .container {
+//     border: 2px solid black;
+//     font-weight: 800;
+//     width: 100%; /* Adjust the width as needed */
+//     border-collapse: collapse;
+//     margin: auto;
+// }
+
+// table {
+//     width: 100%;
+//     border-collapse: collapse;
+// }
+
+// table th, table td {
+//     border-bottom: 2px solid black;
+//     padding: 10px;
+//     text-align: center;
+// }
+
+// thead th {
+//     border-bottom: 2px solid black;
+// }
+
+// .totalhours {
+//     font-weight: 800;
+//     text-align: left;
+//     padding: 9px 0 0 9px;
+// }

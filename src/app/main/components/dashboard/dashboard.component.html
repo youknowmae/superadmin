@@ -1,0 +1,60 @@
+<div class="container">
+    <div class="header">
+        <h1 class="head">Dashboard</h1>
+    </div>
+
+    <div class="content">
+        <div class="total">
+            <div style="background-color: var(--primary-color);">
+                <p>Total Students Enrolled</p>
+                <h1>{{ enrolled_student }}</h1>
+            </div>
+
+            <div style="background-color: #FABC3F;">
+                <p>Pending Students</p>
+                <h1>{{ student_ojt_status_count.pending }}</h1>
+            </div>
+
+            <div style="background-color: var(--secondary-color);">
+                <p>Ongoing OJT</p>
+                <h1>{{ student_ojt_status_count.ongoing }}</h1>
+            </div>
+
+            <div style="background-color: #7C93C3;">
+                <p>Completed OJT</p>
+                <h1>{{ student_ojt_status_count.completed }}</h1>
+            </div>
+        </div>
+
+        <div class="graph">
+            <div class="pie">
+                <h1>Students Enrolled</h1>
+                <canvas id="pieChart"></canvas>
+            </div>
+
+            <div class="bar">
+                <h1>Requirements Status</h1>
+                <canvas id="barChart"></canvas>
+            </div>
+        </div>
+
+        <div class="form-graph">
+            <div class="evaluation-graph">
+                <div class="bar-graph">
+                    <h1>Evaluation Form Average</h1>
+                    <canvas id="evaluationBarChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="exitpoll-graph">
+                <div class="bar-graph">
+                    <h1>Exit Poll Status</h1>
+                    <canvas id="ojtBarChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

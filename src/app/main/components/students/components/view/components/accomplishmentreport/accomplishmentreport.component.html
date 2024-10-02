@@ -1,0 +1,24 @@
+<div class="outer-container">
+    <div class="container"  *ngFor="let report of accomplishmentReports; index as i">
+        <h3>Week {{ i + 1 }}</h3>
+        <table>
+            <thead>
+                <th>Date</th>
+                <th>Description of Activities</th>
+                <th>Time of Work</th>
+                <th>No. of Hours</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let accomplishment of report.accomplishment_report">
+                    <td>{{ accomplishment.date }}</td>
+                    <td>{{ accomplishment.activity_description }}</td>
+                    <td>{{ accomplishment.arrival_time }} - {{ accomplishment.departure_time }}</td>
+                    <td>{{ accomplishment.total_hours }}</td>
+                </tr>
+                <tr>
+                    <td colspan="4"><p class="total-hours">Total: {{ report.accumulated_hours }} Hours</p></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

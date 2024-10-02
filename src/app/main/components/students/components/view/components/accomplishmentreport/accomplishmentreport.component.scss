@@ -1,0 +1,64 @@
+.outer-container {
+    display: flex;
+    padding: 20px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.container {
+    width: 100%; /* Adjust the width as needed */
+    border-collapse: collapse;
+    margin: auto;
+    margin-bottom: 30px;
+}
+
+h3 {
+    font-size: 22px;
+    color: var(--primary-color);
+    transform: translateX(-15px);
+}
+
+table {
+    width: 100%;
+    border: 2px solid black;
+    border-collapse: collapse;
+
+    thead {
+        color: var(--primary-color);
+    }
+
+    th, td {
+        border-bottom: 1px solid black;
+        padding: 10px;
+        text-align: center;
+    }
+
+    th {
+        font-weight: 500;
+    }
+
+    td {
+        font-weight: 400;
+    }
+
+    tr {
+        transition: all ease-in-out .2s;
+    }
+
+    tr:not(:last-child):hover {
+        background-color: rgba(137, 129, 33, .2);
+    }
+}
+
+
+
+
+.total-hours {
+    color: var(--primary-color);
+    font-weight: 500;
+    margin: 0;
+    text-align: left;
+    padding: 2px 5px;
+}

@@ -1,0 +1,15 @@
+<div class="tabbed">
+    <input type="radio" id="tab1" name="css-tabs" checked="checked">
+    <input type="radio" id="tab2" name="css-tabs">
+    <input type="radio" id="tab3" name="css-tabs">
+
+    <ul class="tabs">
+        <li class="tab" [routerLink]="['studentprofile']" routerLinkActive="router-link-active"><label for="tab1">Student Profile</label></li>
+        <li class="tab" [routerLink]="['attendanceform']" routerLinkActive="router-link-active"><label for="tab2">Daily Attendance Form</label></li>
+        <li class="tab" [routerLink]="['accomplishmentreport']" routerLinkActive="router-link-active"><label for="tab3">Weekly Accomplishment Report</label></li>
+    </ul>
+
+    <div class="connection">
+        <router-outlet></router-outlet>
+    </div>
+</div>
