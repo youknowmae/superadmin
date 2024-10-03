@@ -93,7 +93,7 @@
         background-color: var(--main-bg-color);
 
         .notif {
-            border-bottom: 2px solid var(--primary-color);
+            border-bottom: 2px solid var(--main-orange);
             margin-bottom: 25px;
 
             i {
@@ -102,7 +102,7 @@
                 justify-content: end;
                 margin-bottom: 25px;
                 margin-right: 20px;
-                color: var(--tertiary-color);
+                color: var(--main-orange);
                 cursor: pointer;
             }
         }
