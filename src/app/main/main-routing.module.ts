@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { StudentsComponent } from './components/students/students.component';
+import { IndustrypartnersComponent } from './components/industrypartners/industrypartners.component';
 
 
 
@@ -15,7 +16,15 @@ const routes: Routes = [
       path: '',
       loadChildren: ()=>import('./components/students/students.module').then((m)=>m.StudentsModule)
     }]
-  }
+  },
+  { 
+    path: 'industrypartners', 
+    component: IndustrypartnersComponent,
+    children: [{
+      path: '',
+      loadChildren: ()=>import('./components/industrypartners/industrypartners.module').then((m)=>m.IndustrypartnersModule)
+    }]
+  },
 
 ];
 

@@ -1,0 +1,173 @@
+.container {
+    display: row;
+    background-color: var(--main-bg-color);
+
+    .container-content {
+        display: flex;
+
+        .left-container {
+            display: row;
+
+            .clipart {
+                margin-top: -20px;
+                opacity: 0;
+                animation: fadeInUp 1s ease-in-out forwards;
+            }
+
+            .school-logo {
+                display: flex;
+                float: right;
+                margin-top: -130px;
+                margin-right: 190px;
+                opacity: 0;
+                animation: fadeInRight 1.5s ease-in-out forwards;
+
+                .ccs {
+                    margin-top: 12px;
+                }
+            }
+        }
+
+        .right-container {
+            height: 50vh;
+            margin-right: 140px;
+            margin-top: 65px;
+            opacity: 0;
+            animation: fadeInLeft 1.5s ease-in-out forwards;
+
+            .logo {
+                display: flex;
+                justify-content: center;
+                transform: scale(0);
+                animation: scaleIn 1s ease-in-out forwards;
+            }
+
+            h2 {
+                font-size: 40px;
+                text-align: center;
+                opacity: 0;
+                animation: fadeIn 2s ease-in-out forwards;
+            }
+
+            .content {
+                padding: 10px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                border-radius: 48px;
+                height: 500px;
+                width: 550px;
+                opacity: 0;
+                animation: fadeInUp 2s ease-in-out forwards;
+
+                ::placeholder {
+                    color: var(--primary-color);
+                }
+
+                input {
+                    margin: 10px;
+                    padding: 15px 25px;
+                    width: 400px;
+                    border: none;
+                    border-radius: 30px;
+                    background-color: rgba(249, 181, 114, 0.5);
+                    color: var(--primary-color);
+                    font-size: 15px;
+                    height: 60px;
+                    outline: none;
+                    transition: all 0.3s ease-in-out;
+                }
+
+                .input2 {
+                    .icon {
+                        margin-bottom: 30px;
+                        
+                        span {
+                            display: flex;
+                            justify-content: end;
+                            padding-right: 30px;
+                            margin-top: -48px;
+                            font-size: 20px;
+                            cursor: pointer;
+                            color: var(--secondary-color);
+                            transition: color 0.3s ease-in-out;
+                        }
+
+                        span:hover {
+                            color: #EE7214;
+                        }
+                    }
+                }
+
+                button {
+                    border: none;
+                    color: var(--primary-color);
+                    background-color: rgba(249, 181, 114, 0.5);
+                    margin-top: 20px;
+                    padding: 10px 20px;
+                    font-size: 19px;
+                    border-radius: 20px;
+                    cursor: pointer;
+                    transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+                }
+
+                button:hover {
+                    background-color: var(--active-color);
+                    color: #F9E8D9;
+                    transform: scale(1.1);
+                }
+            }
+        }
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes scaleIn {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
