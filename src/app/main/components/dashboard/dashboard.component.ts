@@ -197,7 +197,7 @@ export class DashboardComponent implements AfterViewInit {
   }
 
   getData() {
-    this.ds.get('dashboard/student-info').subscribe(
+    this.ds.get('superadmin/dashboard').subscribe(
       response => {
         console.log(response)
         this.enrolled_student = response.enrolled_student

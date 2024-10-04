@@ -17,23 +17,23 @@ export class AuthService {
 
     login(credentials: {email: string, password: string}) {
 
-        return this.http.post<any>(`${apiUrl}login/student`, credentials).pipe(
+        return this.http.post<any>(`${apiUrl}login/superadmin`, credentials).pipe(
             tap((response => {
                 if(response.token){
                     sessionStorage.setItem('userLogState', 'true')
                     sessionStorage.setItem('token', response.token)
 
-                    let course = response.user.student_courses[0].course_code
+                    // let course = response.user.student_courses[0].course_code
 
-                    let required_hours = 0
-                    if(course === 'ITP132') {
-                        required_hours = 500
-                    }
-                    else if (course === 'ITP131') {
-                        required_hours = 200
-                    }
+                    // let required_hours = 0
+                    // if(course === 'ITP132') {
+                    //     required_hours = 500
+                    // }
+                    // else if (course === 'ITP131') {
+                    //     required_hours = 200
+                    // }
 
-                this.userService.setUser({...response.user, required_hours})
+                this.userService.setUser(response.user)
 
                     this.router.navigate(['/main'])
                 }

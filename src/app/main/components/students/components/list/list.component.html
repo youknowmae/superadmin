@@ -4,22 +4,31 @@
 
 <div class="buttons">
     <div class="filter-container">
-        <div [class.active]="currentFilter == 'all'" class="filter">
-            <button (click)="applyFilter('all')">All Students</button>
+        <div [class.active]="statusFilter == 'all'" class="filter">
+            <button (click)="onStatusFilterChange('all')">All Students</button>
         </div>
-        <div [class.active]="currentFilter == 'completed'" class="filter">
-            <button (click)="applyFilter('completed')">Completed</button>
+        <div [class.active]="statusFilter == 'completed'" class="filter">
+            <button (click)="onStatusFilterChange('completed')">Completed</button>
         </div>
-        <div [class.active]="currentFilter == 'ongoing'" class="filter">
-            <button (click)="applyFilter('ongoing')">Ongoing</button>
+        <div [class.active]="statusFilter == 'ongoing'" class="filter">
+            <button (click)="onStatusFilterChange('ongoing')">Ongoing</button>
         </div>
-        <div [class.active]="currentFilter == 'pending'" class="filter">
-            <button (click)="applyFilter('pending')">Pending</button>
+        <div [class.active]="statusFilter == 'pending'" class="filter">
+            <button (click)="onStatusFilterChange('pending')">Pending</button>
         </div>
 
     </div>
-    <div class="export">
-        <button>Export</button>
+    <div class="right">
+        <div class="class-filter">
+            <mat-form-field>
+                <mat-label>Class Filter</mat-label>
+                <mat-select disableRipple (selectionChange)="onClassFilterChange($event)" [(value)]="classFilter">
+                    <mat-option value="all"> All Classes</mat-option>
+                    <mat-option *ngFor="let option of classList" [value]="option"> {{ option }} </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <button class="export" (click)="downloadExcel()">Export</button>
     </div>
 </div>
 
