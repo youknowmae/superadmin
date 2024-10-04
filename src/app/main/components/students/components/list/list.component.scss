@@ -37,7 +37,7 @@ h1 {
     .filter::before {
         content: '';
         position: absolute; 
-        transform: translateY(30px);
+        transform: translateY(45px);
         width: 0px;
         height: 2px;
         background: var(--primary-color);
@@ -46,6 +46,19 @@ h1 {
 
     .filter.active::before {
         width: 120px;
+    }
+
+    .right {
+        display: flex;
+
+        .class-filter {
+            width: 160px;
+            margin-left: 20px;
+        }
+
+        .export {
+            margin-left: 20px;
+        }
     }
 }
 
@@ -108,4 +121,8 @@ h1 {
         background-color: rgba(var(--secondary-color-semi-transparent));
         transition: all ease-in-out .2s;
     }
+}
+
+mat-paginator {
+    background: none;
 }

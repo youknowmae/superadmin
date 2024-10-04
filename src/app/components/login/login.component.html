@@ -18,7 +18,7 @@
 
             <h2>Welcome Admin!</h2>
 
-            <form (submit)="login()" ngNativeValidate autocomplete="on">
+            <form (submit)="login()" [formGroup]="loginForm" ngNativeValidate autocomplete="on">
                 <div class="content">
                     <div class="input">
                         <input type="text" name="email" placeholder="Username" formControlName="email" autocomplete="on">      

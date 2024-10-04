@@ -10,6 +10,7 @@ import { MainComponent } from './main/main.component';
 import { ViewImageComponent } from './components/login/view-image/view-image.component';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { AuthInterceptor } from './interceptors/auth';
   imports: [
     CommonModule,
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [
     provideClientHydration(),
