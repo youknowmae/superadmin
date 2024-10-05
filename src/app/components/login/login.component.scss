@@ -274,9 +274,11 @@
             right: 120px;
             margin: 50px;
             animation: slideInRight 1s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
 
             h1 {
-                padding-left: 35px;
                 font-size: 40px;
                 color: var(--main-orange);
                 opacity: 0.8;
