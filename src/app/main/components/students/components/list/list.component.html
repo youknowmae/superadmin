@@ -46,9 +46,10 @@
         
         <ng-container matColumnDef="course" >
             <th mat-header-cell *matHeaderCellDef class="col-md-1"> Course </th>
-            <td mat-cell *matCellDef="let element" class="col-md-1"> {{ element.course }} </td>
+            <td mat-cell *matCellDef="let element" class="col-md-1"> {{ element.active_ojt_class.course_code }} </td>
         </ng-container>
 
+        <!-- inactive -->
         <ng-container matColumnDef="mobile" >
             <th mat-header-cell *matHeaderCellDef class="col-md-2"> Mobile Number </th>
             <td mat-cell *matCellDef="let element" class="col-md-2"> {{ element.student_profile.contact_number }} </td>
@@ -64,9 +65,26 @@
             <td mat-cell *matCellDef="let element" class="col-md-1"> {{ element.student_profile.year_level }} </td>
         </ng-container>
         
-        <ng-container matColumnDef="time_completion">
-            <th mat-header-cell *matHeaderCellDef class="col-md-2"> Estimated Time of Completion </th>
-            <td mat-cell *matCellDef="let element" class="col-md-2">  {{ (element.status === 'Completed') ? 'Completed' : element.hours_left + ' hrs left'}} </td>
+        <ng-container matColumnDef="progress">
+            <th mat-header-cell *matHeaderCellDef class="col-md-2"> Progress </th>
+            <td mat-cell *matCellDef="let element" class="col-md-2" style="
+                flex-direction: column;">  
+                {{ (element.status === "Pending") ? 'N/A' :  element.progress + ' hrs' + '/' + element.active_ojt_class.required_hours + ' hrs' }} 
+                <p style="margin: 0;
+                color: grey;
+                font-size: 12px;"
+                *ngIf="element.progress >= element.active_ojt_class.required_hours">Completed</p>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="student_evaluation">
+            <th mat-header-cell *matHeaderCellDef class="col-md-1"> Student Evaluation </th>
+            <td mat-cell *matCellDef="let element" class="col-md-1">  {{ (element.student_evaluation) ?  element.student_evaluation : 'N/A' }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="exit_poll">
+            <th mat-header-cell *matHeaderCellDef class="col-md-1"> Exit Poll </th>
+            <td mat-cell *matCellDef="let element" class="col-md-1">  {{ (element.ojt_exit_poll) ? element.ojt_exit_poll : 'INC'}} </td>
         </ng-container>
         
         <ng-container matColumnDef="status">
