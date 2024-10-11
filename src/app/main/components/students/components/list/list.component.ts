@@ -48,7 +48,7 @@ export class ListComponent {
   getStudents() {
     this.ds.get('superadmin/students').subscribe(
       students => {
-        // console.log(students)
+        console.log(students)
         let studentsList = students.map((student: any) => {
           //get all classes
           if (!this.classList.includes(student.active_ojt_class.class_code)) 
@@ -66,9 +66,10 @@ export class ListComponent {
           let progress: number = 0
 
           //if has accomplishment report
-          if(student.accomplishment_report.length > 0) {
-            student.accomplishment_report = student.accomplishment_report[0]
-            progress += parseInt(student.accomplishment_report.current_total_hours)
+          if(student.verified_attendance_total) {
+            progress += parseInt(student.verified_attendance_total.current_total_hours)
+            if(progress > required_hours)
+              progress = required_hours
           }
 
 
