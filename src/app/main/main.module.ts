@@ -16,12 +16,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { StudentsComponent } from './components/students/students.component';
 import { StudentsModule } from './components/students/students.module';
+import { SettingsComponent } from './components/settings/settings.component';
 
 @NgModule({
   declarations: [
     IndustrypartnersComponent,
     DashboardComponent,
-    StudentsComponent
+    StudentsComponent,
+    SettingsComponent
   ],
   imports: [
     CommonModule,

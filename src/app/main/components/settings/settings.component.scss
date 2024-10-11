@@ -1,0 +1,70 @@
+h1 {
+    color: var(--main-orange);
+    opacity: .7;
+    font-size: 40px;
+    font-weight: 400;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid var(--main-orange);
+    border-radius: 2rem;
+    background-color: white;
+    width: 50%;
+    padding: 10px;
+
+    .title p {
+        font-size: 20px;
+        font-weight: bold;
+        color: var(--main-orange);
+    }
+
+    .content {
+        margin: 20px;
+        
+        .practicum {
+            padding-bottom: 20px;
+
+            p {
+                font-size: 16px;
+                color: var(--main-orange);
+            }
+    
+            .hrs {
+                padding-left: 15px;
+
+                input {
+                    border: 2px solid var(--main-orange);
+                    border-radius: 10px;
+                    width: 50%;
+                    padding: 8px;
+                }
+            }
+        }
+    }
+
+    .btn {
+        display: flex;
+        justify-content: end;
+        padding: 15px;
+
+        button {
+            cursor: pointer;
+            padding: 5px 20px;
+            font-size: 15px;
+            border-radius: 2rem;
+            background-color: white;
+            border: 2px solid var(--main-orange);
+            color: var(--main-orange);
+        }
+
+        button:hover {
+            background-color: var(--secondary-color);
+            border: none;
+            color: white;
+        }
+    }
+}
