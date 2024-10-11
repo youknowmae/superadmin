@@ -4,32 +4,40 @@
 
 <div class="container">
     <div class="title">
-        <p>Practicum Hrs.</p>
+        <p>Practicum Hours</p>
     </div>
 
     <div class="content">
-        <div class="practicum">
-            <p>ITP31101</p>
-
-            <div class="hrs">
-                <p>Practicum Hrs.</p>
-
-                <input type="Number">
+        <form [formGroup]="ojtDurationFormDetails">
+            <div class="practicum">
+                <p>ITP311</p>
+    
+                <div class="hrs">
+                    <div class="col-md-6">
+                        <mat-form-field appearance="outline" floatLabel="always">
+                            <mat-label>Practicum Hours</mat-label>
+                            <input matInput formControlName="ITP131" placeholder="Duration">
+                        </mat-form-field>
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <div class="practicum">
-            <p>ITP31110</p>
-
-            <div class="hrs">
-                <p>Practicum Hrs.</p>
-
-                <input type="Number">
+    
+            <div class="practicum">
+                <p>ITP422</p>
+    
+                <div class="hrs">
+                    <div class="col-md-6">
+                        <mat-form-field appearance="outline" floatLabel="always">
+                            <mat-label>Practicum Hours</mat-label>
+                            <input matInput type="number" formControlName="ITP422" placeholder="Duration">
+                        </mat-form-field>
+                    </div>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
 
     <div class="btn">
-        <button>Save</button>
+        <button type="button" [disabled]="ojtDurationFormDetails.invalid" (click)="savePracticumHours()">Save</button>
     </div>
 </div>

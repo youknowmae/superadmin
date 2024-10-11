@@ -8,7 +8,9 @@ import { UserService } from '../../../../../services/user.service';
 
 import { Router } from '@angular/router';
 
+import * as ExcelJS from 'exceljs';
 import * as XLSX from 'xlsx';
+
 import { saveAs } from 'file-saver';
 import { MatSelectChange } from '@angular/material/select';
 
@@ -150,30 +152,35 @@ export class ListComponent {
     )
   }
 
-  downloadExcel() {
-    const data: any = this.generateExcelContent();
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(data);
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+  async downloadExcel() {
+    let students = this.dataSource.data;
 
+    //sort alphabetically
+    students = students.sort((a: any, b: any) => a.last_name.localeCompare(b.last_name))
 
-    const excelBuffer: any = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+    //group by class code
+    students = this.groupBy(students, (student: any) => student.active_ojt_class.class_code)
+    console.log(students)
+    let a = true
+    // if(a) {
+    //   return
+    // }
+    const excel = await this.generateExcelContent(students);
 
-    const file = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-    if (file) {
-      saveAs(file, 'Report.xlsx');
+    if (excel instanceof ExcelJS.Workbook) {
+      const buffer = await excel.xlsx.writeBuffer();
+      const blob = new Blob([buffer], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+      saveAs(blob, 'OJT-Report.xlsx');
     } else {
       console.error('Error generating Excel file data.');
+
     }
   }
 
-  generateExcelContent() {
-    console.log('generating excel...')
-
-    let data: any = []
-
-    //header
-    data.push([
+  async generateExcelContent(data: any) {
+    const header = [
       'Last Name', 
       'First Name', 
       'Student Number', 
@@ -186,34 +193,118 @@ export class ListComponent {
       'Student Evaluation', 
       'Exit Poll',
       'Remarks'
-    ])
+    ]
 
-    let students = this.dataSource.data;
+    const excel = new ExcelJS.Workbook();
 
-    students = students.sort((a: any, b: any) => a.last_name.localeCompare(b.last_name))
+    try {
+      const gcImageResponse = await fetch("/assets/images/GC.png");
+      const gcImageBlob = await gcImageResponse.blob();
+      const gcImageBase64 = await this.blobToBase64(gcImageBlob);
+      
+      const gcLogo = excel.addImage({
+        base64: gcImageBase64,
+        extension: "png",
+      });
+      
+      const ccsImageResponse = await fetch("/assets/images/ccs.png");
+      const ccsImageBlob = await ccsImageResponse.blob();
+      const ccsImageBase64 = await this.blobToBase64(ccsImageBlob);
+      
+      const ccsLogo = excel.addImage({
+        base64: ccsImageBase64,
+        extension: "png",
+      });
+      
+      Object.entries(data)
+      .map(([class_code, students]: [string, any]) => {
+        const worksheet = excel.addWorksheet('Class ' + class_code);
+  
+        worksheet.addImage(gcLogo, {
+          tl: { col: 0, row: 0 },
+          ext: { width: 120, height: 120 },
+          editAs: "absolute",
+        });
+  
+        worksheet.addImage(ccsLogo, {
+          tl: { col: 10, row: 0 },
+          ext: { width: 120, height: 120 },
+          editAs: "absolute",
+        });
+  
+        worksheet.mergeCells("A2:L2");
+        worksheet.getCell("A2").value = "Gordon College";
+        worksheet.getCell("A2").alignment = {
+          vertical: "middle",
+          horizontal: "center",
+        };
+        worksheet.getCell("A2").font = { size: 16, bold: true };
+  
+        worksheet.mergeCells("A3:L3");
+        worksheet.getCell("A3").value = "College of Computer Studies";
+        worksheet.getCell("A3").alignment = {
+          vertical: "middle",
+          horizontal: "center",
+        };
+        worksheet.getCell("A3").font = { size: 12 };
+  
+        worksheet.mergeCells("A4:L4");
+        worksheet.getCell("A4").value = "A.Y. 2024-2025";
+        worksheet.getCell("A4").alignment = {
+          vertical: "middle",
+          horizontal: "center",
+        };
+        worksheet.getCell("A4").font = { size: 12 };
+  
+        worksheet.addRow([]); 
+        worksheet.addRow([]);
+  
+        worksheet.addRow(header)
+  
+        students.forEach((student: any) => {
+          worksheet.addRow([
+            student.last_name,
+            student.first_name,
+            student.student_profile.student_number,
+            student.student_profile.program,
+            student.student_profile.year_level,
+            student.active_ojt_class.course_code,
+            student.active_ojt_class.class_code,
+            student.active_ojt_class.required_hours,
+            student.progress,
+            (student.student_evaluation) ? student.student_evaluation : 'Not Evaluated',
+            (student.ojt_exit_poll) ? 'Completed' : 'INC',
+            (student.status === 'Completed') ? 'Completed': 'Incomplete',
+          ]);
+        });
 
-    students.forEach((student: any) => {
-      data.push([
-        student.last_name,
-        student.first_name,
-        student.student_profile.student_number,
-        student.student_profile.program,
-        student.student_profile.year_level,
-        student.active_ojt_class.course_code,
-        student.active_ojt_class.class_code,
-        student.active_ojt_class.required_hours,
-        student.progress,
-        (student.student_evaluation) ? student.student_evaluation : 'Not Evaluated',
-        (student.ojt_exit_poll) ? 'Completed' : 'INC',
-        (student.status === 'Completed') ? 'Completed': 'Incomplete',
-      ]);
-    });
+      })
 
+      return excel; // Return the excel workbook
+    } catch (error) {
+      console.error("Error in convertExcel:", error);
+      return false
+    }
 
-    console.log(data)
-
-    return data;
   }
 
+
+  blobToBase64(blob: Blob): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = (reader.result as string).split(',')[1]; // Get base64 part
+        resolve(base64String);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(blob); // Convert blob to base64
+    });
+  }
+
+  groupBy = <T, K extends keyof any>(arr: T[], key: (i: T) => K) =>
+    arr.reduce((groups, item) => {
+      (groups[key(item)] ||= []).push(item);
+      return groups;
+    }, {} as Record<K, T[]>);
 
 }
