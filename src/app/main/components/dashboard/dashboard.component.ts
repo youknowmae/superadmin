@@ -89,98 +89,98 @@ export class DashboardComponent implements AfterViewInit {
     }
   };
 
-  public ojtBarConfig: ChartConfiguration<'bar'> = {
-    type: 'bar',
-    data: {
-      labels: ['BSIT', 'BSCS', 'BSEMC', 'ACT'],
-      datasets: [
-        {
-          label: 'Pending',
-          data: [0, 0, 0, 0],
-          backgroundColor: '#FABC3F'
-        },
-        {
-          label: 'Completed',
-          data: [0, 0, 0, 0],
-          backgroundColor: '#7C93C3'
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: {
-          display: true,
-          position: 'top',
-        },
-        tooltip: {
-          enabled: true,
-        }
-      },
-      scales: {
-        x: {
-          stacked: true
-        },
-        y: {
-          stacked: true
-        }
-      }
-    }
-  };
+  // public ojtBarConfig: ChartConfiguration<'bar'> = {
+  //   type: 'bar',
+  //   data: {
+  //     labels: ['BSIT', 'BSCS', 'BSEMC', 'ACT'],
+  //     datasets: [
+  //       {
+  //         label: 'Pending',
+  //         data: [0, 0, 0, 0],
+  //         backgroundColor: '#FABC3F'
+  //       },
+  //       {
+  //         label: 'Completed',
+  //         data: [0, 0, 0, 0],
+  //         backgroundColor: '#7C93C3'
+  //       }
+  //     ]
+  //   },
+  //   options: {
+  //     responsive: true,
+  //     plugins: {
+  //       legend: {
+  //         display: true,
+  //         position: 'top',
+  //       },
+  //       tooltip: {
+  //         enabled: true,
+  //       }
+  //     },
+  //     scales: {
+  //       x: {
+  //         stacked: true
+  //       },
+  //       y: {
+  //         stacked: true
+  //       }
+  //     }
+  //   }
+  // };
 
-  public evaluationConfig: ChartConfiguration<'bar'> = {
-    type: 'bar',
-    data: {
-      labels: ['BSIT', 'BSCS', 'BSEMC', 'ACT'],
-      datasets: [
-        {
-          label: '100-96',
-          data: [0, 0, 0, 0],
-          backgroundColor: '#FABC3F'
-        },
-        {
-          label: '95-91',
-          data: [0, 0, 0, 0],
-          backgroundColor: '#7C93C3'
-        },
-        {
-          label: '90-86',
-          data: [0, 0, 0, 0],
-          backgroundColor: '#A1D6B2'
-        },
-        {
-          label: '85-81',
-          data: [0, 0, 0, 0],
-          backgroundColor: '#FF9874'
-        },
-        {
-          label: '80-75',
-          data: [0, 0, 0, 0],
-          backgroundColor: '#AD49E1'
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: {
-          display: true,
-          position: 'top',
-        },
-        tooltip: {
-          enabled: true,
-        }
-      },
-      scales: {
-        x: {
-          stacked: true
-        },
-        y: {
-          stacked: true
-        }
-      }
-    }
-  };
+  // public evaluationConfig: ChartConfiguration<'bar'> = {
+  //   type: 'bar',
+  //   data: {
+  //     labels: ['BSIT', 'BSCS', 'BSEMC', 'ACT'],
+  //     datasets: [
+  //       {
+  //         label: '100-96',
+  //         data: [0, 0, 0, 0],
+  //         backgroundColor: '#FABC3F'
+  //       },
+  //       {
+  //         label: '95-91',
+  //         data: [0, 0, 0, 0],
+  //         backgroundColor: '#7C93C3'
+  //       },
+  //       {
+  //         label: '90-86',
+  //         data: [0, 0, 0, 0],
+  //         backgroundColor: '#A1D6B2'
+  //       },
+  //       {
+  //         label: '85-81',
+  //         data: [0, 0, 0, 0],
+  //         backgroundColor: '#FF9874'
+  //       },
+  //       {
+  //         label: '80-75',
+  //         data: [0, 0, 0, 0],
+  //         backgroundColor: '#AD49E1'
+  //       }
+  //     ]
+  //   },
+  //   options: {
+  //     responsive: true,
+  //     plugins: {
+  //       legend: {
+  //         display: true,
+  //         position: 'top',
+  //       },
+  //       tooltip: {
+  //         enabled: true,
+  //       }
+  //     },
+  //     scales: {
+  //       x: {
+  //         stacked: true
+  //       },
+  //       y: {
+  //         stacked: true
+  //       }
+  //     }
+  //   }
+  // };
 
   constructor(
     private ds: DataService
@@ -189,8 +189,8 @@ export class DashboardComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.pieChart = new Chart('pieChart', this.config);
     this.barChart = new Chart('barChart', this.barConfig);
-    this.ojtBarChart = new Chart('ojtBarChart', this.ojtBarConfig);
-    this.evaluationBarChart = new Chart('evaluationBarChart', this.evaluationConfig);
+    // this.ojtBarChart = new Chart('ojtBarChart', this.ojtBarConfig);
+    // this.evaluationBarChart = new Chart('evaluationBarChart', this.evaluationConfig);
 
 
     this.getData()
