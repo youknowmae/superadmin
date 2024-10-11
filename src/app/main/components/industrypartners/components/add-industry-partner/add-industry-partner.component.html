@@ -1,0 +1,241 @@
+<div class="container">
+    <div class="details-content"> 
+        <div class="header">
+            <h1>Add Industry Partner</h1>
+            <i class="fa-solid fa-xmark" (click)="closepopup()"></i>
+        </div>
+        <div class="content">
+            <form [formGroup]="formDetails" (submit)="submit()">
+                <div class="form-content">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <mat-form-field>
+                              <mat-label>Name of Company</mat-label>
+                              <input matInput formControlName="company_name">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-10">
+                            <mat-form-field>
+                                <mat-label>Description</mat-label>
+                                <textarea matInput
+                                        cdkTextareaAutosize
+                                        #autosize="cdkTextareaAutosize"
+                                        cdkAutosizeMinRows="2"
+                                        cdkAutosizeMaxRows="2"
+                                        formControlName="description"></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    
+                    <h3>Company Head</h3>
+
+                    <div class="row" formGroupName="company_head">
+                        <div class="col-md-3">
+                            <mat-form-field>
+                            <mat-label>First Name</mat-label>
+                            <input matInput formControlName="first_name">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2">
+                            <mat-form-field>
+                            <mat-label>Middle Name</mat-label>
+                            <input matInput formControlName="middle_name">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-3">
+                            <mat-form-field>
+                            <mat-label>Last Name</mat-label>
+                            <input matInput formControlName="last_name">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2">
+                            <mat-form-field [floatLabel]="'always'">
+                            <mat-label>Suffix</mat-label>
+                            <mat-select formControlName="ext_name" placeholder="None">
+                                <mat-option [value]="null">None</mat-option>
+                                <mat-option *ngFor="let title of titles" [value]="title">
+                                {{ title }}
+                                </mat-option>
+                            </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2">
+                        <mat-form-field [floatLabel]="'always'">
+                            <mat-label>Sex</mat-label>
+                            <mat-select formControlName="sex" placeholder="None">
+                            <mat-option [value]="'1'">Male</mat-option>
+                            <mat-option [value]="'0'">Female</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <mat-form-field>
+                            <mat-label>Position</mat-label>
+                            <input matInput formControlName="head_position">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <h3>Immediate Supervisor <span style="font-size: 14px; font-weight: 300; opacity: .7;">*This can be the same as Company head</span></h3> 
+
+                    <div class="row" formGroupName="immediate_supervisor">
+                        <div class="col-md-3">
+                            <mat-form-field>
+                            <mat-label>First Name</mat-label>
+                            <input matInput formControlName="first_name">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2">
+                            <mat-form-field>
+                            <mat-label>Middle Name</mat-label>
+                            <input matInput formControlName="middle_name">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-3">
+                            <mat-form-field>
+                            <mat-label>Last Name</mat-label>
+                            <input matInput formControlName="last_name">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2">
+                            <mat-form-field [floatLabel]="'always'">
+                            <mat-label>Suffix</mat-label>
+                            <mat-select formControlName="ext_name" placeholder="None">
+                                <mat-option [value]="null">None</mat-option>
+                                <mat-option *ngFor="let title of titles" [value]="title">
+                                {{ title }}
+                                </mat-option>
+                            </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2">
+                            <mat-form-field [floatLabel]="'always'">
+                                <mat-label>Sex</mat-label>
+                                <mat-select formControlName="sex" placeholder="None">
+                                <mat-option [value]="'1'">Male</mat-option>
+                                <mat-option [value]="'0'">Female</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <mat-form-field>
+                            <mat-label>Position</mat-label>
+                            <input matInput formControlName="supervisor_position">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    
+                    <h3>Address</h3>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <mat-form-field>
+                                <mat-label>Region</mat-label>
+                                <mat-select formControlName="region">
+                                  <mat-option [value]="'III'">
+                                    REGION III 
+                                  </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-3">
+                            <mat-form-field>
+                              <mat-label>Province</mat-label>
+                              <input matInput formControlName="province">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-3">
+                            <mat-form-field>
+                              <mat-label>Municipality</mat-label>
+                              <input matInput formControlName="municipality">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-3">
+                            <mat-form-field>
+                              <mat-label>Barangay</mat-label>
+                              <input matInput formControlName="barangay">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-5">
+                            <mat-form-field>
+                              <mat-label>House No./Lot No./Street Name</mat-label>
+                              <input matInput formControlName="street">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2">
+                            <mat-form-field>
+                              <mat-label>Zip Code</mat-label>
+                              <input matInput formControlName="zip_code">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    
+                    <h3>Contact Information</h3>
+                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <mat-form-field>
+                              <mat-label>Telephone Number</mat-label>
+                              <input matInput formControlName="telephone_number">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-form-field>
+                              <mat-label>Mobile Number</mat-label>
+                              <input matInput formControlName="mobile_number">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-form-field>
+                              <mat-label>Fax Number</mat-label>
+                              <input matInput formControlName="fax_number">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <mat-form-field>
+                              <mat-label>Email Address</mat-label>
+                              <input matInput formControlName="email">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-form-field>
+                              <mat-label>URL/Website</mat-label>
+                              <input matInput formControlName="website">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                
+                    <h3>Logo</h3>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="file-input-container"> 
+                                <div class="label"> Upload Image </div>
+                                <input class="file-input" type="file" accept=".jpeg, .png, .jpg, .svg" (change)="uploadFile($event)"> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="btn">
+                    <button type="submit" [disabled]="formDetails.invalid">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -7,6 +7,9 @@ import { ApplyComponent } from './components/apply/apply.component';
 import { ViewComponent } from './components/view/view.component';
 import { ListComponent } from './components/list/list.component';
 import { MaterialsModules } from '../../../modules/materials.module';
+import { EditIndustryPartnerComponent } from './components/edit-industry-partner/edit-industry-partner.component';
+import { AddIndustryPartnerComponent } from './components/add-industry-partner/add-industry-partner.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -15,10 +18,13 @@ import { MaterialsModules } from '../../../modules/materials.module';
 
     ApplyComponent,
     ViewComponent,
-    ListComponent
+    ListComponent,
+    EditIndustryPartnerComponent,
+    AddIndustryPartnerComponent
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     IndustrypartnersRoutingModule,
     MaterialsModules
   ]

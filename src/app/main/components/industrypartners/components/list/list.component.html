@@ -1,6 +1,10 @@
 <main>
   <div class="container-header">
       <h1>Industry Partners</h1>
+      <div class="btn">
+          <!-- <button [routerLink]="['../addnew']" routerLinkActive="router-link-active" >+ New</button> -->
+          <button (click)="addIndustryPartner()" >+ New</button>
+      </div>
   </div>
 
   <div class="card-container">
@@ -9,8 +13,31 @@
         <h2>{{ industryPartner.company_name }}</h2>
         <p>{{ industryPartner.municipality }}</p>
 
-          <div class="view-button">
-              <button class="view" (click)="getIndustryPartner(industryPartner.id)" ><b>View</b></button>
+          <div class="action-buttons">
+              <button class="delete" 
+                    mat-raised-button
+                    matTooltip="Delete"
+                    [matTooltipShowDelay] = "400" 
+                    (click)="deleteConfirmation(industryPartner.id)">
+                    <i class='bx bxs-trash'></i>
+                </button>
+
+                <button class="edit" 
+                mat-raised-button
+                matTooltip="Edit"
+                [matTooltipShowDelay] = "400"
+                (click)="editIndustryPartner(industryPartner.id)">
+                    <i class='bx bxs-edit'></i>
+                </button>
+
+                <button class="view" 
+                mat-raised-button
+                matTooltip="View"
+                [matTooltipShowDelay] = "400"
+                (click)="getIndustryPartner(industryPartner.id)" 
+                routerLinkActive="router-link-active" >
+                    <i class='bx bx-detail' ></i>
+                </button>
           </div>
       </div>
   </div>

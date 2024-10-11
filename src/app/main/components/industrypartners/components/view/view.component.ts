@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrl: './view.component.scss'
 })
 export class ViewComponent {
-  industryPartner: IndustryPartner = <IndustryPartner>{}
+  industryPartner: any
   student: any
 
   constructor(
