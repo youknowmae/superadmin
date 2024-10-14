@@ -89,6 +89,8 @@ export class ListComponent {
           } 
         })
 
+        studentsList = studentsList.sort((a: any, b: any) => a.last_name.localeCompare(b.last_name))
+
         console.log(studentsList)
         this.unfilteredStudents = studentsList
         this.dataSource.data = studentsList
@@ -155,9 +157,6 @@ export class ListComponent {
   async downloadExcel() {
     let students = this.dataSource.data;
 
-    //sort alphabetically
-    students = students.sort((a: any, b: any) => a.last_name.localeCompare(b.last_name))
-
     //group by class code
     students = this.groupBy(students, (student: any) => student.active_ojt_class.class_code)
     console.log(students)
@@ -181,6 +180,7 @@ export class ListComponent {
 
   async generateExcelContent(data: any) {
     const header = [
+      'No.',
       'Last Name', 
       'First Name', 
       'Student Number', 
@@ -227,12 +227,12 @@ export class ListComponent {
         });
   
         worksheet.addImage(ccsLogo, {
-          tl: { col: 10, row: 0 },
+          tl: { col: 11, row: 0 },
           ext: { width: 120, height: 120 },
           editAs: "absolute",
         });
   
-        worksheet.mergeCells("A2:L2");
+        worksheet.mergeCells("A2:M2");
         worksheet.getCell("A2").value = "Gordon College";
         worksheet.getCell("A2").alignment = {
           vertical: "middle",
@@ -240,7 +240,7 @@ export class ListComponent {
         };
         worksheet.getCell("A2").font = { size: 16, bold: true };
   
-        worksheet.mergeCells("A3:L3");
+        worksheet.mergeCells("A3:M3");
         worksheet.getCell("A3").value = "College of Computer Studies";
         worksheet.getCell("A3").alignment = {
           vertical: "middle",
@@ -248,7 +248,7 @@ export class ListComponent {
         };
         worksheet.getCell("A3").font = { size: 12 };
   
-        worksheet.mergeCells("A4:L4");
+        worksheet.mergeCells("A4:M4");
         worksheet.getCell("A4").value = "A.Y. 2024-2025";
         worksheet.getCell("A4").alignment = {
           vertical: "middle",
@@ -261,8 +261,10 @@ export class ListComponent {
   
         worksheet.addRow(header)
   
+        let counter = 1
         students.forEach((student: any) => {
           worksheet.addRow([
+            counter,
             student.last_name,
             student.first_name,
             student.student_profile.student_number,
@@ -276,8 +278,8 @@ export class ListComponent {
             (student.ojt_exit_poll) ? 'Completed' : 'INC',
             (student.status === 'Completed') ? 'Completed': 'Incomplete',
           ]);
+          counter++
         });
-
       })
 
       return excel; // Return the excel workbook
