@@ -15,6 +15,7 @@ const routes: Routes = [
       loadChildren: ()=> import('./main/main.module'). then((m)=>m.MainModule)
     }]
   },
+  { path: 'newpartners', loadChildren: () => import('./main/components/newpartners/newpartners.module').then(m => m.NewpartnersModule) },
 ];
 
 @NgModule({

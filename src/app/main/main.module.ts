@@ -17,13 +17,16 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { StudentsComponent } from './components/students/students.component';
 import { StudentsModule } from './components/students/students.module';
 import { SettingsComponent } from './components/settings/settings.component';
+import { NewpartnersModule } from './components/newpartners/newpartners.module';
+import { NewpartnersComponent } from './components/newpartners/newpartners.component';
 
 @NgModule({
   declarations: [
     IndustrypartnersComponent,
     DashboardComponent,
     StudentsComponent,
-    SettingsComponent
+    SettingsComponent,
+    NewpartnersComponent
   ],
   imports: [
     CommonModule,
@@ -31,6 +34,7 @@ import { SettingsComponent } from './components/settings/settings.component';
     ReactiveFormsModule,
     IndustrypartnersModule,
     StudentsModule,
+    NewpartnersModule,
     // BrowserModule,
     // BrowserAnimationsModule,
     MaterialsModules

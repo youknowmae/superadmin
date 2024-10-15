@@ -4,6 +4,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { StudentsComponent } from './components/students/students.component';
 import { IndustrypartnersComponent } from './components/industrypartners/industrypartners.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import { NewpartnersComponent } from './components/newpartners/newpartners.component';
 
 
 
@@ -11,7 +12,14 @@ const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'settings', component: SettingsComponent },
-
+  { 
+    path: 'newpartners', 
+    component: NewpartnersComponent,
+    children: [{
+      path: '',
+      loadChildren: ()=>import('./components/newpartners/newpartners.module').then((m)=>m.NewpartnersModule)
+    }]
+  },
   { 
     path: 'students', 
     component: StudentsComponent,

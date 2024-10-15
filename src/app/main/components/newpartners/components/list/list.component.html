@@ -1,0 +1,41 @@
+<main>
+    <div class="container-header">
+        <h1>Partners For Approval</h1>
+    </div>
+  
+    <div class="card-container">
+        <div class="card" *ngFor="let industryPartner of industryPartners; let i = index" [ngStyle]="{'animation-delay': (i * 0.1) + 's'} ">
+          <img [src]="(industryPartner.image) ? industryPartner.image : '/assets/images/LOGO.png'" alt="logo image" class="card-image">
+          <h2>{{ industryPartner.company_name }}</h2>
+          <p>{{ industryPartner.municipality }}</p>
+  
+            <div class="action-buttons">
+                <button class="delete" 
+                      mat-raised-button
+                      matTooltip="Delete"
+                      [matTooltipShowDelay] = "400" 
+                      (click)="deleteConfirmation(industryPartner.id)">
+                      <i class='bx bxs-trash'></i>
+                  </button>
+  
+                  <button class="edit" 
+                  mat-raised-button
+                  matTooltip="Edit"
+                  [matTooltipShowDelay] = "400"
+                  (click)="editIndustryPartner(industryPartner.id)">
+                      <i class='bx bxs-edit'></i>
+                  </button>
+  
+                  <button class="view" 
+                  mat-raised-button
+                  matTooltip="View"
+                  [matTooltipShowDelay] = "400"
+                  (click)="getIndustryPartner(industryPartner.id)" 
+                  routerLinkActive="router-link-active" >
+                      <i class='bx bx-detail' ></i>
+                  </button>
+            </div>
+        </div>
+    </div>
+  </main>
+  
