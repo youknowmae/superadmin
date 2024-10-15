@@ -8,7 +8,7 @@ import { DataService } from '../../../../../../../services/data.service';
   styleUrl: './accomplishmentreport.component.scss'
 })
 export class AccomplishmentreportComponent {
-  accomplishmentReports: any
+  weekly_attendance: any = []
 
   constructor(
     private us: UserService,
@@ -24,26 +24,38 @@ export class AccomplishmentreportComponent {
   }
 
   getAccomplishmentReport(id: number) {
-    this.ds.get('monitoring/students/accomplishment-report/', id).subscribe(
+    this.ds.get('adviser/monitoring/students/attendance/', id).subscribe(
       response => {
-        console.log(response)
-        this.accomplishmentReports = Object.entries(response)
-                                        .map(([week, accomplishment_report]: [string, any]) => { 
-                                          var accumulated_hours: number = 0
-
-                                          accomplishment_report.forEach((report: any) => {
-                                            // console.log(new Date(report.date))
-                                            accumulated_hours += report.total_hours
-                                          });
-
-                                          return { accomplishment_report, accumulated_hours }
-                                        })
-        console.log(this.accomplishmentReports)
+        
+        this.computeWeeklyAttendance(response)
       },
       error => {
         console.error(error)
       }
     )
+  }
+
+  groupBy = <T, K extends keyof any>(arr: T[], key: (i: T) => K) =>
+    arr.reduce((groups, item) => {
+      (groups[key(item)] ||= []).push(item);
+      return groups;
+    }, {} as Record<K, T[]>);
+    
+  computeWeeklyAttendance(data: any) {
+    let weeklyAttendance: any = this.groupBy(data, (item: any) => item.week_of_year)
+
+    weeklyAttendance = Object.entries(weeklyAttendance).map(([week, accomplishment_report]: [string, any]) => { 
+                                      var accumulated_hours: number = 0
+
+                                      accomplishment_report.forEach((report: any) => {
+                                        accumulated_hours += report.total_hours
+                                      });
+
+                                      return { week, accomplishment_report, accumulated_hours }
+                                    })
+
+    this.weekly_attendance = weeklyAttendance
+    console.log(this.weekly_attendance)
   }
 
 }

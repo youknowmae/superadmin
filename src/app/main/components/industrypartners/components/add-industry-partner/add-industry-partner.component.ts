@@ -50,6 +50,9 @@ export class AddIndustryPartnerComponent {
       fax_number: [null, [Validators.pattern('(09)[0-9]{9}')]],
       email: [null, [Validators.required, Validators.email]],
       website: [null, [Validators.maxLength(128)]],
+
+      email_2: [null, Validators.required], //for viewing purposes only
+      password: [null, [Validators.required, Validators.minLength(8)]]
   })
 
   
@@ -62,6 +65,12 @@ export class AddIndustryPartnerComponent {
     this.formDetails.patchValue({
       date: today.toISOString().split('T')[0]
     })
+
+    this.formDetails.get('email')?.valueChanges.subscribe((newValue) => {
+      this.formDetails.patchValue({
+        email_2: newValue
+      })
+    });
   }
   
   uploadFile(event: any) {

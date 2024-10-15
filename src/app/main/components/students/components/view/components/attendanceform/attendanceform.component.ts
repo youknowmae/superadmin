@@ -17,7 +17,9 @@ export class AttendanceformComponent {
     remarks: ''
   }
 
-  displayedColumns: string[] = ['date', 'arrival_time', 'departure_time', 'total_hours'];
+  displayedColumns: string[] = ['date', 'arrival_time', 'departure_time', 'total_hours', 'is_verified'];
+  
+  unverified_attendance: number = 0
 
   dataSource: any = new MatTableDataSource<any>();
   
@@ -39,25 +41,37 @@ export class AttendanceformComponent {
   }
 
   getAttendance(id: number) {
-    this.ds.get('monitoring/students/attendance/', id).subscribe(
+    this.ds.get('adviser/monitoring/students/attendance/', id).subscribe(
       response => {
         console.log(response)
 
-        response.forEach((attendance: any) => {
-          this.progress.total_hours += attendance.total_hours 
-        });
-
-        if(this.progress.total_hours >= this.progress.required_hours) {
-          this.progress.remarks = ' - Completed'
-        }
-
         this.dataSource.data = response;
         this.dataSource.paginator = this.paginator;
+        
+        this.tallyProgress()
       },
       error => {
         console.error(error)
       }
     )
 
+  }
+  
+  tallyProgress() {
+    this.progress.total_hours = 0
+    this.unverified_attendance = 0 
+
+    let data = this.dataSource.data
+
+    data.forEach((attendance: any) => {
+      if(attendance.is_verified)
+        this.progress.total_hours += attendance.total_hours 
+      else 
+        this.unverified_attendance += 1
+    });
+
+    if(this.progress.total_hours >= this.progress.required_hours) 
+      this.progress.remarks = ' - Completed'
+    
   }
 }

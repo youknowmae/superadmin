@@ -134,16 +134,18 @@ export class ListComponent {
   }
 
   viewStudent(id: number) {
+    console.log(id)
     if(this.isLoading) {
       return
     }
 
-    let studentDetails = this.unfilteredStudents.find((student: any) => student.id = id)
+    let studentDetails = this.unfilteredStudents.find((student: any) => student.id == id)
 
     console.log(studentDetails)
-    this.ds.get('monitoring/students/', id).subscribe(
+    this.ds.get('adviser/monitoring/students/', id).subscribe(
       student => {
-        this.us.setStudentProfile({ ...student, required_hours: studentDetails.required_hours })
+        console.log(studentDetails)
+        this.us.setStudentProfile({ ...student, required_hours: studentDetails.active_ojt_class.required_hours })
         this.router.navigate(['main/students/view'])
         this.isLoading = false
       },
