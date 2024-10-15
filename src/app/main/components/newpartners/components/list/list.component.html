@@ -10,7 +10,7 @@
           <p>{{ industryPartner.municipality }}</p>
   
             <div class="action-buttons">
-                <button class="delete" 
+                <!-- <button class="delete" 
                       mat-raised-button
                       matTooltip="Delete"
                       [matTooltipShowDelay] = "400" 
@@ -24,13 +24,14 @@
                   [matTooltipShowDelay] = "400"
                   (click)="editIndustryPartner(industryPartner.id)">
                       <i class='bx bxs-edit'></i>
-                  </button>
+                  </button> -->
   
                   <button class="view" 
                   mat-raised-button
                   matTooltip="View"
                   [matTooltipShowDelay] = "400"
-                  (click)="getIndustryPartner(industryPartner.id)" 
+                  (click)="getIndustryPartner(industryPartner.id)"
+                  routerLink="../view/" 
                   routerLinkActive="router-link-active" >
                       <i class='bx bx-detail' ></i>
                   </button>

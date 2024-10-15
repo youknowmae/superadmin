@@ -3,7 +3,7 @@
 </div> -->
 
 <div class="container">
-    <div class="back-btn" [routerLink]="['../../list']" routerLinkActive="router-link-active">
+    <div class="back-btn" [routerLink]="['list']" routerLinkActive="router-link-active">
         <span class="icon">
             <i class="fa-solid fa-arrow-left"></i>
         </span>
@@ -41,6 +41,20 @@
                     <li *ngIf="industryPartner.website"><b>Website:</b> {{ industryPartner.website }}</li>
                 </ul>
             </div>
+        </div>
+    </div>
+    
+    <div class="account">
+        <h3>Partner's Account</h3>
+        <p>All fields are required for account creation, and the password must be at least 8 characters long.</p>
+
+        <div class="input">
+            <input type="email" placeholder="Email" required>
+            <input type="password" placeholder="Password" required>
+        </div>
+
+        <div class="btn">
+            <button>Save</button>
         </div>
     </div>
     

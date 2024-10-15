@@ -94,3 +94,62 @@
         }
     }
 }
+
+.account {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--semi-transparent-main-orange);
+    border-radius: 20px;
+    width: 100%;
+    min-height: 300px;
+    height: fit-content;
+    justify-self: center;
+    margin-top: 25px;
+    padding: 30px;
+
+    h3 {
+        color: var(--primary-color);
+        font-weight: 600;
+        font-size: 25px;
+    }
+
+    p {
+        padding-left: 5px;
+        opacity: .7;
+    }
+
+    .input {
+        display: flex;
+        flex-direction: column;
+        max-width: 50%;
+        width: 100%;
+        margin-left: 15px;
+
+        input {
+            margin-bottom: 20px;
+            font-size: 15px;
+            border: 2px solid var(--primary-color);
+            background-color: white;
+            padding: 10px;
+            border-radius: 8px;
+        }
+    }
+
+    button {
+        float: right;
+        font-size: 16px;
+        padding: 10px 30px;
+        border: none;
+        border-radius: 2rem;
+        background-color: var(--primary-color);
+        color: white;
+        font-weight: 500;
+        border: 2px solid var(--primary-color);
+    }
+
+    button:hover {
+        border: 2px solid var(--primary-color);
+        background-color: white;
+        color: var(--primary-color);
+    }
+}
