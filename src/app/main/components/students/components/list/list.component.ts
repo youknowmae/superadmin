@@ -162,10 +162,7 @@ export class ListComponent {
     //group by class code
     students = this.groupBy(students, (student: any) => student.active_ojt_class.class_code)
     console.log(students)
-    let a = true
-    // if(a) {
-    //   return
-    // }
+
     const excel = await this.generateExcelContent(students);
 
     if (excel instanceof ExcelJS.Workbook) {
@@ -281,6 +278,17 @@ export class ListComponent {
             (student.status === 'Completed') ? 'Completed': 'Incomplete',
           ]);
           counter++
+        });
+
+        worksheet.columns.forEach((column: any) => {
+          let maxLength = 0;
+          column.eachCell({ includeEmpty: true }, (cell: any) => {
+            if (cell.row >= 7) {  //start checking from row 7 onwards. Cuzzz yknow header nasa taas nakakabasag ng format
+              const cellValue = cell.value ? cell.value.toString() : '';
+              maxLength = Math.max(maxLength, cellValue.length);
+            }
+          });
+          column.width = maxLength < 10 ? 10 : maxLength;
         });
       })
 
