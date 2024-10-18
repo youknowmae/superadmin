@@ -3,7 +3,7 @@
 </div> -->
 
 <div class="container">
-    <div class="back-btn" [routerLink]="['list']" routerLinkActive="router-link-active">
+    <div class="back-btn" [routerLink]="['../list']" routerLinkActive="router-link-active">
         <span class="icon">
             <i class="fa-solid fa-arrow-left"></i>
         </span>
@@ -12,7 +12,170 @@
         </span>
     </div>
 
-    <div class="content">
+    <div class="card">
+        <mat-stepper [linear]="true"  #stepper>
+            <mat-step >
+                <ng-template matStepLabel>Company Details</ng-template>
+                
+                <div class="details">
+                    <div class="image">
+                        <img [src]="(industryPartner.image) ? industryPartner.image : '/assets/images/LOGO.png'" alt="logo image">
+                    </div>
+                    <div class="container-info">
+                        <div class="info">
+                            <div class="company-name">
+                                <h3>{{ industryPartner.company_name }}</h3>
+                                <p>{{ industryPartner.description }}</p>
+                            </div>
+    
+                            <h4>Company Head:</h4>
+                            <p> {{ industryPartner.company_head.full_name }}, {{ industryPartner.head_position }}</p>
+    
+                            <h4>Immediate Supervisor :</h4>
+                            <p> {{ industryPartner.immediate_supervisor.full_name }}, {{ industryPartner.supervisor_position }}</p>
+                            
+                            <ul>
+                                <li>
+                                  <span>Company Address: </span>
+                                  {{ industryPartner.street }}
+                                  {{ industryPartner.barangay }}
+                                  {{ industryPartner.municipality }}
+                                </li>
+                                <li>
+                                  <span>Official Email Address: </span>
+                                  {{ industryPartner.email }}
+                                </li>
+                                <li *ngIf="industryPartner.telephone_number">
+                                  <span>Telephone Number: </span>
+                                  {{ industryPartner.telephone_number }}
+                                </li>
+                                <li *ngIf="industryPartner.fax_number">
+                                  <span>Fax Number: </span>
+                                  {{ industryPartner.fax_number }}
+                                </li>
+                                <li>
+                                  <span>Contact Number: </span>
+                                  {{ industryPartner.mobile_number }}
+                                </li>
+                                <li *ngIf="industryPartner.website">
+                                  <span>Website: </span>
+                                  {{ industryPartner.website }}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                  <button mat-button matStepperNext>Next</button>
+                </div>
+            </mat-step>
+
+            <mat-step [stepControl]="accountDetails">
+                <ng-template matStepLabel>Account Details</ng-template>
+                    <form [formGroup]="accountDetails" (submit)="approvePartner()" class="step-content">
+                        <p>All fields are required for account creation, and the password must be at least 8 characters long.</p>
+                        <div class="col-md-4">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Email</mat-label>
+                                <input type="text" matInput formControlName="email" readonly>
+                            </mat-form-field>
+                        </div>
+                        <div class="password">
+                            <div class="col-md-4">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Password</mat-label>
+                                    <input [type]="(showPassword) ? 'text' : 'password'" matInput formControlName="password">
+                                </mat-form-field>
+                            </div>
+                            <i (click)="showPassword = !showPassword" class="fa" [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'"></i>
+                        </div>
+                        
+                        <div>
+                            <button mat-button matStepperNext (click)="showPassword = false">Next</button>
+                            <button mat-button matStepperPrevious>Back</button>
+                        </div>
+                    </form>
+            </mat-step>
+
+            <mat-step [stepControl]="accountDetails">
+              <ng-template matStepLabel>Review</ng-template>
+              <div class="step-content">
+                <p>You are now done. Please review the content before proceeding.</p>
+                <h2>Company Details</h2>
+                <div class="details">
+                    <div class="image">
+                        <img [src]="(industryPartner.image) ? industryPartner.image : '/assets/images/LOGO.png'" alt="logo image">
+                    </div>
+                    <div class="container-info">
+                        <div class="info">
+                            <div class="company-name">
+                                <h3>{{ industryPartner.company_name }}</h3>
+                                <p>{{ industryPartner.description }}</p>
+                            </div>
+    
+                            <h4>Company Head:</h4>
+                            <p> {{ industryPartner.company_head.full_name }}, {{ industryPartner.head_position }}</p>
+    
+                            <h4>Immediate Supervisor :</h4>
+                            <p> {{ industryPartner.immediate_supervisor.full_name }}, {{ industryPartner.supervisor_position }}</p>
+                            
+                            <ul>
+                                <li>
+                                  <span>Company Address: </span>
+                                  {{ industryPartner.street }}
+                                  {{ industryPartner.barangay }}
+                                  {{ industryPartner.municipality }}
+                                </li>
+                                <li>
+                                  <span>Official Email Address: </span>
+                                  {{ industryPartner.email }}
+                                </li>
+                                <li *ngIf="industryPartner.telephone_number">
+                                  <span>Telephone Number: </span>
+                                  {{ industryPartner.telephone_number }}
+                                </li>
+                                <li *ngIf="industryPartner.fax_number">
+                                  <span>Fax Number: </span>
+                                  {{ industryPartner.fax_number }}
+                                </li>
+                                <li>
+                                  <span>Contact Number: </span>
+                                  {{ industryPartner.mobile_number }}
+                                </li>
+                                <li *ngIf="industryPartner.website">
+                                  <span>Website: </span>
+                                  {{ industryPartner.website }}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <h2>Account Details</h2>
+                <div class="col-md-4">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email</mat-label>
+                        <input type="text" matInput [value]="accountDetails.get('email')?.value" readonly>
+                    </mat-form-field>
+                </div>
+                <div class="password">
+                    <div class="col-md-4">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Password</mat-label>
+                            <input [type]="(showPassword) ? 'text' : 'password'" matInput [value]="accountDetails.get('password')?.value" readonly="">
+                        </mat-form-field>
+                    </div>
+                    <i (click)="showPassword = !showPassword" class="fa" [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'"></i>
+                </div>
+                <div class="btn">
+                  <button mat-button (click)="approveConfirmation()">Approve</button>
+                  <button mat-button matStepperPrevious>Back</button>
+                </div>
+              </div>
+            </mat-step>
+        </mat-stepper>
+    </div>
+    
+    <!-- <div class="content">
         <div class="image">
             <img [src]="(industryPartner.image) ? industryPartner.image : '/assets/images/LOGO.png'" alt="logo image">
         </div>
@@ -41,22 +204,32 @@
                     <li *ngIf="industryPartner.website"><b>Website:</b> {{ industryPartner.website }}</li>
                 </ul>
             </div>
-        </div>
-    </div>
+        </div> 
+    </div> -->
     
-    <div class="account">
-        <h3>Partner's Account</h3>
-        <p>All fields are required for account creation, and the password must be at least 8 characters long.</p>
-
-        <div class="input">
-            <input type="email" placeholder="Email" required>
-            <input type="password" placeholder="Password" required>
-        </div>
-
-        <div class="btn">
-            <button>Save</button>
-        </div>
-    </div>
+    <!-- <div class="account">
+        <form [formGroup]="accountDetails" (submit)="approvePartner()">
+        
+            <h3>Partner's Account</h3>
+            <p>All fields are required for account creation, and the password must be at least 8 characters long.</p>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input type="text" matInput formControlName="email">
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Password</mat-label>
+                    <input type="password" matInput formControlName="password">
+                </mat-form-field>
+            </div>
+            
+            <div class="btn">
+            <button type="submit" [class.invalid]="accountDetails.invalid">Create</button>
+            </div>
+        </form>
+    </div> -->
     
 </div>
 

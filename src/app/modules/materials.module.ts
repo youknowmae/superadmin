@@ -10,6 +10,7 @@ import { MatSelectModule } from "@angular/material/select";
 import { MatOptionModule } from "@angular/material/core";
 import { MatIconModule } from '@angular/material/icon'
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatStepperModule } from '@angular/material/stepper';
 
 
 
@@ -26,6 +27,7 @@ const var_modules = [
     MatOptionModule,
     MatIconModule,
     MatDatepickerModule,
+    MatStepperModule,
 ]
 
 @NgModule({

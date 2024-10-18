@@ -41,7 +41,7 @@ export class AttendanceformComponent {
   }
 
   getAttendance(id: number) {
-    this.ds.get('adviser/monitoring/students/attendance/', id).subscribe(
+    this.ds.get('superadmin/students/attendance/', id).subscribe(
       response => {
         console.log(response)
 

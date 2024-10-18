@@ -6,6 +6,7 @@ import { NewpartnersComponent } from './newpartners.component';
 import { ListComponent } from './components/list/list.component';
 import { ViewComponent } from './components/view/view.component';
 import { MaterialsModules } from '../../../modules/materials.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { MaterialsModules } from '../../../modules/materials.module';
   imports: [
     CommonModule,
     NewpartnersRoutingModule,
-    MaterialsModules
+    MaterialsModules,
+    ReactiveFormsModule
   ]
 })
 export class NewpartnersModule { }

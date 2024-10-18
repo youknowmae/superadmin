@@ -142,7 +142,7 @@ export class ListComponent {
     let studentDetails = this.unfilteredStudents.find((student: any) => student.id == id)
 
     console.log(studentDetails)
-    this.ds.get('adviser/monitoring/students/', id).subscribe(
+    this.ds.get('superadmin/students/', id).subscribe(
       student => {
         console.log(studentDetails)
         this.us.setStudentProfile({ ...student, required_hours: studentDetails.active_ojt_class.required_hours })

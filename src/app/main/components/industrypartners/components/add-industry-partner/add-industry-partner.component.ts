@@ -59,7 +59,7 @@ export class AddIndustryPartnerComponent {
   constructor(
     private ref: MatDialogRef<AddIndustryPartnerComponent>,
     private fb: FormBuilder,
-    private dataService: DataService
+    private ds: DataService
   ) {
     const today = new Date();
     this.formDetails.patchValue({
@@ -151,7 +151,7 @@ export class AddIndustryPartnerComponent {
     if(this.file)
       payload.append('image', this.file);
     
-    this.dataService.post('superadmin/industryPartners', '', payload).subscribe(
+    this.ds.post('superadmin/industryPartners', '', payload).subscribe(
       result => {
         Swal.fire({
           title: "Success!",

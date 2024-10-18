@@ -2,6 +2,22 @@
     <div class="container-header">
         <h1>Partners For Approval</h1>
     </div>
+    <div class="buttons">
+        <div class="filter-container">
+           
+        </div>
+        <div class="right">
+            <div class="select-filter">
+                <mat-form-field>
+                    <mat-label>Status Filter</mat-label>
+                    <mat-select disableRipple (selectionChange)="onStatusFilterChange($event)" [(ngModel)]="statusFilter">
+                        <mat-option value="2"> For Approval</mat-option>
+                        <mat-option value="3"> Approved</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
   
     <div class="card-container">
         <div class="card" *ngFor="let industryPartner of industryPartners; let i = index" [ngStyle]="{'animation-delay': (i * 0.1) + 's'} ">
@@ -30,9 +46,7 @@
                   mat-raised-button
                   matTooltip="View"
                   [matTooltipShowDelay] = "400"
-                  (click)="getIndustryPartner(industryPartner.id)"
-                  routerLink="../view/" 
-                  routerLinkActive="router-link-active" >
+                  (click)="viewRequestDetails(industryPartner.id)">
                       <i class='bx bx-detail' ></i>
                   </button>
             </div>
