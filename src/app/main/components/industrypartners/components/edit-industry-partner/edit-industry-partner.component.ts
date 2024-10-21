@@ -44,7 +44,7 @@ export class EditIndustryPartnerComponent {
       municipality: [null, [Validators.required, Validators.maxLength(32)]],
       barangay: [null, [Validators.required, Validators.maxLength(32)]],
       street: [null, [Validators.required, Validators.maxLength(32)]],
-      zip_code: [null, [Validators.required, Validators.pattern('[0-9]{4}')]],
+      // zip_code: [null, [Validators.required, Validators.pattern('[0-9]{4}')]],
   
       telephone_number: [null, [Validators.pattern('(09)[0-9]{9}')]],
       mobile_number: [null, [Validators.required, Validators.pattern('(09)[0-9]{9}')]],
