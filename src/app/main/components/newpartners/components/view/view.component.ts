@@ -69,7 +69,6 @@ export class ViewComponent {
   }
 
   approvePartner() {
-    console.log('boom')
     this.ds.post('superadmin/request/industryPartners/', this.industryPartner.id, this.accountDetails.value).subscribe(
       response => {
         console.log(response)

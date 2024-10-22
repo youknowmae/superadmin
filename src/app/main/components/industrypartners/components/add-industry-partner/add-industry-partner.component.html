@@ -243,7 +243,10 @@
                         <div class="col-md-4">
                             <mat-form-field>
                                 <mat-label>Password</mat-label>
-                                <input type="password" matInput formControlName="password">
+                                <input [type]="(showPassword) ? 'text' : 'password'" matInput formControlName="password">
+                                <mat-icon matSuffix (click)="showPassword = !showPassword">
+                                    {{ showPassword ? 'visibility' : 'visibility_off' }}
+                                </mat-icon>
                             </mat-form-field>
                         </div>
                     </div>

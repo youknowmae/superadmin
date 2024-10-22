@@ -14,46 +14,9 @@ export class AddIndustryPartnerComponent {
   
   titles: string[] = ['Sr', 'Jr', 'II', 'III', 'IV', 'V'];
 
-  formDetails: FormGroup = this.fb.group({
-    company_name: [null, [Validators.required, Validators.maxLength(64)]],
-      description: [null, [Validators.required, Validators.maxLength(2048)]],
+  showPassword: boolean = false
   
-      // company_head: [null, [Validators.required, Validators.maxLength(128)]],
-      company_head: this.fb.group({
-        first_name: [null, [Validators.required, Validators.maxLength(64)]],
-        middle_name: [null, [Validators.maxLength(64)]],
-        last_name: [null, [Validators.required, Validators.maxLength(64)]],
-        ext_name: [null], 
-        sex: [null, Validators.required],
-      }),
-      head_position: [null, [Validators.required, Validators.maxLength(64)]],
-      
-      // immediate_supervisor: [null, [Validators.required, Validators.maxLength(128)]],
-      immediate_supervisor: this.fb.group({
-        first_name: [null, [Validators.required, Validators.maxLength(64)]],
-        middle_name: [null, [Validators.maxLength(64)]],
-        last_name: [null, [Validators.required, Validators.maxLength(64)]],
-        ext_name: [null],
-        sex: [null, Validators.required],
-      }),
-      supervisor_position: [null, [Validators.required, Validators.maxLength(64)]],
-  
-      region: ["III", [Validators.required, Validators.maxLength(32)]],
-      province: [null, [Validators.required, Validators.maxLength(32)]],
-      municipality: [null, [Validators.required, Validators.maxLength(32)]],
-      barangay: [null, [Validators.required, Validators.maxLength(32)]],
-      street: [null, [Validators.required, Validators.maxLength(32)]],
-      // zip_code: [null, [Validators.required, Validators.pattern('[0-9]{4}')]],
-  
-      telephone_number: [null, [Validators.pattern('(09)[0-9]{9}')]],
-      mobile_number: [null, [Validators.required, Validators.pattern('(09)[0-9]{9}')]],
-      fax_number: [null, [Validators.pattern('(09)[0-9]{9}')]],
-      email: [null, [Validators.required, Validators.email]],
-      website: [null, [Validators.maxLength(128)]],
-
-      email_2: [null, Validators.required], //for viewing purposes only
-      password: [null, [Validators.required, Validators.minLength(8)]]
-  })
+  formDetails: FormGroup 
 
   
   constructor(
@@ -61,6 +24,47 @@ export class AddIndustryPartnerComponent {
     private fb: FormBuilder,
     private ds: DataService
   ) {
+    this.formDetails = this.fb.group({
+      company_name: [null, [Validators.required, Validators.maxLength(64)]],
+        description: [null, [Validators.required, Validators.maxLength(2048)]],
+    
+        // company_head: [null, [Validators.required, Validators.maxLength(128)]],
+        company_head: this.fb.group({
+          first_name: [null, [Validators.required, Validators.maxLength(64)]],
+          middle_name: [null, [Validators.maxLength(64)]],
+          last_name: [null, [Validators.required, Validators.maxLength(64)]],
+          ext_name: [null], 
+          sex: [null, Validators.required],
+        }),
+        head_position: [null, [Validators.required, Validators.maxLength(64)]],
+        
+        // immediate_supervisor: [null, [Validators.required, Validators.maxLength(128)]],
+        immediate_supervisor: this.fb.group({
+          first_name: [null, [Validators.required, Validators.maxLength(64)]],
+          middle_name: [null, [Validators.maxLength(64)]],
+          last_name: [null, [Validators.required, Validators.maxLength(64)]],
+          ext_name: [null],
+          sex: [null, Validators.required],
+        }),
+        supervisor_position: [null, [Validators.required, Validators.maxLength(64)]],
+    
+        region: ["III", [Validators.required, Validators.maxLength(32)]],
+        province: [null, [Validators.required, Validators.maxLength(32)]],
+        municipality: [null, [Validators.required, Validators.maxLength(32)]],
+        barangay: [null, [Validators.required, Validators.maxLength(32)]],
+        street: [null, [Validators.required, Validators.maxLength(32)]],
+        // zip_code: [null, [Validators.required, Validators.pattern('[0-9]{4}')]],
+    
+        telephone_number: [null, [Validators.pattern('(09)[0-9]{9}')]],
+        mobile_number: [null, [Validators.required, Validators.pattern('(09)[0-9]{9}')]],
+        fax_number: [null, [Validators.pattern('(09)[0-9]{9}')]],
+        email: [null, [Validators.required, Validators.email]],
+        website: [null, [Validators.maxLength(128)]],
+  
+        email_2: [null, Validators.required], //for viewing purposes only
+        password: [null, [Validators.required, Validators.minLength(8)]]
+    })
+
     const today = new Date();
     this.formDetails.patchValue({
       date: today.toISOString().split('T')[0]
