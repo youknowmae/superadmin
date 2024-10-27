@@ -3,11 +3,11 @@
 </div>
 
 <div class="card-container">
-    <div class="card">
+    <div class="card" *ngIf="duration.length > 0">
         <h3>Practicum Hours</h3>
     
         <div class="ojt-hours">
-            <form [formGroup]="ojtDurationFormDetails" *ngIf="duration.length > 0">
+            <form [formGroup]="ojtDurationFormDetails" >
                 <div formArrayName="duration">
                     <ng-container *ngFor="let durationForm of duration.controls; index as i;">
                         <div class="practicum" [formGroupName]="i">

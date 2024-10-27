@@ -64,7 +64,7 @@ h1 {
 
 .container {
     margin: 0px 20px;
-    background-color: none;
+    background-color: white;
     overflow-y: auto;
     border: 1px solid var(--primary-color);
     height: fit-content;
@@ -74,8 +74,7 @@ h1 {
 
     table {
         box-shadow: none;
-        margin-bottom: 10px;
-        background-color: var(--main-bg-color);
+        margin-bottom: 10px;;
 
 
         button {

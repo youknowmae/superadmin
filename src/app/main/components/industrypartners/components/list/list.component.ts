@@ -14,9 +14,12 @@ import Swal from 'sweetalert2';
   styleUrl: './list.component.scss'
 })
 export class ListComponent {
+  filteredIndustryPartners: IndustryPartner[] = []
   industryPartners: IndustryPartner[] = []
   isLoading: boolean = false
   isGettingPartner: boolean = false
+
+
 
   constructor(
     private ds: DataService,
@@ -36,6 +39,7 @@ export class ListComponent {
     this.ds.get('superadmin/industryPartners').subscribe(
       industryPartners => {
         this.industryPartners = industryPartners
+        this.filteredIndustryPartners = industryPartners
         console.log(industryPartners)
       },
       error => {
@@ -163,5 +167,13 @@ export class ListComponent {
     });
   }
 
-
+  search(value: string) {
+    value = value.toLowerCase()
+    this.filteredIndustryPartners = this.industryPartners.filter(
+      (item: IndustryPartner) => {
+        return item.company_name.toLowerCase().includes(value) ||
+          item.municipality.toLowerCase().includes(value)
+      }
+    )
+  }
 }

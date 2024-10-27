@@ -11,8 +11,10 @@
                 <mat-form-field>
                     <mat-label>Status Filter</mat-label>
                     <mat-select disableRipple (selectionChange)="onStatusFilterChange($event)" [(ngModel)]="statusFilter">
-                        <mat-option value="2"> For Approval</mat-option>
-                        <mat-option value="3"> Approved</mat-option>
+                        <!-- null doesn't work so... yess -->
+                        <mat-option [value]="''"> All</mat-option> 
+                        <mat-option [value]="2"> For Approval</mat-option>
+                        <mat-option [value]="3"> Approved</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
@@ -21,11 +23,18 @@
   
     <div class="card-container">
         <div class="card" *ngFor="let industryPartner of industryPartners; let i = index" [ngStyle]="{'animation-delay': (i * 0.1) + 's'} ">
+            <div class="status" 
+            [class.pending]="industryPartner.status == 2"
+            [class.approved]="industryPartner.status == 3"
+            >
+                <h3>{{ industryPartner.status_text  }}</h3>
+            </div>
+
           <img [src]="(industryPartner.image) ? industryPartner.image : '/assets/images/LOGO.png'" alt="logo image" class="card-image">
           <h2>{{ industryPartner.company_name }}</h2>
           <p>{{ industryPartner.municipality }}</p>
   
-            <div class="action-buttons">
+            <div class="action-buttons" *ngIf="industryPartners.status == 2">
                 <!-- <button class="delete" 
                       mat-raised-button
                       matTooltip="Delete"

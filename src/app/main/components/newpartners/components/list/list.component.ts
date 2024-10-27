@@ -14,7 +14,7 @@ export class ListComponent {
   unfilteredIndustryPartners: any = []
   industryPartners: any = []
 
-  statusFilter: any = '2'
+  statusFilter: any = ''
 
   constructor(
     private ds: DataService, 
@@ -32,7 +32,21 @@ export class ListComponent {
     this.ds.get('superadmin/request/industryPartners').subscribe(
       response => {
         console.log(response)
-        this.unfilteredIndustryPartners = response
+        let partners = response.filter(
+          (data: any) => data.status == 2 || data.status == 3
+        )
+        
+        this.unfilteredIndustryPartners = partners.map((element: any) => {
+          if(element.status == 2) {
+            element.status_text = 'For Approval'
+          }
+          else if(element.status == 3) {
+            element.status_text = 'Approved'
+          }
+
+          return element
+          
+        });
         this.applyFilter()
       },
       error => {
@@ -81,8 +95,14 @@ export class ListComponent {
   applyFilter() {
     console.log('filtering')
 
-    this.industryPartners = this.unfilteredIndustryPartners.filter(
-      (data: any) => data.status == this.statusFilter
-    )
+    let industryPartner = this.unfilteredIndustryPartners
+
+    if(this.statusFilter) {
+      industryPartner = industryPartner.filter(
+        (data: any) => data.status == this.statusFilter
+      )
+    }
+
+    this.industryPartners = industryPartner
   }
 }

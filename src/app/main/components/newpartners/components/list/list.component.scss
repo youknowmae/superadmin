@@ -126,6 +126,34 @@
     }
   
   /* CARD CONTENTS */
+  .status {
+    width: 200px;
+    height: 30px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+
+    //rejected and cancelled
+    &.rejected {
+      background: linear-gradient(179.1deg, rgb(245, 86, 86) 2.3%, rgb(255, 21, 21) 98.3%);
+    }
+
+    //accepted and pending
+    &.pending {
+      background: #e4c659; //#F4D35E - lighter alternative
+    }
+
+    //monitoring
+    &.approved {
+      background: linear-gradient(179.1deg, rgb(43, 170, 96) 2.3%, rgb(129, 204, 104) 98.3%);
+    }
+    h3 {
+      padding: 0;
+      text-align: center;
+      color: var(--primary-font-color);
+      width: 100%;
+    }
+  }
+
   .card-image {
       width: 100%; /* or any specific width */
       height: 200px; /* or any specific height */
