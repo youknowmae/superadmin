@@ -136,6 +136,7 @@ export class ListComponent {
       result => {
         console.log(result)
         this.industryPartners = this.industryPartners.filter((announcement: any) => announcement.id !== id);
+        this.filteredIndustryPartners = this.filteredIndustryPartners.filter((announcement: any) => announcement.id !== id);
         this.gs.successToastAlert('Successfully removed')
       },
       error => {
