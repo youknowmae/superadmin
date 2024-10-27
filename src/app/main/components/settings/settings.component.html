@@ -8,19 +8,6 @@
     
         <div class="ojt-hours">
             <form [formGroup]="ojtDurationFormDetails" *ngIf="duration.length > 0">
-                <!-- <div class="practicum">
-                    <p>ITP311</p>
-        
-                    <div class="hrs">
-                        <div class="col-md-6">
-                            <mat-form-field appearance="outline" floatLabel="always">
-                                <mat-label>Practicum Hours</mat-label>
-                                <input matInput type="number" formControlName="ITP131" placeholder="Duration">
-                            </mat-form-field>
-                        </div>
-                    </div>
-                </div> -->
-        
                 <div formArrayName="duration">
                     <ng-container *ngFor="let durationForm of duration.controls; index as i;">
                         <div class="practicum" [formGroupName]="i">
