@@ -23,6 +23,7 @@ export class SettingsComponent {
       duration: this.fb.array([]),
     })
   }
+  
   get duration() {
     return this.ojtDurationFormDetails.controls["duration"] as FormArray;
   }

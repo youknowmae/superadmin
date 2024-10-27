@@ -2,45 +2,51 @@
     <h1>Settings</h1>
 </div>
 
-<div class="container">
-    <h3>Practicum Hours</h3>
-
-    <div class="content">
-        <form [formGroup]="ojtDurationFormDetails" *ngIf="duration.length > 0">
-            <!-- <div class="practicum">
-                <p>ITP311</p>
+<div class="card-container">
+    <div class="card">
+        <h3>Practicum Hours</h3>
     
-                <div class="hrs">
-                    <div class="col-md-6">
-                        <mat-form-field appearance="outline" floatLabel="always">
-                            <mat-label>Practicum Hours</mat-label>
-                            <input matInput type="number" formControlName="ITP131" placeholder="Duration">
-                        </mat-form-field>
+        <div class="ojt-hours">
+            <form [formGroup]="ojtDurationFormDetails" *ngIf="duration.length > 0">
+                <!-- <div class="practicum">
+                    <p>ITP311</p>
+        
+                    <div class="hrs">
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline" floatLabel="always">
+                                <mat-label>Practicum Hours</mat-label>
+                                <input matInput type="number" formControlName="ITP131" placeholder="Duration">
+                            </mat-form-field>
+                        </div>
                     </div>
-                </div>
-            </div> -->
-    
-            <div formArrayName="duration">
-                <ng-container *ngFor="let durationForm of duration.controls; index as i;">
-                    <div class="practicum" [formGroupName]="i">
-                        <p> {{ duration.at(i).get('course_code')?.value }} </p>
-            
-                        <div class="hrs">
-                            <div class="col-md-6">
+                </div> -->
+        
+                <div formArrayName="duration">
+                    <ng-container *ngFor="let durationForm of duration.controls; index as i;">
+                        <div class="practicum" [formGroupName]="i">
+                            <h4> {{ duration.at(i).get('course_code')?.value }} </h4>
+                
+                            <div class="input">
                                 <mat-form-field appearance="outline" floatLabel="always">
                                     <mat-label>Practicum Hours</mat-label>
                                     <input matInput type="number" formControlName="required_hours" placeholder="Duration">
                                 </mat-form-field>
                             </div>
                         </div>
-                    </div>
-                </ng-container>  
-            </div>
-            
-            <div class="btn">
-                <button type="button" [disabled]="ojtDurationFormDetails.invalid" (click)="savePracticumHours()">Save</button>
-            </div>
-        </form>
+                    </ng-container>  
+                </div>
+                
+                <div class="btn">
+                    <button type="button" [disabled]="ojtDurationFormDetails.invalid" (click)="savePracticumHours()">Save</button>
+                </div>
+            </form>
+        </div>
+    
+    </div>
+
+    <!-- invisible control ye? -->
+    <div style="width: 50%;">
+        
     </div>
 
 </div>

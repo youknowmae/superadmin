@@ -15,10 +15,19 @@ h1 {
     margin-bottom: 15px;
 }
 
-.container {
+.card-container {
+    padding: 10px 20px;
+    display: flex;
+    flex-wrap: wrap;
+
+}
+.card {
     display: flex;
     flex-direction: column;
     border: 2px solid var(--primary-color);
+    flex: 1;
+    min-width: 400px;
+    margin: 15px;
     border-radius: 2rem;
     background-color: white;
     width: 50%;
@@ -30,22 +39,7 @@ h1 {
         color: var(--primary-color);
     }
 
-    .content {
-        padding: 0 0 0 20px ;
-        
-        .practicum {
-            // padding-bottom: 20px;
-
-            p {
-                font-size: 16px;
-                color: var(--main-orange);
-            }
     
-            .hrs {
-                padding: 5px 15px;
-            }
-        }
-    }
 
     .btn {
         display: flex;
@@ -65,6 +59,25 @@ h1 {
         button:hover {
             background-color: white;
             color: var(--secondary-color);
+        }
+    }
+}
+
+.ojt-hours {
+    padding: 0 0 0 20px ;
+    
+    .practicum {
+        // padding-bottom: 20px;
+
+        h4 {
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--main-orange);
+        }
+
+        .input {
+            padding: 5px 15px;
+            width: 250px;
         }
     }
 }
