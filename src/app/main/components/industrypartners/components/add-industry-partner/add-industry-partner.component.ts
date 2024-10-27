@@ -135,16 +135,13 @@ export class AddIndustryPartnerComponent {
     var payload = new FormData();
     
     Object.entries(this.formDetails.value).forEach(([key, value]) => {
-      // Check if the value is an object and not null
       if (value && typeof value === 'object' && !Array.isArray(value)) {
-        // Spread the properties of the object into the payload
         Object.entries(value).forEach(([subKey, subValue]) => {
           if (subValue) {
-            payload.append(`${key}[${subKey}]`, subValue); // Append with key structure
+            payload.append(`${key}[${subKey}]`, subValue);
           }
         });
       } else if (value) {
-        // If it's a simple value (not an object), append it directly
         payload.append(key, String(value));
       }
       else {

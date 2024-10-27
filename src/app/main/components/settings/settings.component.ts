@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { DataService } from '../../../services/data.service';
 import { UserService } from '../../../services/user.service';
 import Swal from 'sweetalert2';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GeneralService } from '../../../services/general.service';
 
 @Component({
@@ -20,9 +20,11 @@ export class SettingsComponent {
     private gs: GeneralService
   ) {
     this.ojtDurationFormDetails = this.fb.group({
-      ITP131: [null,[Validators.required, Validators.pattern("^[0-9]*$"),]],
-      ITP422: [null, [Validators.required, Validators.pattern("^[0-9]*$"),]]
+      duration: this.fb.array([]),
     })
+  }
+  get duration() {
+    return this.ojtDurationFormDetails.controls["duration"] as FormArray;
   }
 
   ngOnInit() {
@@ -34,9 +36,12 @@ export class SettingsComponent {
       response => {
         console.log(response)
         response.forEach((element: any) => {
-          this.ojtDurationFormDetails.patchValue({
-            [element.course_code]: element.required_hours
+          const settingForm: FormGroup = this.fb.group({
+            course_code: [element.course_code,[Validators.required]],
+            required_hours: [element.required_hours,[Validators.required, Validators.pattern("^[0-9]*$"),]],
           })
+          
+          this.duration.push(settingForm)
         });
       },
       error => {

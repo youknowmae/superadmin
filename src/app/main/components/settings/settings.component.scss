@@ -31,7 +31,7 @@ h1 {
     }
 
     .content {
-        margin: 20px;
+        padding: 0 0 0 20px ;
         
         .practicum {
             // padding-bottom: 20px;
@@ -50,7 +50,7 @@ h1 {
     .btn {
         display: flex;
         justify-content: end;
-        padding: 15px;
+        padding: 15px 0;
 
         button {
             cursor: pointer;
