@@ -13,30 +13,54 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
     padding-bottom: 10px;
 
-    i {
-        font-size: 200px;
-        padding-right: 20px;
+    .info-image {
+      display: flex;
+      justify-content: center ;
+      flex: 1;
+      flex-basis: 20%;
+
+      i {
+          font-size: 190px;
+          padding: 10px;
+      }
     }
 
     .info-content {
-        display: flex;
+        flex: 1;
+        flex-basis: 70%;
+        padding: 10px;
+        overflow-x: auto;
+        
+        table {
+          width: 100%;
+          border: 1px solid rgba(0, 0, 0, .12);
+          border-width: 1px;
+          border-collapse: collapse;
 
-        p {
-            border: 2px solid black;
-            width: 300px;
-            padding-left: 10px;
-            margin-bottom: 0;
-            height: 30px;
-            align-items: center;
-            display: flex;
-        }
+          p {
+            padding: 8px;
+            margin: 0;
+          }
+          
+          td:first-child {
+            border-right: 1px solid rgba(0, 0, 0, .12);
+            font-weight: 500;
+          }
 
-        .left-table {
-            p {
-                border-right: none;
-            }
+          tr td:first-child {
+            width: 25%;
+          }
+
+          tr td:nth-child(2) {
+            width: 75%;
+          }
+
+          tr:not(:last-child) td {
+            border-bottom: 1px solid rgba(0, 0, 0, .12);
+          }
         }
     }
 }
@@ -49,13 +73,9 @@
     mat-label {
         font-size: 14px;
     }
+
     input {
-    //     border: 2px solid black;
-    //     height: 35px;
-    //     width: 202px;
-    //     border-radius: 10px;
         font-size: 14px;
-        // padding: 0 10px 0 10px;
     }
 
 
@@ -85,14 +105,14 @@
   padding: 5px 10px;
 
   .table {
-    border: 1px solid black;
+    border: 1px solid var(--primary-color);
     display: flex;
     flex-direction: column;
   
     .table-row {
       min-height: 40px;
       display: flex;
-      border-bottom: 1px solid black;
+      border-bottom: 1px solid rgba(0, 0, 0, .12);
     }
     
     .table-row:last-child {

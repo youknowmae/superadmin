@@ -1,22 +1,34 @@
 <div class="container">
   <div class="info-header">
-      <i class="fa-regular fa-circle-user"></i>
+      <div class="info-image">
+        <i class="fa-regular fa-circle-user"></i>
+      </div>
   
       <div class="info-content">
-          <div class="left-table">
-              <p>Student Number</p>
-              <p>Full Name</p>
-              <p>College/Program</p>
-              <p>Domain Email</p>
-              <p>Mobile Number</p>
-          </div>
-          <div class="right-table">
-              <p>{{ student.student_profile.student_number }}</p>
-              <p>{{ student.first_name }} {{ student.middle_name }} {{ student.last_name }} {{ student.ext_name }}</p>
-              <p>CCS/{{ student.student_profile.program }}</p>
-              <p>{{ student.student_profile.student_number }}&#64;gordoncollege.edu.ph</p>
-              <p>{{ student.student_profile.contact_number }}</p>
-          </div>
+        <table>
+          <tbody>
+            <tr>
+              <td><p>Student Number</p></td>
+              <td><p>{{ student.student_profile.student_number }}</p></td>
+            </tr>
+            <tr>
+              <td><p>Full Name</p></td>
+              <td><p>{{ student.first_name }} {{ student.middle_name }} {{ student.last_name }} {{ student.ext_name }}</p></td>
+            </tr>
+            <tr>
+              <td><p>College/Program</p></td>
+              <td><p>CCS/{{ student.student_profile.program }}</p></td>
+            </tr>
+            <tr>
+              <td><p>Domain Email</p></td>
+              <td><p>{{ student.student_profile.student_number }}&#64;gordoncollege.edu.ph</p></td>
+            </tr>
+            <tr>
+              <td><p>Mobile Number</p></td>
+              <td><p>{{ student.student_profile.contact_number }}</p></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
   </div>
   
