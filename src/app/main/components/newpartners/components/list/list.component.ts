@@ -15,6 +15,7 @@ export class ListComponent {
   industryPartners: any = []
 
   statusFilter: any = ''
+  searchFilter: string = ''
 
   constructor(
     private ds: DataService, 
@@ -92,6 +93,11 @@ export class ListComponent {
     this.applyFilter()
   }
 
+  search(search: string) {
+    this.searchFilter = search.trim().toLowerCase()
+    this.applyFilter()
+  }
+
   applyFilter() {
     console.log('filtering')
 
@@ -101,6 +107,13 @@ export class ListComponent {
       industryPartner = industryPartner.filter(
         (data: any) => data.status == this.statusFilter
       )
+    }
+
+    if(this.searchFilter) {
+      industryPartner = industryPartner.filter((element: any) => {
+        return element.company_name.includes(this.searchFilter) ||
+          element.municipality.includes(this.searchFilter)
+      })
     }
 
     this.industryPartners = industryPartner

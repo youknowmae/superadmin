@@ -41,10 +41,32 @@ export class ListComponent {
     private us: UserService
   ) {
     this.paginator = new MatPaginator(this.paginatorIntl, this.changeDetectorRef);
+
+    const nameFilterPredicate = (data: any, search: string): boolean => {
+      return data.full_name.toLowerCase().includes(search);
+    } 
+    
+    const emailFilterPredicate = (data: any, search: string): boolean => {
+      // return data.student_profile.student_number.toLowerCase().includes(search);
+      return data.email.toLowerCase().includes(search);
+    } 
+
+    const filterPredicate = (data: any, search: string): boolean => {
+      return (
+        nameFilterPredicate(data, search) ||
+        emailFilterPredicate(data, search)
+      );
+    };
+
+    this.dataSource.filterPredicate = filterPredicate
   }
 
   ngOnInit() {
     this.getStudents()
+  }
+
+  search(search: string) {
+    this.dataSource.filter = search.trim().toLowerCase()
   }
 
   getStudents() {

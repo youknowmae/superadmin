@@ -8,6 +8,12 @@
         </div>
         <div class="right">
             <div class="select-filter">
+                <mat-form-field floatLabel="always">
+                    <mat-label>Search</mat-label>
+                    <input #searchInput (input)="search(searchInput.value)" matInput placeholder="Aa" />
+                </mat-form-field>
+            </div>
+            <div class="select-filter">
                 <mat-form-field>
                     <mat-label>Status Filter</mat-label>
                     <mat-select disableRipple (selectionChange)="onStatusFilterChange($event)" [(ngModel)]="statusFilter">
