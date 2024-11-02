@@ -11,6 +11,7 @@
     <form>
         <mat-form-field>
             <input #searchValue matInput type="email" (keyup)="search(searchValue.value)" placeholder="Search...">
+            <mat-icon *ngIf="searchValue.value" matIconSuffix (click)="searchValue.value = ''"> close</mat-icon>
         </mat-form-field>
     </form>
   </div>

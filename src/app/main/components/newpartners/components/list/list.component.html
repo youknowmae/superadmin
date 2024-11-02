@@ -11,6 +11,7 @@
                 <mat-form-field floatLabel="always">
                     <mat-label>Search</mat-label>
                     <input #searchInput (input)="search(searchInput.value)" matInput placeholder="Aa" />
+                    <mat-icon *ngIf="searchInput.value" matIconSuffix (click)="searchInput.value = ''"> close</mat-icon>
                 </mat-form-field>
             </div>
             <div class="select-filter">

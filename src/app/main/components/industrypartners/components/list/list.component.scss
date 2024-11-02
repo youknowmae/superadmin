@@ -244,6 +244,10 @@
   transition: all .2s ease-in-out;
 }
 
+mat-icon {
+  cursor: pointer;
+} 
+
 @media only screen and (min-width: 1900px) {
   .card-container {
     grid-template-columns: repeat(4, minmax(20%, 1fr));
