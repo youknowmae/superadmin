@@ -26,7 +26,10 @@ h3 {
 table {
     width: 100%;
     border: 1px solid var(--primary-color);
-    border-collapse: collapse;
+    background: white;
+    border-spacing: 0;
+    border-radius: 30px;
+    overflow: hidden;
 
     thead {
         color: var(--primary-color);
@@ -53,10 +56,6 @@ table {
 
     tr:not(:last-child):hover {
         background-color: rgba(137, 129, 33, .2);
-    }
-
-    tr:last-child td {
-        border-color: var(--primary-color);
     }
 }
 
