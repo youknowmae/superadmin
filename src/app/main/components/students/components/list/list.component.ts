@@ -179,10 +179,13 @@ export class ListComponent {
   }
 
   async downloadExcel() {
-    let students = this.unfilteredStudents.filter((student: any) => {
-      return student.active_ojt_class.class_code === this.classFilter
-    });
+    let students = this.unfilteredStudents
 
+    if(this.classFilter != 'all') {
+      students = students.filter((student: any) => {
+        return student.active_ojt_class.class_code === this.classFilter
+      });
+    }
     //group by class code
     students = this.groupBy(students, (student: any) => student.active_ojt_class.class_code)
     console.log(students)

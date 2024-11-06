@@ -42,13 +42,13 @@ export class EditIndustryPartnerComponent {
       region: ["III", [Validators.required, Validators.maxLength(32)]],
       province: [null, [Validators.required, Validators.maxLength(32)]],
       municipality: [null, [Validators.required, Validators.maxLength(32)]],
-      barangay: [null, [Validators.required, Validators.maxLength(32)]],
-      street: [null, [Validators.required, Validators.maxLength(32)]],
+      barangay: [null, [Validators.maxLength(64)]],
+      street: [null, [Validators.maxLength(128)]],
       // zip_code: [null, [Validators.required, Validators.pattern('[0-9]{4}')]],
   
-      telephone_number: [null, [Validators.pattern('(09)[0-9]{9}')]],
-      mobile_number: [null, [Validators.required, Validators.pattern('(09)[0-9]{9}')]],
-      fax_number: [null, [Validators.pattern('(09)[0-9]{9}')]],
+      telephone_number: [null, [Validators.pattern('^[0-9 ()-]+$')]],
+      mobile_number: [null, [Validators.required, Validators.pattern('^[0-9 ()-]+$')]],
+      fax_number: [null, [Validators.pattern('^[0-9 ()-]+$')]],
       email: [null, [Validators.required, Validators.email]],
       website: [null, [Validators.maxLength(128)]],
   })
