@@ -6,7 +6,7 @@
     <ng-container *ngIf="!isLoading; else loading">
         <div class="buttons">
             <div class="filter-container">
-                <div class="select-filter">
+                <div class="search-container">
                     <mat-form-field floatLabel="always">
                         <mat-label>Search</mat-label>
                         <input #searchInput (input)="search(searchInput.value)" matInput placeholder="Aa" />

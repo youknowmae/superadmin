@@ -102,6 +102,8 @@ export class ListComponent {
   }
 
   applyFilter() {
+    let search = this.searchFilter.toLowerCase()
+
     console.log('filtering')
 
     let industryPartner = this.unfilteredIndustryPartners
@@ -114,8 +116,8 @@ export class ListComponent {
 
     if(this.searchFilter) {
       industryPartner = industryPartner.filter((element: any) => {
-        return element.company_name.includes(this.searchFilter) ||
-          element.municipality.includes(this.searchFilter)
+        return element.company_name.toLowerCase().includes(search) ||
+          element.municipality.toLowerCase().includes(search)
       })
     }
 
