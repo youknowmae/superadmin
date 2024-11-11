@@ -110,12 +110,13 @@ export class ListComponent {
     });
   }
 
+  isFetching: boolean = false
   editIndustryPartner(id: number) {
-    if(this.isLoading === true) {
+    if(this.isFetching === true) {
       return
     }
 
-    this.isLoading = true
+    this.isFetching = true
 
     this.ds.get('superadmin/industryPartners/', id).subscribe(
       (industryPartner: IndustryPartner) => {
@@ -138,10 +139,10 @@ export class ListComponent {
       },
       error => {
         console.error(error);
-        this.isLoading = false
+        this.isFetching = false
       },
       () => {
-        this.isLoading = false
+        this.isFetching = false
       }
     )
   }
