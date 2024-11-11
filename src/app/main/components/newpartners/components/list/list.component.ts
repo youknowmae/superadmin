@@ -13,7 +13,8 @@ import { MatSelectChange } from '@angular/material/select';
 export class ListComponent {
   unfilteredIndustryPartners: any = []
   industryPartners: any = []
-
+  isLoading: boolean = true
+  
   statusFilter: any = ''
   searchFilter: string = ''
 
@@ -49,10 +50,12 @@ export class ListComponent {
           
         });
         this.applyFilter()
+        this.isLoading = false
       },
       error => {
         this.gs.errorAlert('Oops!', 'Something went wrong. Please try again later.')
         console.error(error)
+        this.isLoading = false
       }
     )
   }

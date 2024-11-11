@@ -2,71 +2,89 @@
     <div class="container-header">
         <h1>Partners For Approval</h1>
     </div>
-    <div class="buttons">
-        <div class="filter-container">
-           
+    
+    <ng-container *ngIf="!isLoading; else loading">
+        <div class="buttons">
+            <div class="filter-container">
+                <div class="select-filter">
+                    <mat-form-field floatLabel="always">
+                        <mat-label>Search</mat-label>
+                        <input #searchInput (input)="search(searchInput.value)" matInput placeholder="Aa" />
+                        <mat-icon *ngIf="searchInput.value" matIconSuffix (click)="searchInput.value = ''"> close</mat-icon>
+                    </mat-form-field>
+                </div>
+               
+            </div>
+            <div class="right">
+                <div class="select-filter">
+                    <mat-form-field>
+                        <mat-label>Status Filter</mat-label>
+                        <mat-select disableRipple (selectionChange)="onStatusFilterChange($event)" [(ngModel)]="statusFilter">
+                            <!-- null doesn't work so... yess -->
+                            <mat-option [value]="''"> All</mat-option> 
+                            <mat-option [value]="2"> For Approval</mat-option>
+                            <mat-option [value]="3"> Approved</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
         </div>
-        <div class="right">
-            <div class="select-filter">
-                <mat-form-field floatLabel="always">
-                    <mat-label>Search</mat-label>
-                    <input #searchInput (input)="search(searchInput.value)" matInput placeholder="Aa" />
-                    <mat-icon *ngIf="searchInput.value" matIconSuffix (click)="searchInput.value = ''"> close</mat-icon>
-                </mat-form-field>
-            </div>
-            <div class="select-filter">
-                <mat-form-field>
-                    <mat-label>Status Filter</mat-label>
-                    <mat-select disableRipple (selectionChange)="onStatusFilterChange($event)" [(ngModel)]="statusFilter">
-                        <!-- null doesn't work so... yess -->
-                        <mat-option [value]="''"> All</mat-option> 
-                        <mat-option [value]="2"> For Approval</mat-option>
-                        <mat-option [value]="3"> Approved</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-        </div>
-    </div>
-  
-    <div class="card-container">
-        <div class="card" *ngFor="let industryPartner of industryPartners; let i = index" [ngStyle]="{'animation-delay': (i * 0.1) + 's'} ">
-            <div class="status" 
-            [class.pending]="industryPartner.status == 2"
-            [class.approved]="industryPartner.status == 3"
-            >
-                <h3>{{ industryPartner.status_text  }}</h3>
-            </div>
-
-          <img [src]="(industryPartner.image) ? industryPartner.image : '/assets/images/LOGO.png'" alt="logo image" class="card-image">
-          <h2>{{ industryPartner.company_name }}</h2>
-          <p>{{ industryPartner.municipality }}</p>
-  
-            <div class="action-buttons" *ngIf="industryPartner.status == 2">
-                <!-- <button class="delete" 
+      
+        <div class="card-container" *ngIf="industryPartners.length > 0; else noItems">
+            <div class="card" *ngFor="let industryPartner of industryPartners; let i = index" [ngStyle]="{'animation-delay': (i * 0.1) + 's'} ">
+                <div class="status" 
+                [class.pending]="industryPartner.status == 2"
+                [class.approved]="industryPartner.status == 3"
+                >
+                    <h3>{{ industryPartner.status_text  }}</h3>
+                </div>
+    
+              <img [src]="(industryPartner.image) ? industryPartner.image : '/assets/images/LOGO.png'" alt="logo image" class="card-image">
+              <h2>{{ industryPartner.company_name }}</h2>
+              <div class="location"> 
+                <mat-icon>location_on</mat-icon>
+                <p>{{ industryPartner.municipality }}<span *ngIf="industryPartner.province">, {{ industryPartner.province }}</span></p>
+              </div>
+      
+                <div class="action-buttons" *ngIf="industryPartner.status == 2">
+                    <!-- <button class="delete" 
+                          mat-raised-button
+                          matTooltip="Delete"
+                          [matTooltipShowDelay] = "400" 
+                          (click)="deleteConfirmation(industryPartner.id)">
+                          <i class='bx bxs-trash'></i>
+                      </button>
+      
+                      <button class="edit" 
                       mat-raised-button
-                      matTooltip="Delete"
-                      [matTooltipShowDelay] = "400" 
-                      (click)="deleteConfirmation(industryPartner.id)">
-                      <i class='bx bxs-trash'></i>
-                  </button>
-  
-                  <button class="edit" 
-                  mat-raised-button
-                  matTooltip="Edit"
-                  [matTooltipShowDelay] = "400"
-                  (click)="editIndustryPartner(industryPartner.id)">
-                      <i class='bx bxs-edit'></i>
-                  </button> -->
-  
-                  <button class="view" 
-                  mat-raised-button
-                  matTooltip="View"
-                  [matTooltipShowDelay] = "400"
-                  (click)="viewRequestDetails(industryPartner.id)">
-                      <i class='bx bx-detail' ></i>
-                  </button>
+                      matTooltip="Edit"
+                      [matTooltipShowDelay] = "400"
+                      (click)="editIndustryPartner(industryPartner.id)">
+                          <i class='bx bxs-edit'></i>
+                      </button> -->
+      
+                      <button class="view" 
+                      mat-raised-button
+                      matTooltip="View"
+                      [matTooltipShowDelay] = "400"
+                      (click)="viewRequestDetails(industryPartner.id)">
+                          <i class='bx bx-detail' ></i>
+                      </button>
+                </div>
             </div>
         </div>
-    </div>
+    </ng-container>
   </main>
+
+<ng-template #loading>
+    <div class="loading">
+        <mat-spinner></mat-spinner>
+    </div>
+</ng-template>
+
+<ng-template #noItems>
+    <div class="no-items-container">
+        <p>Sorry, no request found</p>
+    </div>
+</ng-template>
   

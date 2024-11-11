@@ -1,5 +1,6 @@
 import Swal from "sweetalert2";
 import { Injectable } from "@angular/core";
+import { pagination } from "../model/pagination.model";
 
 @Injectable({
   providedIn: 'root'
@@ -81,5 +82,19 @@ export class GeneralService {
         });
     }
 
+    getPaginationDetails(materials: any, currentPage: number, perPage: number = 24) {
+      var pagination: pagination = <pagination>{}
+  
+      pagination.current_page = currentPage
+  
+      pagination.total = materials.length
+      pagination.from = (currentPage - 1) * perPage;
+      pagination.to = ((pagination.from + perPage) > pagination.total) ? pagination.total : pagination.from + perPage;
+      pagination.last_page = Math.ceil(pagination.total / perPage)
+  
+      pagination.per_page = perPage
+  
+      return pagination
+    }
     
 }

@@ -7,47 +7,85 @@
       </div>
   </div>
 
-  <div class="search">
-    <form>
-        <mat-form-field>
-            <input #searchValue matInput type="email" (keyup)="search(searchValue.value)" placeholder="Search...">
-            <mat-icon *ngIf="searchValue.value" matIconSuffix (click)="searchValue.value = ''"> close</mat-icon>
-        </mat-form-field>
-    </form>
-  </div>
-
-  <div class="card-container">
-      <div class="card" *ngFor="let industryPartner of filteredIndustryPartners; let i = index" [ngStyle]="{'animation-delay': (i * 0.1) + 's'} ">
-        <img [src]="(industryPartner.image) ? industryPartner.image : '/assets/images/LOGO.png'" alt="logo image" class="card-image">
-        <h2>{{ industryPartner.company_name }}</h2>
-        <p>{{ industryPartner.municipality }}</p>
-
-          <div class="action-buttons">
-              <button class="delete" 
-                    mat-raised-button
-                    matTooltip="Delete"
-                    [matTooltipShowDelay] = "400" 
-                    (click)="deleteConfirmation(industryPartner.id)">
-                    <i class='bx bxs-trash'></i>
-                </button>
-
-                <button class="edit" 
-                mat-raised-button
-                matTooltip="Edit"
-                [matTooltipShowDelay] = "400"
-                (click)="editIndustryPartner(industryPartner.id)">
-                    <i class='bx bxs-edit'></i>
-                </button>
-
-                <button class="view" 
-                mat-raised-button
-                matTooltip="View"
-                [matTooltipShowDelay] = "400"
-                (click)="getIndustryPartner(industryPartner.id)" 
-                routerLinkActive="router-link-active" >
-                    <i class='bx bx-detail' ></i>
-                </button>
+  <ng-container *ngIf="!isLoading; else loading">
+    <div class="search">
+      <form>
+          <mat-form-field>
+              <input #searchValue matInput type="email" (keyup)="search(searchValue.value)" placeholder="Search...">
+              <mat-icon *ngIf="searchValue.value" matIconSuffix (click)="searchValue.value = ''"> close</mat-icon>
+          </mat-form-field>
+      </form>
+    </div>
+  
+    <div class="card-container" *ngIf="filteredIndustryPartners.length > 0; else noItems">
+        <div class="card" *ngFor="let industryPartner of filteredIndustryPartners; let i = index" [ngStyle]="{'animation-delay': (i * 0.1) + 's'} ">
+          <img [src]="(industryPartner.image) ? industryPartner.image : '/assets/images/LOGO.png'" alt="logo image" class="card-image">
+          <h2>{{ industryPartner.company_name }}</h2>
+          <div class="location"> 
+              <mat-icon>location_on</mat-icon>
+              <p>{{ industryPartner.municipality }}<span *ngIf="industryPartner.province">, {{ industryPartner.province }}</span></p>
           </div>
-      </div>
-  </div>
+  
+            <div class="action-buttons">
+                <button class="delete" 
+                      mat-raised-button
+                      matTooltip="Delete"
+                      [matTooltipShowDelay] = "400" 
+                      (click)="deleteConfirmation(industryPartner.id)">
+                      <i class='bx bxs-trash'></i>
+                  </button>
+  
+                  <button class="edit" 
+                  mat-raised-button
+                  matTooltip="Edit"
+                  [matTooltipShowDelay] = "400"
+                  (click)="editIndustryPartner(industryPartner.id)">
+                      <i class='bx bxs-edit'></i>
+                  </button>
+  
+                  <button class="view" 
+                  mat-raised-button
+                  matTooltip="View"
+                  [matTooltipShowDelay] = "400"
+                  (click)="getIndustryPartner(industryPartner.id)" 
+                  routerLinkActive="router-link-active" >
+                      <i class='bx bx-detail' ></i>
+                  </button>
+            </div>
+        </div>
+        <div class="pagination-container">
+          <div class="pagination">
+            <div>
+                <p> {{ pagination.from}} - {{ pagination.to }} of {{ pagination.total }} </p>
+            </div>
+            <div class="icons">
+              <button (click)="jumpPage(1)" [disabled]="pagination.current_page === 1">
+                  <img src="assets/images/chevron-bar-left.svg" >
+              </button>
+              <button (click)="changePage(-1)" [disabled]="pagination.current_page === 1">
+                  <img src="assets/images/chevron-left.svg" >
+              </button>
+              <button (click)="changePage(1)"[disabled]="pagination.current_page === pagination.last_page">
+                  <img src="assets/images/chevron-right.svg">
+              </button>
+              <button (click)="jumpPage(pagination.last_page)" [disabled]="pagination.current_page === pagination.last_page">
+                  <img src="assets/images/chevron-bar-right.svg">
+              </button>
+            </div>
+          </div>
+        </div> 
+    </div>
+  </ng-container>
 </main>
+
+<ng-template #loading>
+    <div class="loading">
+        <mat-spinner></mat-spinner>
+    </div>
+</ng-template>
+
+<ng-template #noItems>
+<div class="no-items-container">
+    <p>Sorry, no data found</p>
+</div>
+</ng-template>

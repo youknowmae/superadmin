@@ -11,8 +11,7 @@ import { MatOptionModule } from "@angular/material/core";
 import { MatIconModule } from '@angular/material/icon'
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatStepperModule } from '@angular/material/stepper';
-
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const var_modules = [
     MatFormFieldModule,
@@ -28,6 +27,7 @@ const var_modules = [
     MatIconModule,
     MatDatepickerModule,
     MatStepperModule,
+    MatProgressSpinnerModule
 ]
 
 @NgModule({

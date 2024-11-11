@@ -117,7 +117,16 @@
   
       animation: fade-in 1s forwards; 
       opacity: 0;         
-      will-change: opacity;  
+      will-change: opacity; 
+      
+      .location {
+        mat-icon {
+          font-size: 18px;
+        }
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+      }
     }
   
     .card:hover{
@@ -221,48 +230,23 @@
       color: var(--warning-color) !important;
     }
   
-    .loading-animation {
-      /* Set the container to position:relative for absolute positioning of loading animation */
-      position: relative;
-    }
-  
-  @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-  }
-  
-  .loading-animation:before {
-      /* Create a circular loading animation */
-      content: '';
-      box-sizing: border-box;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 200px;
-      height: 200px;
-      margin-top: 200px;
-      margin-left: -200px;
-      border-radius: 50%;
-      border: 10px solid #ccc;
-      border-top-color: #31A463;
-      animation: spin 1s linear infinite;
-  }
-  
-  .no-items-container {
-    text-align: center;
-    margin-top: 200px;
-    margin-right: 200px;
-  }
-  
-  .no-items-container img {
-    max-width: 200px;
-    margin-bottom: 20px;
-  }
-  
-  .no-items-container p {
+.loading {
+  width: 100%;
+  height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.no-items-container {
+  padding: 20px;
+  animation: forwards fade-in .2s;
+
+  p {
     font-size: 18px;
     color: #666;
   }
+}
   
   
   .pagination-container {

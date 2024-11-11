@@ -7,7 +7,9 @@ import { Router } from '@angular/router';
 import { EditIndustryPartnerComponent } from '../edit-industry-partner/edit-industry-partner.component';
 import { AddIndustryPartnerComponent } from '../add-industry-partner/add-industry-partner.component';
 import { MatDialog } from '@angular/material/dialog';
+import { pagination } from '../../../../../model/pagination.model';
 import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-list-industry-partners',
   templateUrl: './list.component.html',
@@ -16,9 +18,12 @@ import Swal from 'sweetalert2';
 export class ListComponent {
   filteredIndustryPartners: IndustryPartner[] = []
   industryPartners: IndustryPartner[] = []
-  isLoading: boolean = false
+  isLoading: boolean = true
   isGettingPartner: boolean = false
 
+  searchValue: string = ''
+
+  pagination: pagination = <pagination>{};
 
 
   constructor(
@@ -28,7 +33,14 @@ export class ListComponent {
     private router: Router,
     private dialogRef: MatDialog
   ) {
-
+    this.pagination = {
+      current_page: 1,
+      from: 0,
+      to: 0,
+      total: 0,
+      per_page: 15,
+      last_page: 0,
+    }
   }
 
   ngOnInit() {
@@ -39,11 +51,14 @@ export class ListComponent {
     this.ds.get('superadmin/industryPartners').subscribe(
       industryPartners => {
         this.industryPartners = industryPartners
-        this.filteredIndustryPartners = industryPartners
         console.log(industryPartners)
+
+        this.filterIndustryPartners()
+        this.isLoading = false
       },
       error => {
         console.error(error)
+        this.isLoading = false
       }
     )
   }
@@ -170,11 +185,52 @@ export class ListComponent {
 
   search(value: string) {
     value = value.toLowerCase()
-    this.filteredIndustryPartners = this.industryPartners.filter(
-      (item: IndustryPartner) => {
-        return item.company_name.toLowerCase().includes(value) ||
-          item.municipality.toLowerCase().includes(value)
-      }
-    )
+    this.searchValue = value
+    this.pagination.current_page = 1
+
+    this.filterIndustryPartners()
+    // this.filteredIndustryPartners = this.industryPartners.filter(
+    //   (item: IndustryPartner) => {
+    //     return item.company_name.toLowerCase().includes(value) ||
+    //       item.municipality.toLowerCase().includes(value)
+    //   }
+    // )
+  }
+
+  filterIndustryPartners() {
+    let search = this.searchValue.toLowerCase()
+
+    var data = this.industryPartners
+    if(search) {
+      data = data.filter(
+        (item: IndustryPartner) => {
+          return item.company_name.toLowerCase().includes(search) ||
+            item.municipality.toLowerCase().includes(search) 
+        }
+      )
+    }
+
+    this.pagination = this.gs.getPaginationDetails(data, this.pagination.current_page, this.pagination.per_page)
+
+    data = data.slice(this.pagination.from, this.pagination.to);
+    this.pagination.from++
+    
+
+    this.filteredIndustryPartners = data
+  }
+
+  changePage(page: number) {
+    const destination_page = this.pagination.current_page + page
+    if(destination_page < 1 || destination_page > this.pagination.last_page) {
+      return
+    }
+    
+    this.pagination.current_page += page
+    this.filterIndustryPartners()
+  }
+
+  jumpPage(page: number){
+    this.pagination.current_page = page
+    this.filterIndustryPartners()
   }
 }
