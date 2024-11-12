@@ -23,12 +23,20 @@
                 <img src="assets/images/circle.png">
             </div>
             <div class="login-content">
+                <img src="assets/images/LOGO.png" alt="Logo">
+                
                 <h1>Welcome Admin</h1>
 
-                <form  (submit)="login()" [formGroup]="loginForm" ngNativeValidate autocomplete="on">
+                <form (submit)="login()" [formGroup]="loginForm" ngNativeValidate autocomplete="on">
                     <div class="input">
-                        <input type="text" placeholder="Username" formControlName="email">
-                        <input type="password" placeholder="Password" formControlName="password">
+                        <div class="input-container">
+                            <mat-icon matPrefix>account_circle</mat-icon>
+                            <input type="text" placeholder="Username" formControlName="email" required>
+                        </div>
+                        <div class="input-container">
+                            <mat-icon matPrefix>lock</mat-icon>
+                            <input type="password" placeholder="Password" formControlName="password" required>
+                        </div>
                     </div>
 
                     <div class="btn">

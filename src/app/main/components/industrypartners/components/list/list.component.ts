@@ -125,15 +125,15 @@ export class ListComponent {
           disableClose: true
         })
         
-        modal.afterClosed().subscribe((result) => {
+        modal.afterClosed().subscribe((result: any) => {
           console.log(result)
 
           if (!result) {
             return
           }
           
-          this.industryPartners = this.industryPartners.map((announcement: any) =>
-            announcement.id === result.id ? result : announcement
+          this.filteredIndustryPartners = this.industryPartners.map((data: any) =>
+            data.id === result.id ? result : data
           );
         });
       },
