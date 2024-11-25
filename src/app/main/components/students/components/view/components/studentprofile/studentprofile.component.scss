@@ -22,9 +22,12 @@
       flex: 1;
       flex-basis: 20%;
 
-      i {
-          font-size: 190px;
-          padding: 10px;
+      img {
+        border: 6px solid var(--secondary-color);
+        margin: 0 10px;
+        object-fit: cover;
+        width: 180px;
+        height: 180px;
       }
     }
 

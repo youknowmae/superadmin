@@ -21,9 +21,17 @@
     flex-direction: column;
     align-items: center;
     color: var(--primary-font-color);
+
+    .logo {
+        border-radius: 50%;
+        overflow: hidden;
+        border: 6px solid var(--secondary-color);
+    }
+
     img {
         height: 130px;
         width: 130px;
+        object-fit: cover;
         display: flex;
         align-items: center;
         background: red($color: #000000);

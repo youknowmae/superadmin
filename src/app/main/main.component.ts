@@ -22,7 +22,7 @@ export class MainComponent {
   ) {}
 
   ngOnInit(): void{
-    // this.getUser()
+    this.getUser()
     this.updateDateTime();
 
   }

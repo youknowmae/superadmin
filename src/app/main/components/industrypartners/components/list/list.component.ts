@@ -190,12 +190,6 @@ export class ListComponent {
     this.pagination.current_page = 1
 
     this.filterIndustryPartners()
-    // this.filteredIndustryPartners = this.industryPartners.filter(
-    //   (item: IndustryPartner) => {
-    //     return item.company_name.toLowerCase().includes(value) ||
-    //       item.municipality.toLowerCase().includes(value)
-    //   }
-    // )
   }
 
   filterIndustryPartners() {
