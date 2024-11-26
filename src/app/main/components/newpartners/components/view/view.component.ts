@@ -5,6 +5,7 @@ import { GeneralService } from '../../../../../services/general.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-view',
@@ -23,7 +24,8 @@ export class ViewComponent {
     private ds: DataService, 
     private gs: GeneralService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private sanitizer: DomSanitizer,
   ) {
     this.accountDetails = this.fb.group({
       email: [null, [Validators.required, Validators.email]],
@@ -85,5 +87,9 @@ export class ViewComponent {
         console.log(error)
       }
     )
+  }
+
+  sanitizeUrl(url: string) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url)
   }
 }
