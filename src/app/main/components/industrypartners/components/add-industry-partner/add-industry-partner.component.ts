@@ -3,6 +3,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataService } from '../../../../../services/data.service';
 import Swal from 'sweetalert2';
+import { GeneralService } from '../../../../../services/general.service';
 
 @Component({
   selector: 'app-add-industry-partner',
@@ -22,7 +23,8 @@ export class AddIndustryPartnerComponent {
   constructor(
     private ref: MatDialogRef<AddIndustryPartnerComponent>,
     private fb: FormBuilder,
-    private ds: DataService
+    private ds: DataService,
+    private gs: GeneralService
   ) {
     this.formDetails = this.fb.group({
       company_name: [null, [Validators.required, Validators.maxLength(64)]],
@@ -60,6 +62,9 @@ export class AddIndustryPartnerComponent {
         fax_number: [null, [Validators.pattern('^[0-9 ()-]+$')]],
         email: [null, [Validators.required, Validators.email]],
         website: [null, [Validators.maxLength(128)]],
+
+        email_2: [null, [Validators.required, Validators.email]],
+        password: [null, [Validators.required, Validators.minLength(8)]],
     })
 
     const today = new Date();
@@ -130,6 +135,11 @@ export class AddIndustryPartnerComponent {
 
   create() {
     var payload = new FormData();
+
+    if(!this.file) {
+      this.gs.errorAlert('Invalid Input!', 'Image is required')
+      return
+    }
     
     Object.entries(this.formDetails.value).forEach(([key, value]) => {
       if (value && typeof value === 'object' && !Array.isArray(value)) {

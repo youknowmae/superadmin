@@ -1,6 +1,6 @@
-<div class="container">
-    <div class="weekly_report"  *ngFor="let report of weekly_attendance; index as i">
-        <h3>Week {{ i + 1 }}</h3>
+<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" *ngIf="weekly_attendance.length > 0; else noItems">
+    <mat-tab class="weekly_report" *ngFor="let report of weekly_attendance; index as i">
+        <ng-template mat-tab-label>Week {{ i + 1 }}</ng-template> 
         <table>
             <thead>
                 <th>Date</th>
@@ -20,5 +20,11 @@
                 </tr>
             </tbody>
         </table>
+    </mat-tab>
+</mat-tab-group>
+
+<ng-template #noItems>
+    <div class="no-items-container">
+        <p>Sorry, no data found</p>
     </div>
-</div>
+</ng-template>

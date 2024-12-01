@@ -107,6 +107,7 @@ export class ListComponent {
       }
       
       this.industryPartners.unshift(result)
+      this.filterIndustryPartners()
     });
   }
 
@@ -132,9 +133,10 @@ export class ListComponent {
             return
           }
           
-          this.filteredIndustryPartners = this.industryPartners.map((data: any) =>
+          this.industryPartners = this.industryPartners.map((data: any) =>
             data.id === result.id ? result : data
           );
+          this.filterIndustryPartners()
         });
       },
       error => {
