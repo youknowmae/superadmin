@@ -19,6 +19,8 @@ export class AddIndustryPartnerComponent {
   
   formDetails: FormGroup 
 
+  isSubmitting: boolean = false
+
   
   constructor(
     private ref: MatDialogRef<AddIndustryPartnerComponent>,
@@ -158,9 +160,16 @@ export class AddIndustryPartnerComponent {
 
     if(this.file)
       payload.append('image', this.file);
+
+    if(this.isSubmitting) {
+      return
+    }
+
+    this.isSubmitting = true
     
     this.ds.post('superadmin/industryPartners', '', payload).subscribe(
       result => {
+        this.isSubmitting = false
         Swal.fire({
           title: "Success!",
           text: result.message,
@@ -170,6 +179,7 @@ export class AddIndustryPartnerComponent {
         
       },
       error => {
+        this.isSubmitting = false
         console.error(error)
         if (error.status == 422) {
           Swal.fire({
@@ -180,7 +190,7 @@ export class AddIndustryPartnerComponent {
         }
         else {
           Swal.fire({
-            title: "error!",
+            title: "Oops!",
             text: "Something went wrong, please try again later.",
             icon: "error",
           });

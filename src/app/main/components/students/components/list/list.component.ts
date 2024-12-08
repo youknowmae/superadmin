@@ -161,6 +161,8 @@ export class ListComponent {
       return
     }
 
+    this.isLoading = true
+
     let studentDetails = this.unfilteredStudents.find((student: any) => student.id == id)
 
     console.log(studentDetails)

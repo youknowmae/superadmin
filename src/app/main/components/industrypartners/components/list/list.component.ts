@@ -20,6 +20,7 @@ export class ListComponent {
   industryPartners: IndustryPartner[] = []
   isLoading: boolean = true
   isGettingPartner: boolean = false
+  isSubmitting: boolean = false
 
   searchValue: string = ''
 
@@ -150,14 +151,22 @@ export class ListComponent {
   }
 
   deleteIndustryPartner(id: number) {
+    if(this.isSubmitting) {
+      return
+    }
+
+    this.isSubmitting = true
+
     this.ds.delete('superadmin/industryPartners/', id).subscribe(
       result => {
+        this.isSubmitting = false
         console.log(result)
         this.industryPartners = this.industryPartners.filter((announcement: any) => announcement.id !== id);
         this.filteredIndustryPartners = this.filteredIndustryPartners.filter((announcement: any) => announcement.id !== id);
         this.gs.successToastAlert('Successfully removed')
       },
       error => {
+        this.isSubmitting = false
         console.error(error)
         Swal.fire({
           title: 'Error!',

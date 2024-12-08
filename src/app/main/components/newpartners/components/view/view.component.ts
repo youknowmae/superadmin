@@ -18,6 +18,7 @@ export class ViewComponent {
   accountDetails: FormGroup
 
   showPassword: boolean = false
+  isSubmitting: boolean = false
 
   constructor(
     private us: UserService,
@@ -71,13 +72,21 @@ export class ViewComponent {
   }
 
   approvePartner() {
+    if(this.isSubmitting) {
+      return
+    }
+
+    this.isSubmitting = true
+
     this.ds.post('superadmin/request/industryPartners/', this.industryPartner.id, this.accountDetails.value).subscribe(
       response => {
+        this.isSubmitting = false
         console.log(response)
         this.gs.successAlert(response.title, response.message)
         this.router.navigate(['main/newpartners/list'])
       },
       error => {
+        this.isSubmitting = false
         if(error.status == 422) {
           this.gs.errorAlert('Invalid Input!', 'Please check your input')
         }

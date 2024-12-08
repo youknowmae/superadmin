@@ -13,6 +13,8 @@ import { GeneralService } from '../../../services/general.service';
 export class SettingsComponent {
   ojtDurationFormDetails: FormGroup
 
+  isSubmitting: boolean = false
+
   constructor(
     private ds: DataService,
     private us: UserService,
@@ -63,12 +65,20 @@ export class SettingsComponent {
       cancelButtonColor: "#777777",
     }).then((result) => {
       if (result.isConfirmed) {
+        if(this.isSubmitting){
+          return
+        }
+
+        this.isSubmitting = true
+        
         console.log(this.ojtDurationFormDetails.value)
         this.ds.post('superadmin/settings/required-ojt-hours', '', this.ojtDurationFormDetails.value).subscribe(
           response => {
+            this.isSubmitting = false
             this.gs.successToastAlert(response.message)
           },
           error => {
+            this.isSubmitting = false
             if(error.status === 422) {
               this.gs.errorAlert('Invalid Input!', 'Please check the input.')
 

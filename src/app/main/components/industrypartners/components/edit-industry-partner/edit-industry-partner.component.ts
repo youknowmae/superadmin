@@ -14,6 +14,8 @@ export class EditIndustryPartnerComponent {
   
   titles: string[] = ['Sr', 'Jr', 'II', 'III', 'IV', 'V'];
 
+  isSubmitting: boolean = false
+
   formDetails: FormGroup = this.fb.group({
     company_name: [null, [Validators.required, Validators.maxLength(64)]],
       description: [null, [Validators.required, Validators.maxLength(2048)]],
@@ -152,8 +154,16 @@ export class EditIndustryPartnerComponent {
     if(this.file)
       payload.append('image', this.file);
     
+    
+    if(this.isSubmitting) {
+      return
+    }
+
+    this.isSubmitting = true
+
     this.dataService.post('superadmin/industryPartners/', this.data.id, payload).subscribe(
       result => {
+        this.isSubmitting = false
         Swal.fire({
           title: "Updated!",
           text: result.message,
@@ -163,6 +173,7 @@ export class EditIndustryPartnerComponent {
         
       },
       error => {
+        this.isSubmitting = false
         console.error(error)
         if (error.status == 422) {
           Swal.fire({
@@ -173,7 +184,7 @@ export class EditIndustryPartnerComponent {
         }
         else {
           Swal.fire({
-            title: "error!",
+            title: "Oops!",
             text: "Something went wrong, please try again later.",
             icon: "error",
           });
