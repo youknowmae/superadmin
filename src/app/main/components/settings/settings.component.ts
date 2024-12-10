@@ -41,7 +41,7 @@ export class SettingsComponent {
         response.forEach((element: any) => {
           const settingForm: FormGroup = this.fb.group({
             course_code: [element.course_code,[Validators.required]],
-            required_hours: [element.required_hours,[Validators.required, Validators.pattern("^[0-9]*$"),]],
+            required_hours: [element.required_hours,[Validators.required, Validators.min(100), Validators.max(900), Validators.pattern("^[0-9]*$"),]],
           })
           
           this.duration.push(settingForm)

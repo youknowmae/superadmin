@@ -226,7 +226,7 @@ export class ListComponent {
     const excel = new ExcelJS.Workbook();
 
     try {
-      const gcImageResponse = await fetch("/assets/images/GC.png");
+      const gcImageResponse = await fetch("assets/images/GC.png");
       const gcImageBlob = await gcImageResponse.blob();
       const gcImageBase64 = await this.blobToBase64(gcImageBlob);
       
@@ -235,7 +235,7 @@ export class ListComponent {
         extension: "png",
       });
       
-      const ccsImageResponse = await fetch("/assets/images/ccs.png");
+      const ccsImageResponse = await fetch("assets/images/ccs.png");
       const ccsImageBlob = await ccsImageResponse.blob();
       const ccsImageBase64 = await this.blobToBase64(ccsImageBlob);
       

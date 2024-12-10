@@ -157,7 +157,7 @@ export class ListComponent {
 
     this.isSubmitting = true
 
-    this.ds.delete('superadmin/industryPartners/', id).subscribe(
+    this.ds.get(`superadmin/industryPartners/${id}/delete`, ).subscribe(
       result => {
         this.isSubmitting = false
         console.log(result)

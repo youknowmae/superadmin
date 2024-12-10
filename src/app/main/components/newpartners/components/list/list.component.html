@@ -46,7 +46,7 @@
                 <p>{{ industryPartner.municipality }}<span *ngIf="industryPartner.province">, {{ industryPartner.province }}</span></p>
               </div>
       
-                <div class="action-buttons" *ngIf="industryPartner.status == 2">
+                <div class="action-buttons" *ngIf="industryPartner.status">
                     <!-- <button class="delete" 
                           mat-raised-button
                           matTooltip="Delete"
@@ -72,6 +72,27 @@
                       </button>
                 </div>
             </div>
+            <div class="pagination-container">
+              <div class="pagination">
+                <div>
+                    <p> {{ pagination.from}} - {{ pagination.to }} of {{ pagination.total }} </p>
+                </div>
+                <div class="icons">
+                  <button (click)="jumpPage(1)" [disabled]="pagination.current_page === 1">
+                      <img src="assets/images/chevron-bar-left.svg" >
+                  </button>
+                  <button (click)="changePage(-1)" [disabled]="pagination.current_page === 1">
+                      <img src="assets/images/chevron-left.svg" >
+                  </button>
+                  <button (click)="changePage(1)"[disabled]="pagination.current_page === pagination.last_page">
+                      <img src="assets/images/chevron-right.svg">
+                  </button>
+                  <button (click)="jumpPage(pagination.last_page)" [disabled]="pagination.current_page === pagination.last_page">
+                      <img src="assets/images/chevron-bar-right.svg">
+                  </button>
+                </div>
+              </div>
+            </div> 
         </div>
     </ng-container>
   </main>

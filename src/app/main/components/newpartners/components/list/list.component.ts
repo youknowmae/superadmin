@@ -4,6 +4,7 @@ import { UserService } from '../../../../../services/user.service';
 import { GeneralService } from '../../../../../services/general.service';
 import { Router } from '@angular/router';
 import { MatSelectChange } from '@angular/material/select';
+import { pagination } from '../../../../../model/pagination.model';
 
 @Component({
   selector: 'app-list',
@@ -18,12 +19,22 @@ export class ListComponent {
   statusFilter: any = ''
   searchFilter: string = ''
 
+  pagination: pagination = <pagination>{};
+
   constructor(
     private ds: DataService, 
     private us: UserService, 
     private gs: GeneralService,
     private router: Router
   ) {
+    this.pagination = {
+      current_page: 1,
+      from: 0,
+      to: 0,
+      total: 0,
+      per_page: 15,
+      last_page: 0,
+    }
   }
 
   ngOnInit() {
@@ -49,6 +60,7 @@ export class ListComponent {
           return element
           
         });
+
         this.applyFilter()
         this.isLoading = false
       },
@@ -106,21 +118,41 @@ export class ListComponent {
 
     console.log('filtering')
 
-    let industryPartner = this.unfilteredIndustryPartners
+    let data = this.unfilteredIndustryPartners
 
     if(this.statusFilter) {
-      industryPartner = industryPartner.filter(
+      data = data.filter(
         (data: any) => data.status == this.statusFilter
       )
     }
 
     if(this.searchFilter) {
-      industryPartner = industryPartner.filter((element: any) => {
+      data = data.filter((element: any) => {
         return element.company_name.toLowerCase().includes(search) ||
           element.municipality.toLowerCase().includes(search)
       })
     }
 
-    this.industryPartners = industryPartner
+    this.pagination = this.gs.getPaginationDetails(data, this.pagination.current_page, this.pagination.per_page)
+
+    data = data.slice(this.pagination.from, this.pagination.to);
+    this.pagination.from++
+
+    this.industryPartners = data
+  }
+
+  changePage(page: number) {
+    const destination_page = this.pagination.current_page + page
+    if(destination_page < 1 || destination_page > this.pagination.last_page) {
+      return
+    }
+    
+    this.pagination.current_page += page
+    this.applyFilter()
+  }
+
+  jumpPage(page: number){
+    this.pagination.current_page = page
+    this.applyFilter()
   }
 }

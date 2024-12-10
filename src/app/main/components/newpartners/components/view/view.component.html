@@ -70,7 +70,7 @@
                 </div>
             </mat-step>
             <mat-step>
-                <ng-template matStepLabel>Documents</ng-template>
+                <ng-template matStepLabel>MOU</ng-template>
                 
                 <div class="stepper-content">
                     <div class="preview-container">
@@ -79,11 +79,11 @@
                 </div>
 
                 <div>
-                    <button mat-button matStepperNext (click)="showPassword = false">Next</button>
+                    <button mat-button matStepperNext (click)="showPassword = false"  *ngIf="industryPartner.status === 2">Next</button>
                     <button mat-button matStepperPrevious>Back</button>
                 </div>
             </mat-step>
-            <mat-step [stepControl]="accountDetails">
+            <mat-step [stepControl]="accountDetails" *ngIf="industryPartner.status === 2">
                 <ng-template matStepLabel>Account Details</ng-template>
                     <form [formGroup]="accountDetails" class="step-content">
                         <p>All fields are required for account creation, and the password must be at least 8 characters long.</p>
@@ -98,7 +98,7 @@
                                 <mat-form-field appearance="outline">
                                     <mat-label>Password</mat-label>
                                     <input [type]="(showPassword) ? 'text' : 'password'" matInput formControlName="password">
-                                    <mat-icon matSuffix (click)="showPassword = !showPassword">
+                                    <mat-icon matSuffix (click)="showPassword = !showPassword" style="cursor: pointer;">
                                         {{ showPassword ? 'visibility' : 'visibility_off' }}
                                     </mat-icon>
                                 </mat-form-field>
@@ -112,7 +112,7 @@
                     </form>
             </mat-step>
 
-            <mat-step [stepControl]="accountDetails">
+            <mat-step [stepControl]="accountDetails"  *ngIf="industryPartner.status === 2">
               <ng-template matStepLabel>Review</ng-template>
               <div class="step-content">
                 <p>You are now done. Please review the content before proceeding.</p>
@@ -177,7 +177,7 @@
                         <mat-form-field appearance="outline">
                             <mat-label>Password</mat-label>
                             <input [type]="(showPassword) ? 'text' : 'password'" matInput [value]="accountDetails.get('password')?.value" readonly="">
-                            <mat-icon matSuffix (click)="showPassword = !showPassword">
+                            <mat-icon matSuffix (click)="showPassword = !showPassword" style="cursor: pointer;">
                                 {{ showPassword ? 'visibility' : 'visibility_off' }}
                             </mat-icon>
                         </mat-form-field>
