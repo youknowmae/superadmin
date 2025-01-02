@@ -61,6 +61,11 @@ export class DashboardComponent implements AfterViewInit {
           backgroundColor: '#FABC3F'
         },
         {
+          label: 'Ongoing',
+          data: [0, 0, 0, 0],
+          backgroundColor: '#99B080'
+        },
+        {
           label: 'Completed',
           data: [0, 0, 0, 0],
           backgroundColor: '#7C93C3'
@@ -89,99 +94,6 @@ export class DashboardComponent implements AfterViewInit {
     }
   };
 
-  // public ojtBarConfig: ChartConfiguration<'bar'> = {
-  //   type: 'bar',
-  //   data: {
-  //     labels: ['BSIT', 'BSCS', 'BSEMC', 'ACT'],
-  //     datasets: [
-  //       {
-  //         label: 'Pending',
-  //         data: [0, 0, 0, 0],
-  //         backgroundColor: '#FABC3F'
-  //       },
-  //       {
-  //         label: 'Completed',
-  //         data: [0, 0, 0, 0],
-  //         backgroundColor: '#7C93C3'
-  //       }
-  //     ]
-  //   },
-  //   options: {
-  //     responsive: true,
-  //     plugins: {
-  //       legend: {
-  //         display: true,
-  //         position: 'top',
-  //       },
-  //       tooltip: {
-  //         enabled: true,
-  //       }
-  //     },
-  //     scales: {
-  //       x: {
-  //         stacked: true
-  //       },
-  //       y: {
-  //         stacked: true
-  //       }
-  //     }
-  //   }
-  // };
-
-  // public evaluationConfig: ChartConfiguration<'bar'> = {
-  //   type: 'bar',
-  //   data: {
-  //     labels: ['BSIT', 'BSCS', 'BSEMC', 'ACT'],
-  //     datasets: [
-  //       {
-  //         label: '100-96',
-  //         data: [0, 0, 0, 0],
-  //         backgroundColor: '#FABC3F'
-  //       },
-  //       {
-  //         label: '95-91',
-  //         data: [0, 0, 0, 0],
-  //         backgroundColor: '#7C93C3'
-  //       },
-  //       {
-  //         label: '90-86',
-  //         data: [0, 0, 0, 0],
-  //         backgroundColor: '#A1D6B2'
-  //       },
-  //       {
-  //         label: '85-81',
-  //         data: [0, 0, 0, 0],
-  //         backgroundColor: '#FF9874'
-  //       },
-  //       {
-  //         label: '80-75',
-  //         data: [0, 0, 0, 0],
-  //         backgroundColor: '#AD49E1'
-  //       }
-  //     ]
-  //   },
-  //   options: {
-  //     responsive: true,
-  //     plugins: {
-  //       legend: {
-  //         display: true,
-  //         position: 'top',
-  //       },
-  //       tooltip: {
-  //         enabled: true,
-  //       }
-  //     },
-  //     scales: {
-  //       x: {
-  //         stacked: true
-  //       },
-  //       y: {
-  //         stacked: true
-  //       }
-  //     }
-  //   }
-  // };
-
   constructor(
     private ds: DataService
   ) { }
@@ -189,8 +101,6 @@ export class DashboardComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.pieChart = new Chart('pieChart', this.config);
     this.barChart = new Chart('barChart', this.barConfig);
-    // this.ojtBarChart = new Chart('ojtBarChart', this.ojtBarConfig);
-    // this.evaluationBarChart = new Chart('evaluationBarChart', this.evaluationConfig);
 
 
     this.getData()
@@ -203,7 +113,6 @@ export class DashboardComponent implements AfterViewInit {
         this.enrolled_student = response.enrolled_student
         this.student_ojt_status_count = response.student_ojt_status_count
 
-        
         // ['BSIT', 'BSCS', 'BSEMC', 'ACT']
         this.pieChart.data.datasets[0].data = [
           response.student_program_count.bsit,
@@ -213,23 +122,6 @@ export class DashboardComponent implements AfterViewInit {
         ];
         this.pieChart.update()
 
-        // ['BSIT', 'BSCS', 'BSEMC', 'ACT'],
-        //dataset 0 = pending
-        //dataset 1 = completed
-        // this.ojtBarChart.data.datasets[0].data = [
-        //   response.student_exit_poll.bsit.pending,
-        //   response.student_exit_poll.bscs.pending,
-        //   response.student_exit_poll.bsemc.pending,
-        //   response.student_exit_poll.act.pending,
-        // ]       
-        // this.ojtBarChart.data.datasets[1].data = [
-        //   response.student_exit_poll.bsit.completed,
-        //   response.student_exit_poll.bscs.completed,
-        //   response.student_exit_poll.bsemc.completed,
-        //   response.student_exit_poll.act.completed,
-        // ]       
-        // this.ojtBarChart.update()
-
         this.barChart.data.datasets[0].data = [
           response.student_ojt_status.bsit.pending,
           response.student_ojt_status.bscs.pending,
@@ -238,49 +130,19 @@ export class DashboardComponent implements AfterViewInit {
         ]       
 
         this.barChart.data.datasets[1].data = [
+          response.student_ojt_status.bsit.ongoing,
+          response.student_ojt_status.bscs.ongoing,
+          response.student_ojt_status.bsemc.ongoing,
+          response.student_ojt_status.act.ongoing,
+        ]       
+
+        this.barChart.data.datasets[2].data = [
           response.student_ojt_status.bsit.completed,
           response.student_ojt_status.bscs.completed,
           response.student_ojt_status.bsemc.completed,
           response.student_ojt_status.act.completed,
         ]       
         this.barChart.update()
-
-        // this.evaluationBarChart.data.datasets[0].data = [
-        //   response.student_performance_evaluation.bsit.excellent,
-        //   response.student_performance_evaluation.bscs.excellent,
-        //   response.student_performance_evaluation.bsemc.excellent,
-        //   response.student_performance_evaluation.act.excellent,
-        // ]
-        
-        // this.evaluationBarChart.data.datasets[1].data = [
-        //   response.student_performance_evaluation.bsit.very_good,
-        //   response.student_performance_evaluation.bscs.very_good,
-        //   response.student_performance_evaluation.bsemc.very_good,
-        //   response.student_performance_evaluation.act.very_good,
-        // ];
-
-        // this.evaluationBarChart.data.datasets[2].data = [
-        //   response.student_performance_evaluation.bsit.good,
-        //   response.student_performance_evaluation.bscs.good,
-        //   response.student_performance_evaluation.bsemc.good,
-        //   response.student_performance_evaluation.act.good,
-        // ];
-
-        // this.evaluationBarChart.data.datasets[3].data = [
-        //   response.student_performance_evaluation.bsit.fair,
-        //   response.student_performance_evaluation.bscs.fair,
-        //   response.student_performance_evaluation.bsemc.fair,
-        //   response.student_performance_evaluation.act.fair,
-        // ];
-
-        // this.evaluationBarChart.data.datasets[4].data = [
-        //   response.student_performance_evaluation.bsit.poor,
-        //   response.student_performance_evaluation.bscs.poor,
-        //   response.student_performance_evaluation.bsemc.poor,
-        //   response.student_performance_evaluation.act.poor,
-        // ];
-
-        // this.evaluationBarChart.update()
       },
       error => {
         console.error(error)

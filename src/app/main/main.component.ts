@@ -20,6 +20,8 @@ export class MainComponent {
 
   @ViewChild('sidenav') sidenav!: MatSidenav; // Use @ViewChild to get #sidenav
   private _mobileQueryListener: () => void;
+  
+  private dateTimeInterval: any;
 
   constructor(
     private userService: UserService,
@@ -37,9 +39,15 @@ export class MainComponent {
   ngOnInit(): void{
     this.getUser()
     this.updateDateTime();
-
+      
+    this.dateTimeInterval = setInterval(() => this.updateDateTime(), 30000);
   }
   
+  ngOnDestroy(): void {
+    clearInterval(this.dateTimeInterval);
+    this.mobileQuery.removeListener(this._mobileQueryListener);
+  }
+
   getUser() {
     this.user = this.userService.getUser()
   }
