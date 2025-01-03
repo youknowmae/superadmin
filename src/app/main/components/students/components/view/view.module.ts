@@ -7,6 +7,9 @@ import { AttendanceformComponent } from './components/attendanceform/attendancef
 import { AccomplishmentreportComponent } from './components/accomplishmentreport/accomplishmentreport.component';
 import { MaterialsModules } from '../../../../../modules/materials.module';
 import { LoadingSpinnerComponent } from '../../../../../components/login/loading-spinner/loading-spinner.component';
+import { EvaluationComponent } from './components/evaluation/evaluation.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ExitPollComponent } from './components/exit-poll/exit-poll.component';
 
 
 @NgModule({
@@ -14,12 +17,15 @@ import { LoadingSpinnerComponent } from '../../../../../components/login/loading
     StudentprofileComponent,
     AttendanceformComponent,
     AccomplishmentreportComponent,
+    EvaluationComponent,
+    ExitPollComponent
   ],
   imports: [
     CommonModule,
     MaterialsModules,
     ViewRoutingModule,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    ReactiveFormsModule
   ]
 })
 export class ViewModule { }

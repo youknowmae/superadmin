@@ -16,15 +16,18 @@
         display: flex;
         align-items: stretch;
         list-style: none;
-        padding: 0;
         width: 100%;
+        padding: 0;
         margin: 0;
-        border-bottom: 3.5px solid var(--primary-color);
+        border-bottom: 3px solid var(--primary-color);
+        overflow-x: auto;
+
+        .tab {
+            flex: 1;
+            min-width: 250px;
+        }
     }
-    
-    .tab {
-    width: 50%; /* Make tabs take equal space */
-    }
+
     
     .tab > label {
         color: var(--main-orange);
@@ -41,29 +44,35 @@
     }
     
     .tab:hover label {
-    color: #ffffff;
-    background-color: var(--main-orange);
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
+        color: #ffffff;
+        background-color: var(--main-orange);
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
     }
     
     .tabbed [type="radio"]:nth-of-type(1):checked ~ .tabs .tab:nth-of-type(1) label,
     .tabbed [type="radio"]:nth-of-type(2):checked ~ .tabs .tab:nth-of-type(2) label,
-    .tabbed [type="radio"]:nth-of-type(3):checked ~ .tabs .tab:nth-of-type(3) label {
+    .tabbed [type="radio"]:nth-of-type(3):checked ~ .tabs .tab:nth-of-type(3) label,
+    .tabbed [type="radio"]:nth-of-type(4):checked ~ .tabs .tab:nth-of-type(4) label,
+    .tabbed [type="radio"]:nth-of-type(5):checked ~ .tabs .tab:nth-of-type(5) label,
+    .tabbed [type="radio"]:nth-of-type(6):checked ~ .tabs .tab:nth-of-type(6) label {
         border-bottom-color: var(--primary-color);
         border-top-left-radius: 20px;
         border-top-right-radius: 20px;
         background: var(--main-orange);
         color: white;
     }
-    
+
     .tabbed [type="radio"]:nth-of-type(1):checked ~ .tab-content:nth-of-type(1),
     .tabbed [type="radio"]:nth-of-type(2):checked ~ .tab-content:nth-of-type(2),
-    .tabbed [type="radio"]:nth-of-type(3):checked ~ .tab-content:nth-of-type(3) {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
+    .tabbed [type="radio"]:nth-of-type(3):checked ~ .tab-content:nth-of-type(3),
+    .tabbed [type="radio"]:nth-of-type(4):checked ~ .tab-content:nth-of-type(4),
+    .tabbed [type="radio"]:nth-of-type(5):checked ~ .tab-content:nth-of-type(5),
+    .tabbed [type="radio"]:nth-of-type(6):checked ~ .tab-content:nth-of-type(6) {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
     }
 
 .connection {
