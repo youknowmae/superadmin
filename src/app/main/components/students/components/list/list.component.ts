@@ -9,7 +9,6 @@ import { UserService } from '../../../../../services/user.service';
 import { Router } from '@angular/router';
 
 import * as ExcelJS from 'exceljs';
-import * as XLSX from 'xlsx';
 
 import { saveAs } from 'file-saver';
 import { MatSelectChange } from '@angular/material/select';
@@ -20,7 +19,8 @@ import { MatSelectChange } from '@angular/material/select';
   styleUrl: './list.component.scss'
 })
 export class ListComponent {
-  displayedColumns: string[] = ['name', 'student_number', 'course', 'program', 'year_level', 'progress', 'student_evaluation', 'exit_poll',  'status', 'actions'];
+  // displayedColumns: string[] = ['name', 'student_number', 'course', 'program', 'year_level', 'progress', 'student_evaluation', 'exit_poll',  'status', 'actions'];
+  displayedColumns: string[] = ['name', 'company', 'progress', 'student_evaluation', 'exit_poll', 'status', 'actions'];
 
   unfilteredStudents: any
   dataSource: any = new MatTableDataSource<any>();
@@ -78,10 +78,6 @@ export class ListComponent {
           if (!this.classList.includes(student.active_ojt_class.class_code)) 
             this.classList.push(student.active_ojt_class.class_code) 
 
-          if(student.ojt_exit_poll) {
-            student.ojt_exit_poll = "Answered"
-          }
-
           if(student.student_evaluation) {
             student.student_evaluation = student.student_evaluation.average
           }
@@ -96,11 +92,21 @@ export class ListComponent {
               progress = required_hours
           }
 
-
-          let status = (student.accepted_application) ? 'Ongoing' : 'Pending'
+          let status = null
 
           if(progress >= required_hours && student.ojt_exit_poll && student.student_evaluation) {
             status = "Completed"
+          }
+          else if (student.accepted_application) {
+            status = 'Ongoing'
+          }  
+          else if (student.pending_application && student.pending_application.status == 0)
+            status = 'Pending - Adviser\'s Approval'
+          else if(student.pending_application) {
+            status = 'Pending - Company Approval'
+          }
+          else {
+            status = 'Pending - w/o application'
           }
 
           return {
@@ -303,7 +309,7 @@ export class ListComponent {
             student.active_ojt_class.required_hours,
             student.progress,
             (student.student_evaluation) ? student.student_evaluation : 'Not Evaluated',
-            (student.ojt_exit_poll) ? 'Completed' : 'INC',
+            (student.ojt_exit_poll) ? 'Answered' : 'Not Completed',
             (student.status === 'Completed') ? 'Completed': 'Incomplete',
           ]);
           counter++
@@ -329,7 +335,6 @@ export class ListComponent {
 
   }
 
-
   blobToBase64(blob: Blob): Promise<string> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -340,6 +345,12 @@ export class ListComponent {
       reader.onerror = reject;
       reader.readAsDataURL(blob); // Convert blob to base64
     });
+  }
+
+  getProgressPercentage(progress: number, required_hours: number) {
+    let percentage = progress/required_hours * 100
+
+    return Math.round(percentage * 100) / 100 //return 2 decimal
   }
 
   groupBy = <T, K extends keyof any>(arr: T[], key: (i: T) => K) =>

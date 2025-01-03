@@ -10,6 +10,7 @@ import { MaterialsModules } from '../../../modules/materials.module';
 import { EditIndustryPartnerComponent } from './components/edit-industry-partner/edit-industry-partner.component';
 import { AddIndustryPartnerComponent } from './components/add-industry-partner/add-industry-partner.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { LoadingSpinnerComponent } from '../../../components/login/loading-spinner/loading-spinner.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     ReactiveFormsModule,
     IndustrypartnersRoutingModule,
-    MaterialsModules
+    MaterialsModules,
+    LoadingSpinnerComponent
   ]
 })
 export class IndustrypartnersModule { }

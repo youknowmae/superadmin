@@ -14,6 +14,7 @@ export class SettingsComponent {
   ojtDurationFormDetails: FormGroup
 
   isSubmitting: boolean = false
+  isLoading: boolean = true
 
   constructor(
     private ds: DataService,
@@ -46,9 +47,11 @@ export class SettingsComponent {
           
           this.duration.push(settingForm)
         });
+        this.isLoading = false
       },
       error => {
         console.error(error)
+        this.isLoading = false
       }
     )
   }

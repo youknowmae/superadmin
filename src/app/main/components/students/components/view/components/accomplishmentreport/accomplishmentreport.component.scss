@@ -43,23 +43,10 @@ table {
     }
 }
 
-
-
-
 .total-hours {
     color: var(--primary-color);
     font-weight: 500;
     margin: 0;
     text-align: left;
     padding: 2px 5px;
-}
-
-.no-items-container {
-    padding: 20px;
-    animation: forwards fade-in .2s;
-  
-    p {
-      font-size: 18px;
-      color: #666;
-    }
 }

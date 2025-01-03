@@ -19,6 +19,7 @@ import { StudentsModule } from './components/students/students.module';
 import { SettingsComponent } from './components/settings/settings.component';
 import { NewpartnersModule } from './components/newpartners/newpartners.module';
 import { NewpartnersComponent } from './components/newpartners/newpartners.component';
+import { LoadingSpinnerComponent } from "../components/login/loading-spinner/loading-spinner.component";
 
 @NgModule({
   declarations: [
@@ -35,9 +36,8 @@ import { NewpartnersComponent } from './components/newpartners/newpartners.compo
     IndustrypartnersModule,
     StudentsModule,
     NewpartnersModule,
-    // BrowserModule,
-    // BrowserAnimationsModule,
-    MaterialsModules
-  ],
+    MaterialsModules,
+    LoadingSpinnerComponent
+],
 })
 export class MainModule { }

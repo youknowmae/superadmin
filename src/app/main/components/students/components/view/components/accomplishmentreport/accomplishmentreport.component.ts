@@ -9,6 +9,7 @@ import { DataService } from '../../../../../../../services/data.service';
 })
 export class AccomplishmentreportComponent {
   weekly_attendance: any = []
+  isLoading: boolean = true
 
   constructor(
     private us: UserService,
@@ -28,9 +29,11 @@ export class AccomplishmentreportComponent {
       response => {
         
         this.computeWeeklyAttendance(response)
+        this.isLoading = false
       },
       error => {
         console.error(error)
+        this.isLoading = false
       }
     )
   }

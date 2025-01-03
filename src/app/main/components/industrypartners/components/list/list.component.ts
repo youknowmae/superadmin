@@ -73,6 +73,9 @@ export class ListComponent {
     
     this.ds.get('superadmin/industryPartners/', id).subscribe(
       industryPartner => {
+        let full_address = `${industryPartner?.street || ''} ${industryPartner?.barangay || ''}, ${industryPartner?.municipality || ''}`
+        industryPartner.full_address = full_address
+
         let companyHead = industryPartner.company_head;
         let fullName = `${companyHead?.first_name || ''} ${companyHead?.last_name || ''} ${companyHead?.ext_name || ''}`.trim();
         industryPartner.company_head.full_name = fullName;

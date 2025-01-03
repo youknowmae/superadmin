@@ -29,16 +29,10 @@ $myintern-theme: mat.define-light-theme((
 // Define the palettes for your theme using the Material Design palettes av
 * {
     font-family: 'Poppins'; 
-    // outline: none;
     margin: 0;
     border: none;
     box-sizing: border-box; 
-    
 }
-
-
-// html, body { height: 100%; }
-// body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 :root {
     font-size: 100%;
@@ -83,9 +77,15 @@ body {
     border-radius: 10px;
 }
 
-html, body { height: 100%; }
-body { 
-    margin: 0; 
+.sub-text {
+    color: grey;
+    font-size: 12px;
+}
+
+.mat-typography {
+    p, h3, h4 {
+        margin: 0;
+    }
 }
 
 
@@ -155,9 +155,23 @@ body {
     padding: 0px 5px;
 }
 
+.no-items-container {
+    padding: 20px;
+    animation: forwards fade-in .2s;
+  
+    p {
+      font-size: 18px;
+      color: #666;
+    }
+}
+
 
 mat-form-field {
     width: 100%;
+}
+
+mat-paginator {
+    background: none
 }
 
 @media only screen and (max-width: 680px) {

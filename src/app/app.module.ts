@@ -18,7 +18,7 @@ import { MaterialsModules } from './modules/materials.module';
     AppComponent,
     LoginComponent, 
     MainComponent,
-    ViewImageComponent
+    ViewImageComponent,
   ],
   imports: [
     CommonModule,

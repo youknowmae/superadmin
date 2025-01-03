@@ -7,6 +7,7 @@ import { ListComponent } from './components/list/list.component';
 import { ViewComponent } from './components/view/view.component';
 import { MaterialsModules } from '../../../modules/materials.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { LoadingSpinnerComponent } from '../../../components/login/loading-spinner/loading-spinner.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     NewpartnersRoutingModule,
     MaterialsModules,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    LoadingSpinnerComponent
   ]
 })
 export class NewpartnersModule { }

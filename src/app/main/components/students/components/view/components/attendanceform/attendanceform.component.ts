@@ -11,6 +11,7 @@ import { UserService } from '../../../../../../../services/user.service';
   styleUrl: './attendanceform.component.scss'
 })
 export class AttendanceformComponent {
+  isLoading: boolean = true
   progress: any = {
     total_hours: 0,
     required_hours: 0,
@@ -49,9 +50,11 @@ export class AttendanceformComponent {
         this.dataSource.paginator = this.paginator;
         
         this.tallyProgress()
+        this.isLoading = false
       },
       error => {
         console.error(error)
+        this.isLoading = false
       }
     )
 

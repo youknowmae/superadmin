@@ -1,7 +1,3 @@
-<!-- <div class="header">
-  <h1>Industry Partners</h1>
-</div> -->
-
 <div class="container">
     <div class="back-btn" [routerLink]="['../../list']" routerLinkActive="router-link-active">
         <span class="icon">
@@ -12,34 +8,58 @@
         </span>
     </div>
 
-    <div class="content">
+    <div class="card">
         <div class="image">
             <img [src]="(industryPartner.image) ? industryPartner.image : 'assets/images/logo.png'" alt="logo image">
         </div>
         <div class="container-info">
             <div class="info">
-                <h2>{{ industryPartner.company_name }}</h2>
-                <p>{{ industryPartner.description }}</p>
-
-                <h3 style="margin: 0; font-weight: 600;" >Company Head:</h3>
-                <p> {{ industryPartner.company_head.full_name }}, {{ industryPartner.head_position }}</p>
-
-                <h3 style="margin: 0; font-weight: 600;" >Immediate Supervisor :</h3>
-                <p> {{ industryPartner.immediate_supervisor.full_name }}, {{ industryPartner.supervisor_position }}</p>
+                <div class="details-section">
+                    <h2>{{ industryPartner.company_name }}</h2>
+                    <p>{{ industryPartner.description }}</p>
+                </div>
                 
-                <ul>
-                    <li>
-                        <b>Company Address: </b>
-                        {{  industryPartner.street }}
-                        {{  industryPartner.barangay }}
-                        {{  industryPartner.municipality }}
-                    </li>
-                    <li><b>Official Email Address:</b> {{ industryPartner.email }}</li>
-                    <li *ngIf="industryPartner.telephone_number"><b>Telephone Number:</b> {{ industryPartner.telephone_number }}</li>
-                    <li *ngIf="industryPartner.fax_number"><b>Fax Number:</b> {{ industryPartner.fax_number }}</li>
-                    <li><b>Contact Number:</b> {{ industryPartner.mobile_number }}</li>
-                    <li *ngIf="industryPartner.website"><b>Website:</b> {{ industryPartner.website }}</li>
-                </ul>
+                <div class="details-section">
+                    <p> <b>Company Head:</b> {{ industryPartner.company_head.full_name }}, {{ industryPartner.head_position }}</p>
+                </div>
+                
+                <div class="details-section">
+                    <p> <b>Immediate Supervisor :</b> {{ industryPartner.immediate_supervisor.full_name }}, {{ industryPartner.supervisor_position }}</p>
+                </div>
+
+
+                <div class="details-section">
+                    <ul>
+                        <li>
+                            <mat-icon>apartment</mat-icon>
+                            <p><b>Company Address: </b> {{  industryPartner.full_address }}</p> 
+                        </li>
+                        <li>
+                            <mat-icon>mail</mat-icon>
+                            <p><b>Official Email Address:</b> {{ industryPartner.email }}</p>
+                        </li>
+                        <li *ngIf="industryPartner.telephone_number">
+                            <mat-icon>call</mat-icon>
+                            <p><b>Telephone Number:</b> {{ industryPartner.telephone_number }}</p>
+                        </li>
+                        <li *ngIf="industryPartner.fax_number">
+                            <mat-icon>fax</mat-icon>
+                            <p><b>Fax Number:</b> {{ industryPartner.fax_number }}</p>
+                        </li>
+                        <li>
+                            <mat-icon>call</mat-icon>
+                            <p><b>Contact Number:</b> {{ industryPartner.mobile_number }}</p>
+                        </li>
+                        <li *ngIf="industryPartner.website">
+                            <mat-icon>public</mat-icon>
+                            <p><b>Website:</b> {{ industryPartner.website }}</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="details-section">
+                    <p><b>Total Slots:</b> 20</p>
+                </div>
             </div>
         </div>
     </div>

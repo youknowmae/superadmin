@@ -6,6 +6,7 @@ import { StudentprofileComponent } from './components/studentprofile/studentprof
 import { AttendanceformComponent } from './components/attendanceform/attendanceform.component';
 import { AccomplishmentreportComponent } from './components/accomplishmentreport/accomplishmentreport.component';
 import { MaterialsModules } from '../../../../../modules/materials.module';
+import { LoadingSpinnerComponent } from '../../../../../components/login/loading-spinner/loading-spinner.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { MaterialsModules } from '../../../../../modules/materials.module';
   imports: [
     CommonModule,
     MaterialsModules,
-    ViewRoutingModule
+    ViewRoutingModule,
+    LoadingSpinnerComponent
   ]
 })
 export class ViewModule { }
