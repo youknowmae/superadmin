@@ -193,7 +193,7 @@ export class AddIndustryPartnerComponent {
     }
 
     this.isSubmitting = true
-    
+
     var formData = new FormData();
 
     formData.append('company_name', this.formDetails.get('company_name')?.value);
@@ -203,29 +203,36 @@ export class AddIndustryPartnerComponent {
     formData.append('municipality', this.formDetails.get('municipality')?.value.citymunDesc);
     formData.append('barangay', this.formDetails.get('barangay')?.value.brgyDesc);
     formData.append('street', this.formDetails.get('street')?.value);
-    formData.append('telephone_number', this.formDetails.get('telephone_number')?.value);
+    if(this.formDetails.get('telephone_number')?.value)
+      formData.append('telephone_number', this.formDetails.get('telephone_number')?.value);
     formData.append('mobile_number', this.formDetails.get('mobile_number')?.value);
-    formData.append('fax_number', this.formDetails.get('fax_number')?.value);
+    if(this.formDetails.get('fax_number')?.value)
+      formData.append('fax_number', this.formDetails.get('fax_number')?.value);
     formData.append('email', this.formDetails.get('email')?.value);
-    formData.append('website', this.formDetails.get('website')?.value);
+    if(this.formDetails.get('website')?.value)
+      formData.append('website', this.formDetails.get('website')?.value);
     formData.append('email_2', this.formDetails.get('email_2')?.value);
     formData.append('password', this.formDetails.get('password')?.value);
 
     const companyHead = this.formDetails.get('company_head')?.value;
     formData.append('company_head[first_name]', companyHead.first_name);
-    formData.append('company_head[middle_name]', companyHead.middle_name);
+    if(companyHead.middle_name)
+      formData.append('company_head[middle_name]', companyHead.middle_name);
     formData.append('company_head[last_name]', companyHead.last_name);
     formData.append('company_head[sex]', companyHead.sex);
-    formData.append('company_head[ext_name]', companyHead.ext_name);
+    if(companyHead.ext_name)
+      formData.append('company_head[ext_name]', companyHead.ext_name);
 
     formData.append('head_position', this.formDetails.get('head_position')?.value);
 
     const supervisor = this.formDetails.get('immediate_supervisor')?.value;
     formData.append('immediate_supervisor[first_name]', supervisor.first_name);
-    formData.append('immediate_supervisor[middle_name]', supervisor.middle_name);
+    if(supervisor.middle_name)
+      formData.append('immediate_supervisor[middle_name]', supervisor.middle_name);
     formData.append('immediate_supervisor[last_name]', supervisor.last_name);
     formData.append('immediate_supervisor[sex]', supervisor.sex);
-    formData.append('immediate_supervisor[ext_name]', supervisor.ext_name);
+    if(supervisor.ext_name)
+      formData.append('immediate_supervisor[ext_name]', supervisor.ext_name);
 
     formData.append('supervisor_position', this.formDetails.get('supervisor_position')?.value);
 
