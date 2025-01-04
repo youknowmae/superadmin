@@ -26,4 +26,8 @@ export class DataService {
   public download(endpoint: string, params: string|number = '',) {
    return this.http.get(apiUrl+endpoint+params, { responseType: 'blob' })
   }
+
+  public fetchAssets(endpoint: string) {
+    return this.http.get<any>('./assets/' + endpoint)
+  }
 }

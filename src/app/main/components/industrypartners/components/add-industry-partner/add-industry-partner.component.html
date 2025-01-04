@@ -140,29 +140,33 @@
                         <div class="col-md-3">
                             <mat-form-field>
                                 <mat-label>Region</mat-label>
-                                <mat-select formControlName="region">
-                                  <mat-option [value]="'III'">
-                                    REGION III 
-                                  </mat-option>
+                                <mat-select #region formControlName="region" (selectionChange)="onRegionChange(region.value)">
+                                  <mat-option [value]="region" *ngFor="let region of regions"> {{ region.regDesc }} </mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
                         <div class="col-md-3">
                             <mat-form-field>
                               <mat-label>Province</mat-label>
-                              <input matInput formControlName="province">
+                              <mat-select #province formControlName="province" (selectionChange)="onProvinceChange(province.value)">
+                                <mat-option [value]="province" *ngFor="let province of provinces"> {{ province.provDesc }} </mat-option>
+                              </mat-select>
                             </mat-form-field>
                         </div>
                         <div class="col-md-3">
                             <mat-form-field>
                               <mat-label>Municipality</mat-label>
-                              <input matInput formControlName="municipality">
+                              <mat-select #municipality formControlName="municipality" (selectionChange)="onMunicipalityChange(municipality.value)">
+                                <mat-option [value]="municipality" *ngFor="let municipality of municipalities"> {{ municipality.citymunDesc }} </mat-option>
+                              </mat-select>
                             </mat-form-field>
                         </div>
                         <div class="col-md-3">
                             <mat-form-field>
                               <mat-label>Barangay</mat-label>
-                              <input matInput formControlName="barangay">
+                              <mat-select #barangay formControlName="barangay">
+                                <mat-option [value]="barangay" *ngFor="let barangay of barangays"> {{ barangay.brgyDesc }} </mat-option>
+                              </mat-select>
                             </mat-form-field>
                         </div>
                     </div>
@@ -174,12 +178,6 @@
                               <input matInput formControlName="street">
                             </mat-form-field>
                         </div>
-                        <!-- <div class="col-md-2">
-                            <mat-form-field>
-                              <mat-label>Zip Code</mat-label>
-                              <input matInput formControlName="zip_code">
-                            </mat-form-field>
-                        </div> -->
                     </div>
                     
                     <h3>Contact Information</h3>
@@ -254,7 +252,7 @@
                 </div>
                 
                 <div class="btn">
-                    <button type="submit" [disabled]="formDetails.invalid">Create</button>
+                    <button type="submit">Create</button>
                 </div>
             </form>
         </div>

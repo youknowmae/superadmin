@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataService } from '../../../../../services/data.service';
 import Swal from 'sweetalert2';
 import { GeneralService } from '../../../../../services/general.service';
+import { LocationService } from '../../../../../services/location.service';
+import { response } from 'express';
 
 @Component({
   selector: 'app-add-industry-partner',
@@ -21,57 +23,57 @@ export class AddIndustryPartnerComponent {
 
   isSubmitting: boolean = false
 
-  
+  regions: any = []
+  provinces: any = []
+  municipalities: any = []
+  barangays: any = []
+
   constructor(
     private ref: MatDialogRef<AddIndustryPartnerComponent>,
     private fb: FormBuilder,
     private ds: DataService,
-    private gs: GeneralService
+    private gs: GeneralService,
+    private ls: LocationService
   ) {
     this.formDetails = this.fb.group({
       company_name: [null, [Validators.required, Validators.maxLength(64)]],
-        description: [null, [Validators.required, Validators.maxLength(2048)]],
-    
-        // company_head: [null, [Validators.required, Validators.maxLength(128)]],
-        company_head: this.fb.group({
-          first_name: [null, [Validators.required, Validators.maxLength(64)]],
-          middle_name: [null, [Validators.maxLength(64)]],
-          last_name: [null, [Validators.required, Validators.maxLength(64)]],
-          ext_name: [null], 
-          sex: [null, Validators.required],
-        }),
-        head_position: [null, [Validators.required, Validators.maxLength(64)]],
-        
-        // immediate_supervisor: [null, [Validators.required, Validators.maxLength(128)]],
-        immediate_supervisor: this.fb.group({
-          first_name: [null, [Validators.required, Validators.maxLength(64)]],
-          middle_name: [null, [Validators.maxLength(64)]],
-          last_name: [null, [Validators.required, Validators.maxLength(64)]],
-          ext_name: [null],
-          sex: [null, Validators.required],
-        }),
-        supervisor_position: [null, [Validators.required, Validators.maxLength(64)]],
-    
-        region: ["III", [Validators.required, Validators.maxLength(32)]],
-        province: [null, [Validators.required, Validators.maxLength(32)]],
-        municipality: [null, [Validators.required, Validators.maxLength(32)]],
-        barangay: [null, [Validators.maxLength(64)]],
-        street: [null, [Validators.maxLength(128)]],
-        // zip_code: [null, [Validators.required, Validators.pattern('[0-9]{4}')]],
-    
-        telephone_number: [null, [Validators.pattern('^[0-9 ()-]+$')]],
-        mobile_number: [null, [Validators.required, Validators.pattern('^[0-9 ()-]+$')]],
-        fax_number: [null, [Validators.pattern('^[0-9 ()-]+$')]],
-        email: [null, [Validators.required, Validators.email]],
-        website: [null, [Validators.maxLength(128)]],
+      description: [null, [Validators.required, Validators.maxLength(2048)]],
+  
+      // company_head: [null, [Validators.required, Validators.maxLength(128)]],
+      company_head: this.fb.group({
+        first_name: [null, [Validators.required, Validators.maxLength(64)]],
+        middle_name: [null, [Validators.maxLength(64)]],
+        last_name: [null, [Validators.required, Validators.maxLength(64)]],
+        ext_name: [null], 
+        sex: [null, Validators.required],
+      }),
+      head_position: [null, [Validators.required, Validators.maxLength(64)]],
+      
+      // immediate_supervisor: [null, [Validators.required, Validators.maxLength(128)]],
+      immediate_supervisor: this.fb.group({
+        first_name: [null, [Validators.required, Validators.maxLength(64)]],
+        middle_name: [null, [Validators.maxLength(64)]],
+        last_name: [null, [Validators.required, Validators.maxLength(64)]],
+        ext_name: [null],
+        sex: [null, Validators.required],
+      }),
+      supervisor_position: [null, [Validators.required, Validators.maxLength(64)]],
+  
+      region: [null, [Validators.required]],
+      province: [null, [Validators.required]],
+      municipality: [null, [Validators.required]],
+      barangay: [null, [Validators.required]],
+      street: [null, [Validators.required, Validators.maxLength(128)]],
+      // zip_code: [null, [Validators.required, Validators.pattern('[0-9]{4}')]],
+  
+      telephone_number: ['', [Validators.pattern('^[0-9 ()-]+$')]],
+      mobile_number: [null, [Validators.required, Validators.pattern('^[0-9 ()-]+$')]],
+      fax_number: ['', [Validators.pattern('^[0-9 ()-]+$')]],
+      email: [null, [Validators.required, Validators.email]],
+      website: ['', [Validators.maxLength(128)]],
 
-        email_2: [null, [Validators.required, Validators.email]],
-        password: [null, [Validators.required, Validators.minLength(8)]],
-    })
-
-    const today = new Date();
-    this.formDetails.patchValue({
-      date: today.toISOString().split('T')[0]
+      email_2: [null, [Validators.required, Validators.email]],
+      password: [null, [Validators.required, Validators.minLength(8)]],
     })
 
     this.formDetails.get('email')?.valueChanges.subscribe((newValue) => {
@@ -81,6 +83,55 @@ export class AddIndustryPartnerComponent {
     });
   }
   
+  async ngOnInit() {
+    // console.log(this.regions)
+    this.regions = await this.ls.getRegions()
+  }
+
+  async onRegionChange(region: any) {
+    let regCode = region.regCode
+    // console.log(region)
+    this.provinces = []
+    this.municipalities = []
+    this.barangays = []
+
+    this.formDetails.patchValue({
+      municipality: null,
+      province: null,
+      barangay: null,
+    })
+
+    console.log(this.formDetails.value)
+    this.provinces = await this.ls.getProvinces(regCode)
+  }
+
+  async onProvinceChange(province: any) {
+    // console.log(province)
+    
+    this.municipalities = []
+    this.barangays = []
+
+    this.formDetails.patchValue({
+      municipality: null,
+      barangay: null,
+    })
+
+    this.municipalities = await this.ls.getMunicipalities(province.provCode)
+  }
+  async onMunicipalityChange(municipality: any) {
+    // console.log(municipality)
+    
+    this.barangays = []
+
+    this.formDetails.patchValue({
+      barangay: null,
+    })
+
+    this.barangays = await this.ls.getBarangays(municipality.citymunCode)
+  }
+
+  
+
   uploadFile(event: any) {
     this.file = event.target.files[0];
   }
@@ -98,29 +149,30 @@ export class AddIndustryPartnerComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         this.ref.close(null);
-
-        const Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 2500,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-          }
-        });
-        Toast.fire({
-          icon: "error",
-          title: "Changes not saved."
-        });
+        this.gs.errorToastAlert('Changes not saved.')
       }
     });
   }
 
   submit() {
+    if(this.formDetails.invalid) {
+      const firstInvalidControl: HTMLElement = document.querySelector('form .ng-invalid')!;
+      
+      if (firstInvalidControl) {
+        firstInvalidControl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+  
+      this.formDetails.markAllAsTouched();
+      return;
+    }
+
+    if(!this.file) {
+      this.gs.errorAlert('Invalid Input!', 'Image is required')
+      return
+    }
+
     Swal.fire({
-      title: "Create?",
+      title: "Add?",
       text: "Are you sure you want to add this industry partner?",
       icon: "warning",
       showCancelButton: true,
@@ -136,64 +188,63 @@ export class AddIndustryPartnerComponent {
   }
 
   create() {
-    var payload = new FormData();
-
-    if(!this.file) {
-      this.gs.errorAlert('Invalid Input!', 'Image is required')
-      return
-    }
-    
-    Object.entries(this.formDetails.value).forEach(([key, value]) => {
-      if (value && typeof value === 'object' && !Array.isArray(value)) {
-        Object.entries(value).forEach(([subKey, subValue]) => {
-          if (subValue) {
-            payload.append(`${key}[${subKey}]`, subValue);
-          }
-        });
-      } else if (value) {
-        payload.append(key, String(value));
-      }
-      else {
-        payload.append(key, '');
-      }
-    });
-
-    if(this.file)
-      payload.append('image', this.file);
-
     if(this.isSubmitting) {
       return
     }
 
     this.isSubmitting = true
     
-    this.ds.post('superadmin/industryPartners', '', payload).subscribe(
+    var formData = new FormData();
+
+    formData.append('company_name', this.formDetails.get('company_name')?.value);
+    formData.append('description', this.formDetails.get('description')?.value);
+    formData.append('region', this.formDetails.get('region')?.value.regDesc);
+    formData.append('province', this.formDetails.get('province')?.value.provDesc);
+    formData.append('municipality', this.formDetails.get('municipality')?.value.citymunDesc);
+    formData.append('barangay', this.formDetails.get('barangay')?.value.brgyDesc);
+    formData.append('street', this.formDetails.get('street')?.value);
+    formData.append('telephone_number', this.formDetails.get('telephone_number')?.value);
+    formData.append('mobile_number', this.formDetails.get('mobile_number')?.value);
+    formData.append('fax_number', this.formDetails.get('fax_number')?.value);
+    formData.append('email', this.formDetails.get('email')?.value);
+    formData.append('website', this.formDetails.get('website')?.value);
+    formData.append('email_2', this.formDetails.get('email_2')?.value);
+    formData.append('password', this.formDetails.get('password')?.value);
+
+    const companyHead = this.formDetails.get('company_head')?.value;
+    formData.append('company_head[first_name]', companyHead.first_name);
+    formData.append('company_head[middle_name]', companyHead.middle_name);
+    formData.append('company_head[last_name]', companyHead.last_name);
+    formData.append('company_head[sex]', companyHead.sex);
+    formData.append('company_head[ext_name]', companyHead.ext_name);
+
+    formData.append('head_position', this.formDetails.get('head_position')?.value);
+
+    const supervisor = this.formDetails.get('immediate_supervisor')?.value;
+    formData.append('immediate_supervisor[first_name]', supervisor.first_name);
+    formData.append('immediate_supervisor[middle_name]', supervisor.middle_name);
+    formData.append('immediate_supervisor[last_name]', supervisor.last_name);
+    formData.append('immediate_supervisor[sex]', supervisor.sex);
+    formData.append('immediate_supervisor[ext_name]', supervisor.ext_name);
+
+    formData.append('supervisor_position', this.formDetails.get('supervisor_position')?.value);
+
+    formData.append('image', this.file);
+    
+    this.ds.post('superadmin/industryPartners', '', formData).subscribe(
       result => {
         this.isSubmitting = false
-        Swal.fire({
-          title: "Success!",
-          text: result.message,
-          icon: "success",
-        });
+        this.gs.successAlert(result.title, result.message)
         this.ref.close(result.data);
-        
       },
       error => {
         this.isSubmitting = false
         console.error(error)
         if (error.status == 422) {
-          Swal.fire({
-            title: "error!",
-            text: "Invalid input.",
-            icon: "error",
-          });
+          this.gs.errorAlert('Error!', "Invalid input.")
         }
         else {
-          Swal.fire({
-            title: "Oops!",
-            text: "Something went wrong, please try again later.",
-            icon: "error",
-          });
+          this.gs.errorAlert('Oops!', "Something went wrong, please try again later.")
         }
       }
     )
