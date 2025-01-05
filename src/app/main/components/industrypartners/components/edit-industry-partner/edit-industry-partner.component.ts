@@ -98,11 +98,6 @@ export class EditIndustryPartnerComponent {
       municipality: municipalityFormValue, 
       barangay: barangayFormValue
     })
-
-    console.log(this.formDetails.value)
-
-    
-    // console.log(this.formDetails)
   }
 
   async onRegionChange(region: any) {

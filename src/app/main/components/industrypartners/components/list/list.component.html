@@ -20,8 +20,13 @@
     <div class="card-container" *ngIf="filteredIndustryPartners.length > 0; else noItems">
         <div class="card" *ngFor="let industryPartner of filteredIndustryPartners; let i = index" [ngStyle]="{'animation-delay': (i * 0.1) + 's'} ">
           <img [src]="(industryPartner.image) ? industryPartner.image : 'assets/images/logo.png'" alt="logo image" class="card-image">
-          <h2>{{ industryPartner.company_name }}</h2>
-          <div class="location"> 
+          
+          <div class="info-section"> 
+            <mat-icon>apartment</mat-icon>
+            <h2>{{ industryPartner.company_name }}</h2>
+          </div>
+
+          <div class="info-section"> 
               <mat-icon>location_on</mat-icon>
               <p>{{ industryPartner.municipality }}<span *ngIf="industryPartner.province">, {{ industryPartner.province }}</span></p>
           </div>
