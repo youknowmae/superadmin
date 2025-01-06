@@ -155,15 +155,7 @@ body {
     padding: 0px 5px;
 }
 
-@keyframes fade-in {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-  
+
 .no-items-container {
     padding: 20px;
     animation: forwards fade-in .2s;

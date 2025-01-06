@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { IndustrypartnersRoutingModule } from './industrypartners-routing.module';
-import { IndustrypartnersComponent } from './industrypartners.component';
 import { ApplyComponent } from './components/apply/apply.component';
 import { ViewComponent } from './components/view/view.component';
 import { ListComponent } from './components/list/list.component';
@@ -15,8 +14,6 @@ import { LoadingSpinnerComponent } from '../../../components/login/loading-spinn
 
 @NgModule({
   declarations: [
-    // IndustrypartnersComponent
-
     ApplyComponent,
     ViewComponent,
     ListComponent,

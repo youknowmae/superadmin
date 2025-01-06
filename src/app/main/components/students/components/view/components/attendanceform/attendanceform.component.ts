@@ -24,7 +24,11 @@ export class AttendanceformComponent {
 
   dataSource: any = new MatTableDataSource<any>();
   
-  @ViewChild(MatPaginator, {static:true}) paginator!: MatPaginator;
+  @ViewChild(MatPaginator) set paginator(paginator: MatPaginator) {
+    if (paginator) {
+      this.dataSource.paginator = paginator;
+    }
+  }
 
   constructor(
     private paginatorIntl: MatPaginatorIntl, 
@@ -47,7 +51,6 @@ export class AttendanceformComponent {
         console.log(response)
 
         this.dataSource.data = response;
-        this.dataSource.paginator = this.paginator;
         
         this.tallyProgress()
         this.isLoading = false
