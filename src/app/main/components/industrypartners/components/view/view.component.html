@@ -57,8 +57,18 @@
                     </ul>
                 </div>
 
+                <div class="details-section" *ngIf="industryPartner.job_requirements">
+                    <div class="job-requirements">
+                        <p><b>Job/Skills Requirements:</b></p>
+
+                        <div class="items">
+                            <p *ngFor="let item of industryPartner.job_requirements"> {{ item }}</p>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="details-section">
-                    <p><b>Total Slots:</b> 20</p>
+                    <p><b>Total Slots:</b> {{ industryPartner.slots }} </p>
                 </div>
             </div>
         </div>

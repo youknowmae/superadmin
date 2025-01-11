@@ -74,6 +74,8 @@ export class AddIndustryPartnerComponent {
 
       email_2: [null, [Validators.required, Validators.email]],
       password: [null, [Validators.required, Validators.minLength(8)]],
+      
+      slots: [null,[Validators.required, Validators.min(1), Validators.max(50)]] 
     })
 
     this.formDetails.get('email')?.valueChanges.subscribe((newValue) => {
@@ -213,6 +215,7 @@ export class AddIndustryPartnerComponent {
       formData.append('website', this.formDetails.get('website')?.value);
     formData.append('email_2', this.formDetails.get('email_2')?.value);
     formData.append('password', this.formDetails.get('password')?.value);
+    formData.append('slots', this.formDetails.get('slots')?.value);
 
     const companyHead = this.formDetails.get('company_head')?.value;
     formData.append('company_head[first_name]', companyHead.first_name);
