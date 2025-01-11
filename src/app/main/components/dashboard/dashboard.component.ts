@@ -29,7 +29,7 @@ export class DashboardComponent implements AfterViewInit {
   public config: ChartConfiguration<'pie'> = {
     type: 'pie',
     data: {
-      labels: ['BSIT', 'BSCS', 'BSEMC', 'ACT'],
+      labels: ['BSIT', 'BSCS', 'BSEMC'],
       datasets: [{
         data: [0, 0, 0, 0],
         backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
@@ -53,7 +53,7 @@ export class DashboardComponent implements AfterViewInit {
   public barConfig: ChartConfiguration<'bar'> = {
     type: 'bar',
     data: {
-      labels: ['BSIT', 'BSCS', 'BSEMC', 'ACT'],
+      labels: ['BSIT', 'BSCS', 'BSEMC'],
       datasets: [
         {
           label: 'Pending',
