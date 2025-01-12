@@ -4,10 +4,10 @@
     justify-content: center;
     background: linear-gradient(
         to right,
-        #99B080 0%,
-        #99B080 50%,
-        #faf8ed 50%,
-        #faf8ed 100%
+        #EE7214 0%,
+        #EE7214 50%,
+        #F9E8D9 50%,
+        #F9E8D9 100%
     );
     width: 100%;
     height: 100vh;
@@ -128,7 +128,7 @@
     border: rgba(219, 130, 40, 0.5);
     border-top-left-radius: 10rem;
     border-bottom-right-radius: 10rem;
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
     display: flex;
     flex-direction: column;
 
