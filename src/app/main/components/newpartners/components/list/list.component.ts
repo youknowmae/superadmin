@@ -16,7 +16,7 @@ export class ListComponent {
   industryPartners: any = []
   isLoading: boolean = true
   
-  statusFilter: any = ''
+  statusFilter: any = 2
   searchFilter: string = ''
 
   pagination: pagination = <pagination>{};
@@ -46,7 +46,7 @@ export class ListComponent {
       response => {
         console.log(response)
         let partners = response.filter(
-          (data: any) => data.status == 2 || data.status == 3
+          (data: any) => data.status == 2 || data.status == 3 || data.status == 4
         )
         
         this.unfilteredIndustryPartners = partners.map((element: any) => {
@@ -54,6 +54,9 @@ export class ListComponent {
             element.status_text = 'For Approval'
           }
           else if(element.status == 3) {
+            element.status_text = 'Not Approved'
+          } 
+          else if(element.status == 4) {
             element.status_text = 'Approved'
           }
 

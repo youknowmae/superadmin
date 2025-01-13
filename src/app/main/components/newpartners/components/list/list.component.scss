@@ -122,14 +122,17 @@
       animation: fade-in 1s forwards; 
       opacity: 0;         
       will-change: opacity; 
-      
-      .location {
-        mat-icon {
-          font-size: 18px;
-        }
+  
+      .info-section {
         display: flex;
         align-items: center;
-        margin-bottom: 5px;
+        margin-bottom: 6px;
+  
+        mat-icon {
+          color: rgba(0,0,0,0.60);
+          margin-right: 5px;
+          overflow: visible;
+        }
       }
     }
   

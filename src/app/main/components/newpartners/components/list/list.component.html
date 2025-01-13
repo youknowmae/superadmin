@@ -23,7 +23,8 @@
                             <!-- null doesn't work so... yess -->
                             <mat-option [value]="''"> All</mat-option> 
                             <mat-option [value]="2"> For Approval</mat-option>
-                            <mat-option [value]="3"> Approved</mat-option>
+                            <mat-option [value]="3"> Not Approved</mat-option>
+                            <mat-option [value]="4"> Approved</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
@@ -34,36 +35,26 @@
             <div class="card" *ngFor="let industryPartner of industryPartners; let i = index" [ngStyle]="{'animation-delay': (i * 0.1) + 's'} ">
                 <div class="status" 
                 [class.pending]="industryPartner.status == 2"
-                [class.approved]="industryPartner.status == 3"
+                [class.rejected]="industryPartner.status == 3"
+                [class.approved]="industryPartner.status == 4"
                 >
                     <h3>{{ industryPartner.status_text  }}</h3>
                 </div>
     
-              <img [src]="(industryPartner.image) ? industryPartner.image : 'assets/images/logo.png'" alt="logo image" class="card-image">
-              <h2>{{ industryPartner.company_name }}</h2>
-              <div class="location"> 
-                <mat-icon>location_on</mat-icon>
-                <p>{{ industryPartner.municipality }}<span *ngIf="industryPartner.province">, {{ industryPartner.province }}</span></p>
-              </div>
+                <img [src]="(industryPartner.image) ? industryPartner.image : 'assets/images/logo.png'" alt="logo image" class="card-image">
+                <div class="info-section"> 
+                    <mat-icon>apartment</mat-icon>
+                    <h2>{{ industryPartner.company_name }}</h2>
+                </div>
+        
+                <div class="info-section"> 
+                    <mat-icon>location_on</mat-icon>
+                    <p>{{ industryPartner.municipality }}<span *ngIf="industryPartner.province">, {{ industryPartner.province }}</span></p>
+                </div>
       
                 <div class="action-buttons" *ngIf="industryPartner.status">
-                    <!-- <button class="delete" 
-                          mat-raised-button
-                          matTooltip="Delete"
-                          [matTooltipShowDelay] = "400" 
-                          (click)="deleteConfirmation(industryPartner.id)">
-                          <i class='bx bxs-trash'></i>
-                      </button>
-      
-                      <button class="edit" 
-                      mat-raised-button
-                      matTooltip="Edit"
-                      [matTooltipShowDelay] = "400"
-                      (click)="editIndustryPartner(industryPartner.id)">
-                          <i class='bx bxs-edit'></i>
-                      </button> -->
-      
                       <button class="view" 
+                      mat-ripple
                       mat-raised-button
                       matTooltip="View"
                       [matTooltipShowDelay] = "400"

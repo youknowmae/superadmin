@@ -3,7 +3,7 @@
       <h1>Industry Partners</h1>
       <div class="btn">
           <!-- <button [routerLink]="['../addnew']" routerLinkActive="router-link-active" >+ New</button> -->
-          <button (click)="addIndustryPartner()" >+ New</button>
+          <button mat-ripple (click)="addIndustryPartner()" >+ New</button>
       </div>
   </div>
 
@@ -34,6 +34,7 @@
             <div class="action-buttons">
                 <button class="delete" 
                       mat-raised-button
+                      mat-ripple
                       matTooltip="Delete"
                       [matTooltipShowDelay] = "400" 
                       (click)="deleteConfirmation(industryPartner.id)">
@@ -42,6 +43,7 @@
   
                   <button class="edit" 
                   mat-raised-button
+                  mat-ripple
                   matTooltip="Edit"
                   [matTooltipShowDelay] = "400"
                   (click)="editIndustryPartner(industryPartner.id)">
@@ -50,6 +52,7 @@
   
                   <button class="view" 
                   mat-raised-button
+                  mat-ripple
                   matTooltip="View"
                   [matTooltipShowDelay] = "400"
                   (click)="getIndustryPartner(industryPartner.id)" 

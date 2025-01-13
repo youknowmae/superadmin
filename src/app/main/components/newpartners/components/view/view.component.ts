@@ -19,6 +19,10 @@ export class ViewComponent {
 
   showPassword: boolean = false
   isSubmitting: boolean = false
+  
+  file: any
+  filePreview: any
+  isImage: boolean = false
 
   constructor(
     private us: UserService,
@@ -30,7 +34,8 @@ export class ViewComponent {
   ) {
     this.accountDetails = this.fb.group({
       email: [null, [Validators.required, Validators.email]],
-      password: [null, [Validators.required, Validators.minLength(8)]]
+      password: [null, [Validators.required, Validators.minLength(8)]],
+      slots: [null,[Validators.required, Validators.min(1), Validators.max(50)]] 
     })
     
   }
@@ -78,7 +83,15 @@ export class ViewComponent {
 
     this.isSubmitting = true
 
-    this.ds.post('superadmin/request/industryPartners/', this.industryPartner.id, this.accountDetails.value).subscribe(
+    const formdata = new FormData
+
+    formdata.append('mou', this.file)
+    formdata.append('email', this.accountDetails.value.email)
+    formdata.append('password', this.accountDetails.value.password)
+    formdata.append('slots', this.accountDetails.value.slots)
+
+
+    this.ds.post('superadmin/request/industryPartners/', this.industryPartner.id, formdata).subscribe(
       response => {
         this.isSubmitting = false
         console.log(response)
@@ -101,4 +114,70 @@ export class ViewComponent {
   sanitizeUrl(url: string) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url)
   }
+
+  uploadFile(event: any) {
+    this.file = event.target.files[0];
+
+    let file = this.file
+
+    const fileType = file.type;
+
+      if (fileType.startsWith('image/')) {
+        this.isImage = true;
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.filePreview = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      } 
+
+      else if (fileType === 'application/pdf') {
+        this.isImage = false;
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.filePreview = this.sanitizer.bypassSecurityTrustResourceUrl(e.target.result +  '#toolbar=0&navpanes=0&scrollbar=0');
+        };
+        reader.readAsDataURL(file);
+      } 
+    }
+
+
+    reject() {
+      Swal.fire({
+        title: "Please state the reason for not approving.",
+        input: "text",
+        inputAttributes: {
+          autocapitalize: "off"
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Reject',
+        cancelButtonText: 'Cancel',
+        confirmButtonColor: "#ff4141",
+        cancelButtonColor: "#777777",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const formData = new FormData
+          formData.append('remarks', result.value)
+          this.ds.post('superadmin/request/industryPartners/reject/', this.industryPartner.id, formData).subscribe(
+            response => {
+              this.gs.successAlert(response.title, response.message)
+              this.router.navigate(['main/newpartners/list'])
+              this.industryPartner.status = 3
+            },
+            error => {
+              console.error(error)
+              if(error.status === 409) {
+                this.gs.errorAlert(error.error.title, error.error.message)
+              }
+              else if(error.status === 422) { 
+                this.gs.errorAlert(error.error.title, error.error.error)
+              }
+              else {
+                this.gs.errorAlert("Oops!", "Something went wrong. Please try again later.")
+              }
+            }
+          )
+        }
+      });
+    }
 }

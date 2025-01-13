@@ -23,70 +23,97 @@
                     </div>
                     <div class="container-info">
                         <div class="info">
-                            <div class="company-name">
-                                <h3>{{ industryPartner.company_name }}</h3>
+                            <div class="details-section">
+                                <h2>{{ industryPartner.company_name }}</h2>
                                 <p>{{ industryPartner.description }}</p>
                             </div>
-    
-                            <h4>Company Head:</h4>
-                            <p> {{ industryPartner.company_head.full_name }}, {{ industryPartner.head_position }}</p>
-    
-                            <h4>Immediate Supervisor :</h4>
-                            <p> {{ industryPartner.immediate_supervisor.full_name }}, {{ industryPartner.supervisor_position }}</p>
                             
-                            <ul>
-                                <li>
-                                  <span>Company Address: </span>
-                                  {{ industryPartner.street }}
-                                  {{ industryPartner.barangay }}
-                                  {{ industryPartner.municipality }}
-                                </li>
-                                <li>
-                                  <span>Official Email Address: </span>
-                                  {{ industryPartner.email }}
-                                </li>
-                                <li *ngIf="industryPartner.telephone_number">
-                                  <span>Telephone Number: </span>
-                                  {{ industryPartner.telephone_number }}
-                                </li>
-                                <li *ngIf="industryPartner.fax_number">
-                                  <span>Fax Number: </span>
-                                  {{ industryPartner.fax_number }}
-                                </li>
-                                <li>
-                                  <span>Contact Number: </span>
-                                  {{ industryPartner.mobile_number }}
-                                </li>
-                                <li *ngIf="industryPartner.website">
-                                  <span>Website: </span>
-                                  {{ industryPartner.website }}
-                                </li>
-                            </ul>
+                            <div class="details-section">
+                                <p> <b>Company Head:</b> {{ industryPartner.company_head.full_name }}, {{ industryPartner.head_position }}</p>
+                            </div>
+                            
+                            <div class="details-section">
+                                <p> <b>Immediate Supervisor :</b> {{ industryPartner.immediate_supervisor.full_name }}, {{ industryPartner.supervisor_position }}</p>
+                            </div>
+            
+                            
+                            <div class="details-section">
+                                <ul>
+                                    <li>
+                                        <mat-icon>location_on</mat-icon>
+                                        <p><b>Company Address: </b> {{  industryPartner.full_address }}</p> 
+                                    </li>
+                                    <li>
+                                        <mat-icon>mail</mat-icon>
+                                        <p><b>Official Email Address:</b> {{ industryPartner.email }}</p>
+                                    </li>
+                                    <li *ngIf="industryPartner.telephone_number">
+                                        <mat-icon>call</mat-icon>
+                                        <p><b>Telephone Number:</b> {{ industryPartner.telephone_number }}</p>
+                                    </li>
+                                    <li *ngIf="industryPartner.fax_number">
+                                        <mat-icon>fax</mat-icon>
+                                        <p><b>Fax Number:</b> {{ industryPartner.fax_number }}</p>
+                                    </li>
+                                    <li>
+                                        <mat-icon>call</mat-icon>
+                                        <p><b>Contact Number:</b> {{ industryPartner.mobile_number }}</p>
+                                    </li>
+                                    <li *ngIf="industryPartner.website">
+                                        <mat-icon>public</mat-icon>
+                                        <p><b>Website:</b> {{ industryPartner.website }}</p>
+                                    </li>
+                                </ul>   
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="stepper-content">
+                    <div *ngIf="industryPartner.remarks">
+                        <h4 style="margin: 0; font-weight: 600;" >Remarks:</h4>
+                        <p>{{ industryPartner.remarks }}</p>
+                    </div>
+                </div>
                 <div>
-                  <button mat-button matStepperNext>Next</button>
+                    <button mat-button mat-ripple *ngIf="industryPartner.status != 3" matStepperNext>Next</button>
+                    <button class="warning" mat-ripple *ngIf="industryPartner.status === 2" (click)="reject()">Not Recommend</button>
                 </div>
             </mat-step>
-            <mat-step>
+            <mat-step *ngIf="industryPartner.status != 3">
                 <ng-template matStepLabel>MOU</ng-template>
                 
                 <div class="stepper-content">
-                    <div class="preview-container">
+                    <!-- <div class="preview-container">
                         <object [data]="sanitizeUrl(industryPartner.mou.file_location)" width="100%" height="550px"></object>
+                    </div> -->
+                    
+                    <!-- ;else mouPreview -->
+                    <div class="stepper-content">
+                        <div class="row" >
+                            <div class="col-md-4">
+                                <div class="file-input-container"> 
+                                    <div class="label"> Upload MOU </div>
+                                    <input class="file-input" type="file" accept=".jpeg, .png, .jpg, .svg, .pdf" (change)="uploadFile($event)"> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="preview-container" *ngIf="filePreview">
+                            <img *ngIf="isImage" [src]="filePreview" alt="File Preview" class="image-preview">
+                            <object *ngIf="!isImage" [data]="filePreview" width="100%" height="550px"></object>
+                        </div>
                     </div>
                 </div>
 
                 <div>
-                    <button mat-button matStepperNext (click)="showPassword = false"  *ngIf="industryPartner.status === 2">Next</button>
+                    <button mat-button matStepperNext (click)="showPassword = false"  *ngIf="industryPartner.status === 2" [disabled]="!file">Next</button>
                     <button mat-button matStepperPrevious>Back</button>
                 </div>
             </mat-step>
             <mat-step [stepControl]="accountDetails" *ngIf="industryPartner.status === 2">
                 <ng-template matStepLabel>Account Details</ng-template>
                     <form [formGroup]="accountDetails" class="step-content">
-                        <p>All fields are required for account creation, and the password must be at least 8 characters long.</p>
+                        <p class="sub-text">All fields are required for account creation, and the password must be at least 8 characters long.</p>
                         <div class="content">
                             <div class="col-md-4">
                                 <mat-form-field appearance="outline">
@@ -103,6 +130,12 @@
                                     </mat-icon>
                                 </mat-form-field>
                             </div>
+                            <div class="col-md-4">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Slots</mat-label>
+                                    <input type="text" matInput formControlName="slots" type="number">
+                                </mat-form-field>
+                            </div>
                         </div>
                         
                         <div>
@@ -115,7 +148,7 @@
             <mat-step [stepControl]="accountDetails"  *ngIf="industryPartner.status === 2">
               <ng-template matStepLabel>Review</ng-template>
               <div class="step-content">
-                <p>You are now done. Please review the content before proceeding.</p>
+                <p class="sub-text">You are now done. Please review the content before proceeding.</p>
                 <h2>Company Details</h2>
                 <div class="details">
                     <div class="image">
@@ -123,45 +156,48 @@
                     </div>
                     <div class="container-info">
                         <div class="info">
-                            <div class="company-name">
-                                <h3>{{ industryPartner.company_name }}</h3>
+                            <div class="details-section">
+                                <h2>{{ industryPartner.company_name }}</h2>
                                 <p>{{ industryPartner.description }}</p>
                             </div>
-    
-                            <h4>Company Head:</h4>
-                            <p> {{ industryPartner.company_head.full_name }}, {{ industryPartner.head_position }}</p>
-    
-                            <h4>Immediate Supervisor :</h4>
-                            <p> {{ industryPartner.immediate_supervisor.full_name }}, {{ industryPartner.supervisor_position }}</p>
                             
-                            <ul>
-                                <li>
-                                  <span>Company Address: </span>
-                                  {{ industryPartner.street }}
-                                  {{ industryPartner.barangay }}
-                                  {{ industryPartner.municipality }}
-                                </li>
-                                <li>
-                                  <span>Official Email Address: </span>
-                                  {{ industryPartner.email }}
-                                </li>
-                                <li *ngIf="industryPartner.telephone_number">
-                                  <span>Telephone Number: </span>
-                                  {{ industryPartner.telephone_number }}
-                                </li>
-                                <li *ngIf="industryPartner.fax_number">
-                                  <span>Fax Number: </span>
-                                  {{ industryPartner.fax_number }}
-                                </li>
-                                <li>
-                                  <span>Contact Number: </span>
-                                  {{ industryPartner.mobile_number }}
-                                </li>
-                                <li *ngIf="industryPartner.website">
-                                  <span>Website: </span>
-                                  {{ industryPartner.website }}
-                                </li>
-                            </ul>
+                            <div class="details-section">
+                                <p> <b>Company Head:</b> {{ industryPartner.company_head.full_name }}, {{ industryPartner.head_position }}</p>
+                            </div>
+                            
+                            <div class="details-section">
+                                <p> <b>Immediate Supervisor :</b> {{ industryPartner.immediate_supervisor.full_name }}, {{ industryPartner.supervisor_position }}</p>
+                            </div>
+            
+                            
+                            <div class="details-section">
+                                <ul>
+                                    <li>
+                                        <mat-icon>location_on</mat-icon>
+                                        <p><b>Company Address: </b> {{  industryPartner.full_address }}</p> 
+                                    </li>
+                                    <li>
+                                        <mat-icon>mail</mat-icon>
+                                        <p><b>Official Email Address:</b> {{ industryPartner.email }}</p>
+                                    </li>
+                                    <li *ngIf="industryPartner.telephone_number">
+                                        <mat-icon>call</mat-icon>
+                                        <p><b>Telephone Number:</b> {{ industryPartner.telephone_number }}</p>
+                                    </li>
+                                    <li *ngIf="industryPartner.fax_number">
+                                        <mat-icon>fax</mat-icon>
+                                        <p><b>Fax Number:</b> {{ industryPartner.fax_number }}</p>
+                                    </li>
+                                    <li>
+                                        <mat-icon>call</mat-icon>
+                                        <p><b>Contact Number:</b> {{ industryPartner.mobile_number }}</p>
+                                    </li>
+                                    <li *ngIf="industryPartner.website">
+                                        <mat-icon>public</mat-icon>
+                                        <p><b>Website:</b> {{ industryPartner.website }}</p>
+                                    </li>
+                                </ul>   
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -180,6 +216,13 @@
                             <mat-icon matSuffix (click)="showPassword = !showPassword" style="cursor: pointer;">
                                 {{ showPassword ? 'visibility' : 'visibility_off' }}
                             </mat-icon>
+                        </mat-form-field>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Slots</mat-label>
+                            <input type="text" matInput [value]="accountDetails.get('slots')?.value" readonly>
                         </mat-form-field>
                     </div>
                 </div>
