@@ -77,7 +77,7 @@
                 </div>
                 <div>
                     <button mat-button mat-ripple *ngIf="industryPartner.status != 3" matStepperNext>Next</button>
-                    <button class="warning" mat-ripple *ngIf="industryPartner.status === 2" (click)="reject()">Not Recommend</button>
+                    <button class="warning" mat-ripple *ngIf="industryPartner.status === 2" (click)="reject()">Not Approved</button>
                 </div>
             </mat-step>
             <mat-step *ngIf="industryPartner.status != 3">
