@@ -1,4 +1,4 @@
-import Swal from "sweetalert2";
+import Swal, { SweetAlertIcon } from "sweetalert2";
 import { Injectable } from "@angular/core";
 import { pagination } from "../model/pagination.model";
 
@@ -96,5 +96,19 @@ export class GeneralService {
   
       return pagination
     }
+
+    createConfirmationAlert(title: string, text: string, icon: SweetAlertIcon) {
+      let swalInstance = Swal.mixin({
+        title,
+        text,
+        icon,
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No',
+        confirmButtonColor: "#AB0E0E",
+        cancelButtonColor: "#777777",
+      })
+      return swalInstance
+    }    
     
 }
