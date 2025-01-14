@@ -154,6 +154,7 @@
 
 .step-content {
     padding: 10px 20px;
+    min-height: 150px;
 }
 
 .file-input-container{
@@ -219,3 +220,19 @@
     color: var(--warning-color) !important;
     background-color: white !important;
 }
+
+.download {
+    width: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(-10px);
+    color: var(--primary-color);
+    font-size: 36px;
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+
+    .icon {
+      z-index: 300;
+    }
+  }

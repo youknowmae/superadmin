@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { DomSanitizer } from '@angular/platform-browser';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-view',
@@ -111,6 +112,23 @@ export class ViewComponent {
     )
   }
 
+  downloadDocx() {
+    this.isSubmitting = true
+    
+    this.ds.download('superadmin/request/industryPartners/mou/', this.industryPartner.id).subscribe(
+      (response: Blob) => {
+        saveAs(response, 'MOU.docx');
+        this.isSubmitting = false
+      },
+      error => {
+        this.gs.errorAlert('Error!', 'Something went wrong. Please try again later.')
+        console.error(error)
+        this.isSubmitting = false
+
+      }
+    )
+  }
+  
   sanitizeUrl(url: string) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url)
   }
