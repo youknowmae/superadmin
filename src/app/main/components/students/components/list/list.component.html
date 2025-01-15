@@ -89,8 +89,8 @@
             <td mat-cell *matCellDef="let element" class="col-md-2" style="
                 flex-direction: column;">  
                 {{ (element.status === "Pending") ? 'N/A' :  element.progress + ' hrs' + '/' + element.active_ojt_class.required_hours + ' hrs' }} 
-                <p class="sub-text" *ngIf="element.progress >= element.active_ojt_class.required_hours">Completed</p>
-                <p class="sub-text" *ngIf="element.status == 'Ongoing'"> {{ getProgressPercentage(element.progress, element.active_ojt_class.required_hours) }}%</p>
+                <!-- <p class="sub-text" *ngIf="element.progress >= element.active_ojt_class.required_hours">Completed</p> -->
+                <p class="sub-text" *ngIf="element.status == 'Ongoing' || element.status == 'Completed'"> {{ getProgressPercentage(element.progress, element.active_ojt_class.required_hours) }}% Completed</p>
             </td>
         </ng-container>
 
