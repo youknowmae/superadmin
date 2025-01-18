@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Observable, Subject, catchError, tap } from 'rxjs';
 import { apiUrl } from '../config/config';
 import { UserService } from './user.service';
+import { GeneralService } from './general.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class AuthService {
     constructor(
         private router: Router, 
         private http: HttpClient,
-        private userService: UserService
+        private userService: UserService,
+        private gs: GeneralService
     ) { }
 
     login(credentials: {email: string, password: string}) {
@@ -21,19 +23,11 @@ export class AuthService {
             tap((response => {
                 if(response.token){
                     sessionStorage.setItem('userLogState', 'true')
-                    sessionStorage.setItem('token', response.token)
 
-                    // let course = response.user.student_courses[0].course_code
+                    let encryptedToken = this.gs.encrypt(response.token)
+                    sessionStorage.setItem('token', encryptedToken)
 
-                    // let required_hours = 0
-                    // if(course === 'ITP132') {
-                    //     required_hours = 500
-                    // }
-                    // else if (course === 'ITP131') {
-                    //     required_hours = 200
-                    // }
-
-                this.userService.setUser(response.user)
+                    this.userService.setUser(response.user)
 
                     this.router.navigate(['/main'])
                 }

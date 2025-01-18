@@ -1,6 +1,7 @@
 import Swal, { SweetAlertIcon } from "sweetalert2";
 import { Injectable } from "@angular/core";
 import { pagination } from "../model/pagination.model";
+import * as CryptoJS from 'crypto-js';
 
 @Injectable({
   providedIn: 'root'
@@ -110,5 +111,30 @@ export class GeneralService {
       })
       return swalInstance
     }    
+
+    
+    private secretKey = 'kjSj48U6G0H0BwC'; 
+    
+    encrypt(data: any): string {
+      try {
+        return CryptoJS.AES.encrypt(JSON.stringify(data), this.secretKey).toString();
+      } catch (error) {
+        console.error('Encryption error:', error);
+        return '';
+      }
+    }
+  
+    decrypt(cipherText: string): any {
+      try {
+        const bytes = CryptoJS.AES.decrypt(cipherText, this.secretKey);
+        if (bytes.toString()) {
+          return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+        }
+        return null;
+      } catch (error) {
+        console.error('Decryption error:', error);
+        return null;
+      }
+    } 
     
 }

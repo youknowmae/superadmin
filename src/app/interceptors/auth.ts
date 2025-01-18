@@ -9,12 +9,14 @@ import {
 } from '@angular/common/http';
 
 import { Observable, tap } from 'rxjs';
+import { GeneralService } from '../services/general.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
     constructor(
-        @Inject(PLATFORM_ID) private platformId: any
+        @Inject(PLATFORM_ID) private platformId: any,
+        private gs: GeneralService
     ) {}
   
     intercept(request: HttpRequest<any>, next: HttpHandler) {
@@ -23,11 +25,13 @@ export class AuthInterceptor implements HttpInterceptor {
             return next.handle(request);
         }
 
-        const token = sessionStorage.getItem('token')
+        let token = sessionStorage.getItem('token')
         
         if(!token){
             return next.handle(request);
         }
+
+        token = this.gs.decrypt(token)
     
         const authReq = request.clone({
             headers: request.headers.set('Authorization', `Bearer ${token}`)

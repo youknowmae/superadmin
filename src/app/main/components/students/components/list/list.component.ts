@@ -212,16 +212,138 @@ export class ListComponent {
     }
   }
 
+  // async generateExcelContent(data: any) {
+  //   const header = [
+  //     'No.',
+  //     'Last Name', 
+  //     'First Name', 
+  //     'Student Number', 
+  //     'Program', 
+  //     'Year Level', 
+  //     'Course', 
+  //     'Class Code', 
+  //     'Required OJT Hours', 
+  //     'Rendered OJT Hours',
+  //     'Student Evaluation', 
+  //     'Exit Poll',
+  //     'Remarks'
+  //   ]
+
+  //   const excel = new ExcelJS.Workbook();
+
+  //   try {
+  //     const gcImageResponse = await fetch("assets/images/GC.png");
+  //     const gcImageBlob = await gcImageResponse.blob();
+  //     const gcImageBase64 = await this.blobToBase64(gcImageBlob);
+      
+  //     const gcLogo = excel.addImage({
+  //       base64: gcImageBase64,
+  //       extension: "png",
+  //     });
+      
+  //     const ccsImageResponse = await fetch("assets/images/ccs.png");
+  //     const ccsImageBlob = await ccsImageResponse.blob();
+  //     const ccsImageBase64 = await this.blobToBase64(ccsImageBlob);
+      
+  //     const ccsLogo = excel.addImage({
+  //       base64: ccsImageBase64,
+  //       extension: "png",
+  //     });
+      
+  //     Object.entries(data)
+  //     .map(([class_code, students]: [string, any]) => {
+  //       const worksheet = excel.addWorksheet('Class ' + class_code);
+  
+  //       worksheet.addImage(gcLogo, {
+  //         tl: { col: 0, row: 0 },
+  //         ext: { width: 120, height: 120 },
+  //         editAs: "absolute",
+  //       });
+  
+  //       worksheet.addImage(ccsLogo, {
+  //         tl: { col: 11, row: 0 },
+  //         ext: { width: 120, height: 120 },
+  //         editAs: "absolute",
+  //       });
+  
+  //       worksheet.mergeCells("A2:M2");
+  //       worksheet.getCell("A2").value = "Gordon College";
+  //       worksheet.getCell("A2").alignment = {
+  //         vertical: "middle",
+  //         horizontal: "center",
+  //       };
+  //       worksheet.getCell("A2").font = { size: 16, bold: true };
+  
+  //       worksheet.mergeCells("A3:M3");
+  //       worksheet.getCell("A3").value = "College of Computer Studies";
+  //       worksheet.getCell("A3").alignment = {
+  //         vertical: "middle",
+  //         horizontal: "center",
+  //       };
+  //       worksheet.getCell("A3").font = { size: 12 };
+  
+  //       worksheet.mergeCells("A4:M4");
+  //       worksheet.getCell("A4").value = "A.Y. 2024-2025";
+  //       worksheet.getCell("A4").alignment = {
+  //         vertical: "middle",
+  //         horizontal: "center",
+  //       };
+  //       worksheet.getCell("A4").font = { size: 12 };
+  
+  //       worksheet.addRow([]); 
+  //       worksheet.addRow([]);
+  
+  //       worksheet.addRow(header)
+  
+  //       let counter = 1
+  //       students.forEach((student: any) => {
+  //         worksheet.addRow([
+  //           counter,
+  //           student.last_name,
+  //           student.first_name,
+  //           student.student_profile.student_number,
+  //           student.student_profile.program,
+  //           student.student_profile.year_level,
+  //           student.active_ojt_class.course_code,
+  //           student.active_ojt_class.class_code,
+  //           student.active_ojt_class.required_hours,
+  //           student.progress,
+  //           (student.student_evaluation) ? student.student_evaluation : 'Not Evaluated',
+  //           (student.ojt_exit_poll) ? 'Answered' : 'Not Completed',
+  //           (student.status === 'Completed') ? 'Completed': 'Incomplete',
+  //         ]);
+  //         counter++
+  //       });
+
+  //       worksheet.columns.forEach((column: any) => {
+  //         let maxLength = 0;
+  //         column.eachCell({ includeEmpty: true }, (cell: any) => {
+  //           if (cell.row >= 7) {  //start checking from row 7 onwards. Cuzzz yknow header nasa taas nakakabasag ng format
+  //             const cellValue = cell.value ? cell.value.toString() : '';
+  //             maxLength = Math.max(maxLength, cellValue.length);
+  //           }
+  //         });
+  //         column.width = maxLength < 10 ? 10 : maxLength;
+  //       });
+  //     })
+
+  //     return excel; // Return the excel workbook
+  //   } catch (error) {
+  //     console.error("Error in convertExcel:", error);
+  //     return false
+  //   }
+
+  // }
+
+  
   async generateExcelContent(data: any) {
     const header = [
       'No.',
       'Last Name', 
       'First Name', 
       'Student Number', 
-      'Program', 
-      'Year Level', 
-      'Course', 
-      'Class Code', 
+      'Seminar Hours', 
+      'Other Works', 
       'Required OJT Hours', 
       'Rendered OJT Hours',
       'Student Evaluation', 
@@ -249,52 +371,97 @@ export class ListComponent {
         base64: ccsImageBase64,
         extension: "png",
       });
+
+      var currentPageLine = 0;
       
+      var worksheet: any
+
+      const pageSetup: Partial<ExcelJS.PageSetup>  = {
+        orientation: 'landscape', 
+        paperSize: 9, // A4 paper size
+        fitToPage: true,
+        fitToWidth: 1, // Fit to one page width
+        fitToHeight: 0, // Fit to unlimited page height
+      };
+
+      if(this.classFilter == 'all') {
+        worksheet = excel.addWorksheet('All Classes', {
+          pageSetup,
+        });
+      }
+
+
+      var items: any = [];
+      
+
+
       Object.entries(data)
-      .map(([class_code, students]: [string, any]) => {
-        const worksheet = excel.addWorksheet('Class ' + class_code);
+      .map(([class_course_code, students]: [string, any]) => {
+        if(this.classFilter != 'all') {
+          worksheet = excel.addWorksheet('Class ' + class_course_code, {
+            pageSetup,
+          });
+        }
   
         worksheet.addImage(gcLogo, {
-          tl: { col: 0, row: 0 },
+          tl: { col: 0, row: currentPageLine },
           ext: { width: 120, height: 120 },
           editAs: "absolute",
         });
   
         worksheet.addImage(ccsLogo, {
-          tl: { col: 11, row: 0 },
+          tl: { col: 9, row: currentPageLine },
           ext: { width: 120, height: 120 },
           editAs: "absolute",
         });
   
-        worksheet.mergeCells("A2:M2");
-        worksheet.getCell("A2").value = "Gordon College";
-        worksheet.getCell("A2").alignment = {
+        currentPageLine += 1
+        worksheet.mergeCells(`A${currentPageLine+1}:K${currentPageLine+1}`);
+        worksheet.getCell(`A${currentPageLine+1}`).value = "Gordon College";
+        worksheet.getCell(`A${currentPageLine+1}`).alignment = {
           vertical: "middle",
           horizontal: "center",
         };
-        worksheet.getCell("A2").font = { size: 16, bold: true };
+        worksheet.getCell(`A${currentPageLine+1}`).font = { size: 16, bold: true };
   
-        worksheet.mergeCells("A3:M3");
-        worksheet.getCell("A3").value = "College of Computer Studies";
-        worksheet.getCell("A3").alignment = {
+        currentPageLine += 1
+
+        worksheet.mergeCells(`A${currentPageLine+1}:K${currentPageLine+1}`);
+        worksheet.getCell(`A${currentPageLine+1}`).value = "College of Computer Studies";
+        worksheet.getCell(`A${currentPageLine+1}`).alignment = {
           vertical: "middle",
           horizontal: "center",
         };
-        worksheet.getCell("A3").font = { size: 12 };
+        worksheet.getCell(`A${currentPageLine+1}`).font = { size: 12 };
+
+        currentPageLine += 1
   
-        worksheet.mergeCells("A4:M4");
-        worksheet.getCell("A4").value = "A.Y. 2024-2025";
-        worksheet.getCell("A4").alignment = {
+        worksheet.mergeCells(`A${currentPageLine + 1}:K${currentPageLine + 1}`);
+        worksheet.getCell(`A${currentPageLine + 1}`).value = "A.Y. 2024-2025";
+        worksheet.getCell(`A${currentPageLine + 1}`).alignment = {
           vertical: "middle",
           horizontal: "center",
         };
-        worksheet.getCell("A4").font = { size: 12 };
+        worksheet.getCell(`A${currentPageLine + 1}`).font = { size: 12 };
+        currentPageLine += 1;
+
+        worksheet.mergeCells(`A${currentPageLine + 1}:K${currentPageLine + 1}`);
+        worksheet.getCell(`A${currentPageLine + 1}`).value = "Class " + class_course_code;
+        worksheet.getCell(`A${currentPageLine + 1}`).alignment = {
+          vertical: "middle",
+          horizontal: "center",
+        };
+        worksheet.getCell(`A${currentPageLine + 1}`).font = { size: 12 };
+        currentPageLine += 1;
   
         worksheet.addRow([]); 
-        worksheet.addRow([]);
+
+        currentPageLine += 1
   
         worksheet.addRow(header)
+        currentPageLine += 1
   
+        let itemStartingLine =  currentPageLine
         let counter = 1
         students.forEach((student: any) => {
           worksheet.addRow([
@@ -302,10 +469,8 @@ export class ListComponent {
             student.last_name,
             student.first_name,
             student.student_profile.student_number,
-            student.student_profile.program,
-            student.student_profile.year_level,
-            student.active_ojt_class.course_code,
-            student.active_ojt_class.class_code,
+            student.seminar_hours_total,
+            student.other_task_total_hours,
             student.active_ojt_class.required_hours,
             student.progress,
             (student.student_evaluation) ? student.student_evaluation : 'Not Evaluated',
@@ -313,26 +478,51 @@ export class ListComponent {
             (student.status === 'Completed') ? 'Completed': 'Incomplete',
           ]);
           counter++
+          currentPageLine++
         });
 
-        worksheet.columns.forEach((column: any) => {
+        items.push({start: itemStartingLine, end: currentPageLine})
+        console.log(items)
+
+        if(this.classFilter != 'all') {
+          worksheet.columns.forEach((column: any) => {
+            let maxLength = 0;
+            column.eachCell({ includeEmpty: true }, (cell: any) => {
+              if (cell.row >= 7) { 
+                const cellValue = cell.value ? cell.value.toString() : '';
+                maxLength = Math.max(maxLength, cellValue.length);
+              }
+            });
+            column.width = maxLength < 6 ? 6 : maxLength + 1;
+          });
+          currentPageLine = 0
+        } 
+        else {
+          worksheet.getRow(currentPageLine).addPageBreak()
+          currentPageLine += 1
+        }
+      })
+      
+      worksheet.columns.forEach((column: any) => {
           let maxLength = 0;
           column.eachCell({ includeEmpty: true }, (cell: any) => {
-            if (cell.row >= 7) {  //start checking from row 7 onwards. Cuzzz yknow header nasa taas nakakabasag ng format
-              const cellValue = cell.value ? cell.value.toString() : '';
-              maxLength = Math.max(maxLength, cellValue.length);
-            }
+            items.forEach((item: any) => {
+              if (cell.row >= item.start && cell.row <= item.end) { 
+                const cellValue = cell.value ? cell.value.toString() : '';
+                maxLength = Math.max(maxLength, cellValue.length);
+              }
+            });
+            
           });
-          column.width = maxLength < 10 ? 10 : maxLength;
+          column.width = maxLength < 6 ? 6 : maxLength + 1;
         });
-      })
-
       return excel; // Return the excel workbook
+
+
     } catch (error) {
       console.error("Error in convertExcel:", error);
       return false
     }
-
   }
 
   blobToBase64(blob: Blob): Promise<string> {
