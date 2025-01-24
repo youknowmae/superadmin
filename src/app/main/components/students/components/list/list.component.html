@@ -30,7 +30,7 @@
                 <mat-label>Class Filter</mat-label>
                 <mat-select disableRipple (selectionChange)="onClassFilterChange($event)" [(value)]="classFilter">
                     <mat-option value="all"> All Classes</mat-option>
-                    <mat-option *ngFor="let option of classList" [value]="option"> {{ option }} </mat-option>
+                    <mat-option *ngFor="let option of classList" [value]="option.value"> {{ option.label}} </mat-option>
                 </mat-select>
             </mat-form-field>
         </div>

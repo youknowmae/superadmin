@@ -12,6 +12,7 @@ import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@a
 import { AuthInterceptor } from './interceptors/auth';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialsModules } from './modules/materials.module';
+import { ResponseInterceptor } from './interceptors/response.interceptor';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { MaterialsModules } from './modules/materials.module';
       withInterceptorsFromDi()
     ),
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ResponseInterceptor, multi: true },
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     provideAnimationsAsync()
   ],

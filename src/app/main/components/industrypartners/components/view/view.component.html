@@ -1,78 +1,85 @@
-<div class="container">
-    <div class="back-btn" [routerLink]="['../../list']" routerLinkActive="router-link-active">
-        <span class="icon">
-            <i class="fa-solid fa-arrow-left"></i>
-        </span>
-        <span class="btn-name">
-            Back
-        </span>
-    </div>
-
-    <div class="card">
-        <div class="image">
-            <img [src]="(industryPartner.image) ? industryPartner.image : 'assets/images/logo.png'" alt="logo image">
-        </div>
-        <div class="container-info">
-            <div class="info">
-                <div class="details-section">
-                    <h2>{{ industryPartner.company_name }}</h2>
-                    <p>{{ industryPartner.description }}</p>
-                </div>
-                
-                <div class="details-section">
-                    <p> <b>Company Head:</b> {{ industryPartner.company_head.full_name }}, {{ industryPartner.head_position }}</p>
-                </div>
-                
-                <div class="details-section">
-                    <p> <b>Immediate Supervisor :</b> {{ industryPartner.immediate_supervisor.full_name }}, {{ industryPartner.supervisor_position }}</p>
-                </div>
-
-
-                <div class="details-section">
-                    <ul>
-                        <li>
-                            <mat-icon>location_on</mat-icon>
-                            <p><b>Company Address: </b> {{  industryPartner.full_address }}</p> 
-                        </li>
-                        <li>
-                            <mat-icon>mail</mat-icon>
-                            <p><b>Official Email Address:</b> {{ industryPartner.email }}</p>
-                        </li>
-                        <li *ngIf="industryPartner.telephone_number">
-                            <mat-icon>call</mat-icon>
-                            <p><b>Telephone Number:</b> {{ industryPartner.telephone_number }}</p>
-                        </li>
-                        <li *ngIf="industryPartner.fax_number">
-                            <mat-icon>fax</mat-icon>
-                            <p><b>Fax Number:</b> {{ industryPartner.fax_number }}</p>
-                        </li>
-                        <li>
-                            <mat-icon>call</mat-icon>
-                            <p><b>Contact Number:</b> {{ industryPartner.mobile_number }}</p>
-                        </li>
-                        <li *ngIf="industryPartner.website">
-                            <mat-icon>public</mat-icon>
-                            <p><b>Website:</b> {{ industryPartner.website }}</p>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="details-section" *ngIf="industryPartner.job_requirements">
-                    <div class="job-requirements">
-                        <p><b>Job/Skills Requirements:</b></p>
-
-                        <div class="items">
-                            <p *ngFor="let item of industryPartner.job_requirements"> {{ item }}</p>
+<ng-container *ngIf="!isLoading; else loading">
+    <div class="container">
+        <button mat-button mat-ripple class="back-btn" [routerLink]="['../list']" routerLinkActive="router-link-active">
+            <span class="icon">
+                <i class="fa-solid fa-arrow-left"></i>
+            </span>
+            <p>
+                Back
+            </p>
+        </button>
+    
+        <div class="card card-accent">
+            <div class="image">
+                <img [src]="(industryPartner.image) ? industryPartner.image : 'assets/images/logo.png'" alt="logo image">
+            </div>
+            <div class="container-info">
+                <div class="info">
+                    <div class="details-section">
+                        <h2>{{ industryPartner.company_name }}</h2>
+                        <p>{{ industryPartner.description }}</p>
+                    </div>
+                    
+                    <div class="details-section">
+                        <p> <b>Company Head:</b> {{ industryPartner.company_head.full_name }}, {{ industryPartner.head_position }}</p>
+                    </div>
+                    
+                    <div class="details-section">
+                        <p> <b>Immediate Supervisor :</b> {{ industryPartner.immediate_supervisor.full_name }}, {{ industryPartner.supervisor_position }}</p>
+                    </div>
+    
+    
+                    <div class="details-section">
+                        <ul>
+                            <li>
+                                <mat-icon>location_on</mat-icon>
+                                <p><b>Company Address: </b> {{  industryPartner.full_address }}</p> 
+                            </li>
+                            <li>
+                                <mat-icon>mail</mat-icon>
+                                <p><b>Official Email Address:</b> {{ industryPartner.email }}</p>
+                            </li>
+                            <li *ngIf="industryPartner.telephone_number">
+                                <mat-icon>call</mat-icon>
+                                <p><b>Telephone Number:</b> {{ industryPartner.telephone_number }}</p>
+                            </li>
+                            <li *ngIf="industryPartner.fax_number">
+                                <mat-icon>fax</mat-icon>
+                                <p><b>Fax Number:</b> {{ industryPartner.fax_number }}</p>
+                            </li>
+                            <li>
+                                <mat-icon>call</mat-icon>
+                                <p><b>Contact Number:</b> {{ industryPartner.mobile_number }}</p>
+                            </li>
+                            <li *ngIf="industryPartner.website">
+                                <mat-icon>public</mat-icon>
+                                <p><b>Website:</b> {{ industryPartner.website }}</p>
+                            </li>
+                        </ul>
+                    </div>
+    
+                    <div class="details-section" *ngIf="industryPartner.job_requirements">
+                        <div class="job-requirements">
+                            <p><b>Job/Skills Requirements:</b></p>
+    
+                            <div class="items">
+                                <p *ngFor="let item of industryPartner.job_requirements"> {{ item }}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                
-                <div class="details-section">
-                    <p><b>Total Slots:</b> {{ industryPartner.slots }} </p>
+                    
+                    <div class="details-section">
+                        <p><b>Total Slots:</b> {{ industryPartner.slots }} </p>
+                    </div>
                 </div>
             </div>
         </div>
+        
     </div>
-    
-</div>
+</ng-container>
+
+<ng-template #loading>
+    <app-loading-spinner></app-loading-spinner>
+</ng-template>
+
 

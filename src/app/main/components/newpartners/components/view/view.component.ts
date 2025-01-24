@@ -25,6 +25,8 @@ export class ViewComponent {
   filePreview: any
   isImage: boolean = false
 
+  isLoading: boolean = true
+
   constructor(
     private us: UserService,
     private ds: DataService, 
@@ -46,18 +48,49 @@ export class ViewComponent {
   }
 
   getAddRequest() {
-    let request = this.us.getIndustryPartnerAddRequest()
+    let id = this.us.getIndustryPartnerAddRequest()
 
-    if(!request) {
+    if(!id) {
       this.router.navigate(['main/newpartners/list'])
       return
     }
+    
+    this.ds.get('superadmin/request/industryPartners/', id).subscribe(
+      response => {
+        console.log(response)
 
-    this.industryPartner = request
+        let industryPartner = response
 
-    this.accountDetails.patchValue({
-      email: this.industryPartner.email
-    })
+        let companyHead = industryPartner.company_head;
+        let fullName = `${companyHead?.first_name || ''} ${companyHead?.last_name || ''} ${companyHead?.ext_name || ''}`.trim();
+        industryPartner.company_head.full_name = fullName;
+
+        let supervisor = industryPartner.immediate_supervisor;
+        let supervisorFullName = `${supervisor?.first_name || ''} ${supervisor?.last_name || ''} ${supervisor?.ext_name || ''}`.trim();
+        industryPartner.immediate_supervisor.full_name = supervisorFullName;
+        
+        this.industryPartner = industryPartner
+        
+        this.accountDetails.patchValue({
+          email: industryPartner.email
+        })
+
+        this.isLoading = false
+      },
+      error => {
+        if(error.status === 404) {
+          this.router.navigate(['main/newpartners/list'])
+          this.gs.errorAlert('Not Found!', 'The industry partner approval not found.')
+        }
+        else {
+          this.gs.errorAlert('Oops!', 'Something went wrong. Please try again later.')
+        }
+
+        console.error(error)
+        this.isLoading = false
+      }
+    )
+
   }
 
   approveConfirmation() {

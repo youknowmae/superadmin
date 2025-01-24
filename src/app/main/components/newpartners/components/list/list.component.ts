@@ -76,34 +76,8 @@ export class ListComponent {
   }
 
   viewRequestDetails(id: number) {
-    this.ds.get('superadmin/request/industryPartners/', id).subscribe(
-      response => {
-        console.log(response)
-
-        let industryPartner = response
-
-        let companyHead = industryPartner.company_head;
-        let fullName = `${companyHead?.first_name || ''} ${companyHead?.last_name || ''} ${companyHead?.ext_name || ''}`.trim();
-        industryPartner.company_head.full_name = fullName;
-
-        let supervisor = industryPartner.immediate_supervisor;
-        let supervisorFullName = `${supervisor?.first_name || ''} ${supervisor?.last_name || ''} ${supervisor?.ext_name || ''}`.trim();
-        industryPartner.immediate_supervisor.full_name = supervisorFullName;
-        
-        this.us.setIndustryPartnerAddRequest(response)
-        this.router.navigate(['main/newpartners/view'])
-      },
-      error => {
-        if(error.status === 404) {
-          this.gs.errorAlert('Not Found!', 'The item your looking for is not existing.')
-        }
-        else {
-          this.gs.errorAlert('Oops!', 'Something went wrong. Please try again later.')
-        }
-
-        console.error(error)
-      }
-    )
+    this.us.setIndustryPartnerAddRequest(id)
+    this.router.navigate(['main/newpartners/view'])
   }
 
   onStatusFilterChange(event: MatSelectChange) {

@@ -3,6 +3,7 @@ import { IndustryPartner } from '../../../../../model/industry-partner.model';
 import { GeneralService } from '../../../../../services/general.service';
 import { UserService } from '../../../../../services/user.service';
 import { Router } from '@angular/router';
+import { DataService } from '../../../../../services/data.service';
 
 @Component({
   selector: 'app-view',
@@ -12,11 +13,14 @@ import { Router } from '@angular/router';
 export class ViewComponent {
   industryPartner: any
   student: any
+  
+  isLoading: boolean = true
 
   constructor(
     private gs: GeneralService,
     private us: UserService,
     private router: Router,
+    private ds: DataService
   ) {
   }
 
@@ -26,7 +30,44 @@ export class ViewComponent {
   }
   
   getIndustryPartner() {
-    this.industryPartner = this.us.getIndustryPartner()
+    let id = this.us.getIndustryPartner()
+
+    if(!id) {
+      this.router.navigate(['main/industrypartners/list'])
+    }
+
+    
+    this.ds.get('superadmin/industryPartners/', id).subscribe(
+      industryPartner => {
+        let companyHead = industryPartner.company_head;
+        let fullName = `${companyHead?.first_name || ''} ${companyHead?.last_name || ''} ${companyHead?.ext_name || ''}`.trim();
+        industryPartner.company_head.full_name = fullName;
+
+        let supervisor = industryPartner.immediate_supervisor;
+        let supervisorFullName = `${supervisor?.first_name || ''} ${supervisor?.last_name || ''} ${supervisor?.ext_name || ''}`.trim();
+        industryPartner.immediate_supervisor.full_name = supervisorFullName;
+
+        let full_address = `${industryPartner?.street || ''} ${industryPartner?.barangay || ''}, ${industryPartner?.municipality || ''}`
+        industryPartner.full_address = full_address
+        
+        console.log(industryPartner)
+
+        this.industryPartner = industryPartner
+
+        this.isLoading = false
+      },
+      error => {
+        this.isLoading = false
+        console.error(error)
+        if(error.status === 404) {
+          this.router.navigate(['main/industrypartners/list'])
+          this.gs.errorAlert('Not Found!', 'Industry Partner not found.')
+        }
+        else {
+          this.gs.errorAlert('Oops!', 'Something went wrong. Please try again later.')
+        }
+      }
+    )      
   }
 
   navigateToApplication(id: number) {

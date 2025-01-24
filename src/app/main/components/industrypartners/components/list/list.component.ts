@@ -65,38 +65,8 @@ export class ListComponent {
   }
 
   getIndustryPartner(id: number) {
-    if(this.isGettingPartner) {
-      return
-    }
-
-    this.isGettingPartner = true
-    
-    this.ds.get('superadmin/industryPartners/', id).subscribe(
-      industryPartner => {
-        let full_address = `${industryPartner?.street || ''} ${industryPartner?.barangay || ''}, ${industryPartner?.municipality || ''}`
-        industryPartner.full_address = full_address
-
-        let companyHead = industryPartner.company_head;
-        let fullName = `${companyHead?.first_name || ''} ${companyHead?.last_name || ''} ${companyHead?.ext_name || ''}`.trim();
-        industryPartner.company_head.full_name = fullName;
-
-        let supervisor = industryPartner.immediate_supervisor;
-        let supervisorFullName = `${supervisor?.first_name || ''} ${supervisor?.last_name || ''} ${supervisor?.ext_name || ''}`.trim();
-        industryPartner.immediate_supervisor.full_name = supervisorFullName;
-
-        this.us.setIndustryPartner(industryPartner)
-        console.log(industryPartner)
-        this.router.navigate(['main/industrypartners/view/' + id])
-        this.isGettingPartner = false
-      },
-      error => {
-        console.error(error)
-        if(error.status === 404) {
-          this.gs.errorAlert('Error!', 'Industry Partner not found.')
-          this.isGettingPartner = false
-        }
-      }
-    )
+    this.us.setIndustryPartner(id)
+    this.router.navigate(['main/industrypartners/view'])
   }
 
   addIndustryPartner() {

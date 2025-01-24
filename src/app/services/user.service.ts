@@ -14,21 +14,22 @@ interface User {
 })
 
 export class UserService {
-    industryPartner: string = 'industryPartner'
-    studentProfile: string = 'studentProfile'
-    industryPartnerAddRequest: string = 'industryPartnerAddRequest'
+    user: string = btoa('user')
+    industryPartner: string = btoa('industryPartner')
+    studentProfile: string = btoa('studentProfile')
+    industryPartnerAddRequest: string = btoa('industryPartnerAddRequest')
 
     constructor(
-        @Inject(PLATFORM_ID) private platformId: any,
         private gs: GeneralService
     ) {}
+    
     setUser(user: User) {
         let encryptedData = this.gs.encrypt(user)
-        sessionStorage.setItem('user', encryptedData)
+        sessionStorage.setItem(this.user, encryptedData)
     }
 
     getUser() {
-        let user = sessionStorage.getItem('user')
+        let user = sessionStorage.getItem(this.user)
 
         if(!user) {
             return null
