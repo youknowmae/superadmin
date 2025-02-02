@@ -87,7 +87,7 @@ export class StudentprofileComponent {
         this.personality_test = response
       },
       error => {
-        console.error(error)
+        // console.error(error)
       }
     )
   }
@@ -136,7 +136,7 @@ export class StudentprofileComponent {
         console.log(this.ojtInfo)
       },
       error => {
-        console.error(error)
+        // console.error(error)
       }
     )
   }

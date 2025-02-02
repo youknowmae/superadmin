@@ -16,8 +16,7 @@ export class AuthService {
     constructor(
         private router: Router, 
         private http: HttpClient,
-        private userService: UserService,
-        private gs: GeneralService
+        private us: UserService,
     ) { }
 
     login(credentials: {email: string, password: string}) {
@@ -25,12 +24,9 @@ export class AuthService {
         return this.http.post<any>(`${this.apiUrl}login/superadmin`, credentials).pipe(
             tap((response => {
                 if(response.token){
-                    sessionStorage.setItem('userLogState', 'true')
-
-                    let encryptedToken = this.gs.encrypt(response.token)
-                    sessionStorage.setItem(this.token, encryptedToken)
-
-                    this.userService.setUser(response.user)
+                    this.us.setUserLogState()
+                    this.us.setToken(response.token)
+                    this.us.setUser(response.user)
 
                     this.router.navigate(['/main'])
                 }

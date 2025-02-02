@@ -16,6 +16,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSortModule } from "@angular/material/sort";
 
 const var_modules = [
     MatFormFieldModule,
@@ -36,7 +37,8 @@ const var_modules = [
     MatProgressSpinnerModule,
     MatTabsModule,
     MatSidenavModule,  
-    MatRippleModule  
+    MatRippleModule,
+    MatSortModule  
 ]
 
 @NgModule({

@@ -39,6 +39,7 @@ export class ExitPollComponent {
     this.ds.get('superadmin/students/exit-poll/', user.id).subscribe(
       exitPollDetails=> {  
         this.isLoading = false
+        exitPollDetails = exitPollDetails.data
 
         let supervisor = exitPollDetails.industry_partner.immediate_supervisor;
         let supervisorFullName = `${supervisor?.first_name || ''} ${supervisor?.last_name || ''} ${supervisor?.ext_name || ''}`.trim();

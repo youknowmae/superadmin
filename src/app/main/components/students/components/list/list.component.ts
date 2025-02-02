@@ -12,6 +12,7 @@ import * as ExcelJS from 'exceljs';
 
 import { saveAs } from 'file-saver';
 import { MatSelectChange } from '@angular/material/select';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-list',
@@ -20,7 +21,7 @@ import { MatSelectChange } from '@angular/material/select';
 })
 export class ListComponent {
   // displayedColumns: string[] = ['name', 'student_number', 'course', 'program', 'year_level', 'progress', 'student_evaluation', 'exit_poll',  'status', 'actions'];
-  displayedColumns: string[] = ['name', 'company', 'progress', 'student_evaluation', 'exit_poll', 'status', 'actions'];
+  displayedColumns: string[] = ['full_name', 'company', 'progress', 'student_evaluation', 'exit_poll', 'status', 'actions'];
 
   unfilteredStudents: any
   dataSource: any = new MatTableDataSource<any>();
@@ -32,6 +33,12 @@ export class ListComponent {
   classFilter: string = 'all'
   
   @ViewChild(MatPaginator, {static:true}) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+  }
+
   
   constructor(
     private paginatorIntl: MatPaginatorIntl, 
@@ -126,11 +133,19 @@ export class ListComponent {
             status = 'Pending - without application'
           }
 
+          let student_evaluation = (student.student_evaluation) ?  student.student_evaluation : 'N/A'
+          let exit_poll = (student.ojt_exit_poll) ? 'Answered' : 'Not Completed'
+
+          let company = (student.accepted_application) ? student.accepted_application.company_name: 'N/A'
+
           return {
             full_name: student.first_name + " " + student.last_name,
             progress,
             status,
-            ...student
+            company,
+            exit_poll,
+            ...student,
+            student_evaluation,
           } 
         })
 

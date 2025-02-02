@@ -106,11 +106,6 @@ export class EvaluationComponent {
     this.ds.get('superadmin/students/evaluation/', user.id).subscribe(
       evaluation => {
         this.isLoading = false
-        if(!evaluation) {
-          this.isEmpty = true
-          return
-        }
-
         this.evaluation = evaluation
     
         this.formDetails.patchValue({
@@ -126,7 +121,12 @@ export class EvaluationComponent {
         }
       },
       error => {
-        this.gs.errorAlert('Oops!', 'Something went wrong. Please try again later.')
+        if(error.status === 404) {
+          this.isEmpty = true
+        }
+        else {
+          this.gs.errorAlert('Oops!', 'Something went wrong. Please try again later.')
+        }
         this.isLoading = false
         console.error(error)
       }
