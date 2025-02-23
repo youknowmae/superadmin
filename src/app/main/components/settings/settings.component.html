@@ -3,38 +3,103 @@
 </div>
 
 <ng-container *ngIf="!isLoading; else loading">
-    <div class="card-container">
-        <div class="card" *ngIf="duration.length > 0">
-            <h3>Practicum Hours</h3>
-        
-            <div class="ojt-hours">
-                <form [formGroup]="ojtDurationFormDetails" >
-                    <div formArrayName="duration">
-                        <ng-container *ngFor="let durationForm of duration.controls; index as i;">
-                            <div class="practicum" [formGroupName]="i">
-                                <h4> {{ duration.at(i).get('course_code')?.value }} </h4>
-                    
-                                <div class="input">
-                                    <mat-form-field appearance="outline" floatLabel="always">
-                                        <mat-label>Practicum Hours</mat-label>
-                                        <input matInput type="number" formControlName="required_hours" placeholder="Duration">
-                                    </mat-form-field>
+    <div class="container">
+        <div class="card-container">
+            <div class="card" *ngIf="duration.length > 0">
+                <h3>Practicum Hours</h3>
+                <h4>BSIT</h4>
+                <div class="ojt-hours">
+                    <form [formGroup]="ojtDurationFormDetails" >
+                        <div formArrayName="duration">
+                            <ng-container *ngFor="let durationForm of duration.controls; index as i;">
+                                <div class="practicum" [formGroupName]="i">
+                                    <h4> {{ duration.at(i).get('course_code')?.value }} </h4>
+                        
+                                    <div class="input">
+                                        <mat-form-field appearance="outline" floatLabel="always">
+                                            <mat-label>Practicum Hours</mat-label>
+                                            <input matInput type="number" formControlName="required_hours" placeholder="Duration">
+                                        </mat-form-field>
+                                    </div>
                                 </div>
-                            </div>
-                        </ng-container>  
-                    </div>
-                    
-                    <div class="btn">
-                        <button type="button" [disabled]="ojtDurationFormDetails.invalid" (click)="savePracticumHours()">Save</button>
-                    </div>
-                </form>
+                            </ng-container>  
+                        </div>
+                    </form>
+                </div>
+    
+                <h4>BSCS</h4>
+                <div class="ojt-hours">
+                    <form [formGroup]="ojtDurationFormDetails" >
+                        <div formArrayName="duration">
+                            <ng-container *ngFor="let durationForm of duration.controls; index as i;">
+                                <div class="practicum" [formGroupName]="i">
+                                    <h4> {{ duration.at(i).get('course_code')?.value }} </h4>
+                        
+                                    <div class="input">
+                                        <mat-form-field appearance="outline" floatLabel="always">
+                                            <mat-label>Practicum Hours</mat-label>
+                                            <input matInput type="number" formControlName="required_hours" placeholder="Duration">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </ng-container>  
+                        </div>
+                    </form>
+                </div>
+    
+                <h4>BSEMC</h4>
+                <div class="ojt-hours">
+                    <form [formGroup]="ojtDurationFormDetails" >
+                        <div formArrayName="duration">
+                            <ng-container *ngFor="let durationForm of duration.controls; index as i;">
+                                <div class="practicum" [formGroupName]="i">
+                                    <h4> {{ duration.at(i).get('course_code')?.value }} </h4>
+                        
+                                    <div class="input">
+                                        <mat-form-field appearance="outline" floatLabel="always">
+                                            <mat-label>Practicum Hours</mat-label>
+                                            <input matInput type="number" formControlName="required_hours" placeholder="Duration">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </ng-container>  
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="btn">
+                    <button type="button" [disabled]="ojtDurationFormDetails.invalid" (click)="savePracticumHours()">Save</button>
+                </div>
+            </div>
+            <!-- invisible control ye? -->
+            <div style="width: 50%;">
+            </div>
+        </div>
+    
+        <div class="history-container">
+            <div class="history-header">
+                <h3>Modification History</h3>
+                <div class="filter-dropdown">
+                    <label for="historyFilter">Filter:</label>
+                    <select id="historyFilter" [(ngModel)]="selectedFilter">
+                        <option value="all">All</option>
+                        <option value="bsit">BSIT</option>
+                        <option value="bscs">BSCS</option>
+                        <option value="bsemc">BSEMC</option>
+                    </select>
+                </div>
             </div>
         
-        </div>
-        <!-- invisible control ye? -->
-        <div style="width: 50%;">
-        </div>
-    </div>
+            <div class="history-list">
+                <div *ngFor="let entry of filteredHistory()" class="history-entry">
+                    <h4>{{ entry.course_code }} ({{ entry.category.toUpperCase() }})</h4>
+                    <p><strong>Previous Hours:</strong> {{ entry.previous_hours }}</p>
+                    <p><strong>Last Modified:</strong> {{ entry.last_modified }}</p>
+                    <p><strong>Modified By:</strong></p>
+                </div>
+            </div>
+        </div>                
+    </div>    
 </ng-container>
 
 <ng-template #loading>

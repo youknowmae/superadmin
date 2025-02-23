@@ -11,10 +11,13 @@ import { GeneralService } from '../../../services/general.service';
   styleUrl: './settings.component.scss'
 })
 export class SettingsComponent {
-  ojtDurationFormDetails: FormGroup
+  ojtDurationFormDetails: FormGroup;
+  isSubmitting: boolean = false;
+  isLoading: boolean = true;
 
-  isSubmitting: boolean = false
-  isLoading: boolean = true
+  // Dropdown filter
+  selectedFilter: string = 'all';
+  historyEntries: any[] = [];
 
   constructor(
     private ds: DataService,
@@ -24,36 +27,59 @@ export class SettingsComponent {
   ) {
     this.ojtDurationFormDetails = this.fb.group({
       duration: this.fb.array([]),
-    })
+    });
   }
-  
+
   get duration() {
     return this.ojtDurationFormDetails.controls["duration"] as FormArray;
   }
 
   ngOnInit() {
-    this.getOjtHours()
+    this.getOjtHours();
+    this.getModificationHistory();
   }
 
   getOjtHours() {
     this.ds.get('superadmin/settings/required-ojt-hours').subscribe(
       response => {
-        console.log(response)
+        console.log(response);
         response.forEach((element: any) => {
           const settingForm: FormGroup = this.fb.group({
-            course_code: [element.course_code,[Validators.required]],
-            required_hours: [element.required_hours,[Validators.required, Validators.min(100), Validators.max(900), Validators.pattern("^[0-9]*$"),]],
-          })
-          
-          this.duration.push(settingForm)
+            course_code: [element.course_code, [Validators.required]],
+            required_hours: [element.required_hours, [Validators.required, Validators.min(100), Validators.max(900), Validators.pattern("^[0-9]*$")]],
+          });
+
+          this.duration.push(settingForm);
         });
-        this.isLoading = false
+        this.isLoading = false;
       },
       error => {
-        console.error(error)
-        this.isLoading = false
+        console.error(error);
+        this.isLoading = false;
       }
-    )
+    );
+  }
+
+  getModificationHistory() {
+    this.ds.get('superadmin/settings/modification-history').subscribe(
+      response => {
+        console.log('Modification History:', response);
+        this.historyEntries = response.map((entry: any) => ({
+          course_code: entry.course_code,
+          category: entry.category.toLowerCase(),
+          previous_hours: entry.previous_hours,
+          last_modified: entry.last_modified
+        }));
+      },
+      error => {
+        console.error(error);
+      }
+    );
+  }
+
+  filteredHistory() {
+    return this.selectedFilter === 'all' ? this.historyEntries : 
+           this.historyEntries.filter(entry => entry.category === this.selectedFilter);
   }
 
   savePracticumHours() {
@@ -69,30 +95,27 @@ export class SettingsComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         if(this.isSubmitting){
-          return
+          return;
         }
 
-        this.isSubmitting = true
+        this.isSubmitting = true;
         
-        console.log(this.ojtDurationFormDetails.value)
+        console.log(this.ojtDurationFormDetails.value);
         this.ds.post('superadmin/settings/required-ojt-hours', '', this.ojtDurationFormDetails.value).subscribe(
           response => {
-            this.isSubmitting = false
-            this.gs.successToastAlert(response.message)
+            this.isSubmitting = false;
+            this.gs.successToastAlert(response.message);
           },
           error => {
-            this.isSubmitting = false
+            this.isSubmitting = false;
             if(error.status === 422) {
-              this.gs.errorAlert('Invalid Input!', 'Please check the input.')
-
+              this.gs.errorAlert('Invalid Input!', 'Please check the input.');
+            } else {
+              this.gs.errorAlert('Oops!', 'Something went wrong. Please try again later.');
             }
-            else {
-              this.gs.errorAlert('Oops!', 'Something went wrong. Please try again later')
-
-            }
-            console.error(error)
+            console.error(error);
           }
-        )
+        );
       }
     });
   }

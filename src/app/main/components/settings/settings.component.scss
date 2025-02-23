@@ -6,6 +6,11 @@ mat-form-field {
     font-size: 14px;
 }
 
+.container {
+    display: flex;
+    justify-content: space-evenly;
+}
+
 h1 {
     color: var(--main-orange);
     opacity: .7;
@@ -19,6 +24,8 @@ h1 {
     padding: 10px 20px;
     display: flex;
     flex-wrap: wrap;
+    width: 50%;
+
 
 }
 .card {
@@ -37,9 +44,13 @@ h1 {
         font-size: 20px;
         font-weight: 550;
         color: var(--primary-color);
+        margin-bottom: 10px;
     }
 
-    
+    h4 {
+        color: var(--primary-color);
+        font-size: 18px;
+    }
 
     .btn {
         display: flex;
@@ -78,6 +89,74 @@ h1 {
         .input {
             padding: 5px 15px;
             width: 250px;
+        }
+    }
+}
+
+.history-container {
+    width: 40%;
+    padding: 15px;
+    border: 2px solid var(--primary-color);
+    border-radius: 1.5rem;
+    background-color: white;
+    margin: 15px;
+    position: relative;
+
+    .history-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+
+        h3 {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .filter-dropdown {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+
+            label {
+                font-size: 14px;
+                font-weight: 500;
+                color: var(--primary-color);
+            }
+
+            select {
+                padding: 5px;
+                font-size: 14px;
+                border-radius: 5px;
+                border: 1px solid #ccc;
+                cursor: pointer;
+                background-color: white;
+            }
+        }
+    }
+
+    .history-list {
+        .history-entry {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 10px;
+
+            h4 {
+                font-size: 16px;
+                color: var(--main-orange);
+                margin-bottom: 5px;
+            }
+
+            p {
+                font-size: 14px;
+                margin: 3px 0;
+                color: var(--secondary-color);
+            }
+        }
+
+        .hidden {
+            display: none;
         }
     }
 }
