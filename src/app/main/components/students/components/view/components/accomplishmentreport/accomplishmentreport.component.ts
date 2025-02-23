@@ -45,7 +45,7 @@ export class AccomplishmentreportComponent {
     }, {} as Record<K, T[]>);
     
   computeWeeklyAttendance(data: any) {
-    let weeklyAttendance: any = this.groupBy(data, (item: any) => item.week_of_year)
+    let weeklyAttendance: any = this.groupBy(data, (item: any) => new Date(item.date).getFullYear() + " " + item.week_of_year)
 
     weeklyAttendance = Object.entries(weeklyAttendance).map(([week, accomplishment_report]: [string, any]) => { 
                                       var accumulated_hours: number = 0
