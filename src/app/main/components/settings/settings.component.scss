@@ -123,6 +123,8 @@ h1 {
     }
 
     .history-list {
+        max-height: 350px;
+        overflow-y: auto;
         .history-entry {
             padding: 10px;
             border-bottom: 1px solid #ccc;

@@ -18,6 +18,7 @@ export class SettingsComponent {
   // Dropdown filter
   selectedFilter: string = 'all';
   historyEntries: any[] = [];
+  course: any = []
 
   constructor(
     private ds: DataService,
@@ -44,6 +45,8 @@ export class SettingsComponent {
       response => {
         console.log(response);
         response.forEach((element: any) => {
+          this.course.push(element.course_code)
+
           const settingForm: FormGroup = this.fb.group({
             course_code: [element.course_code, [Validators.required]],
             required_hours: [element.required_hours, [Validators.required, Validators.min(100), Validators.max(900), Validators.pattern("^[0-9]*$")]],
@@ -74,7 +77,9 @@ export class SettingsComponent {
 
   filteredHistory() {
     return this.selectedFilter === 'all' ? this.historyEntries : 
-           this.historyEntries.filter(entry => entry.category === this.selectedFilter);
+        this.historyEntries.filter(item => {
+          return item.action_desc.includes(this.selectedFilter)
+        });
   }
 
   savePracticumHours() {
@@ -100,6 +105,7 @@ export class SettingsComponent {
           response => {
             this.isSubmitting = false;
             this.gs.successToastAlert(response.message);
+            this.getModificationHistory()
           },
           error => {
             this.isSubmitting = false;
