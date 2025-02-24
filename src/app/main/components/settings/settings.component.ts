@@ -61,15 +61,10 @@ export class SettingsComponent {
   }
 
   getModificationHistory() {
-    this.ds.get('superadmin/settings/modification-history').subscribe(
+    this.ds.get('superadmin/settings/ojt-hours-history').subscribe(
       response => {
-        console.log('Modification History:', response);
-        this.historyEntries = response.map((entry: any) => ({
-          course_code: entry.course_code,
-          category: entry.category.toLowerCase(),
-          previous_hours: entry.previous_hours,
-          last_modified: entry.last_modified
-        }));
+        this.historyEntries = response
+        console.log(response)
       },
       error => {
         console.error(error);

@@ -30,37 +30,38 @@
                     <button type="button" [disabled]="ojtDurationFormDetails.invalid" (click)="savePracticumHours()">Save</button>
                 </div>
             </div>
-            <!-- invisible control ye? -->
-            <div style="width: 50%;">
-            </div>
+
+            <div class="card">
+                <div class="history-header">
+                    <h3>Modification History</h3>
+                    <div class="filter-dropdown">
+                        <label for="historyFilter">Filter:</label>
+                        <select id="historyFilter" [(ngModel)]="selectedFilter">
+                            <option value="all">All</option>
+                            <option value="bsit">BSIT</option>
+                            <option value="bscs">BSCS</option>
+                            <option value="bsemc">BSEMC</option>
+                        </select>
+                    </div>
+                </div>
+            
+                <div class="history-list" *ngIf="historyEntries.length > 0; else noItems">
+                    <div *ngFor="let entry of historyEntries" class="history-entry" >
+                        <p>{{ entry.user.first_name + ' ' + entry.user.last_name }} {{ entry.action_desc }} at {{ entry.created_at }} </p>
+                    </div>
+                </div>
+            </div>      
         </div>
-    
-        <div class="history-container">
-            <div class="history-header">
-                <h3>Modification History</h3>
-                <div class="filter-dropdown">
-                    <label for="historyFilter">Filter:</label>
-                    <select id="historyFilter" [(ngModel)]="selectedFilter">
-                        <option value="all">All</option>
-                        <option value="bsit">BSIT</option>
-                        <option value="bscs">BSCS</option>
-                        <option value="bsemc">BSEMC</option>
-                    </select>
-                </div>
-            </div>
-        
-            <div class="history-list">
-                <div *ngFor="let entry of filteredHistory()" class="history-entry">
-                    <h4>{{ entry.course_code }} ({{ entry.category.toUpperCase() }})</h4>
-                    <p><strong>Previous Hours:</strong> {{ entry.previous_hours }}</p>
-                    <p><strong>Last Modified:</strong> {{ entry.last_modified }}</p>
-                    <p><strong>Modified By:</strong></p>
-                </div>
-            </div>
-        </div>                
+              
     </div>    
 </ng-container>
 
 <ng-template #loading>
     <app-loading-spinner></app-loading-spinner>
+</ng-template>
+
+<ng-template #noItems>
+    <div class="no-items-container">
+        <p>Sorry, no data found</p>
+    </div>
 </ng-template>
