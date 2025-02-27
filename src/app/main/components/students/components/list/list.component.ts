@@ -145,8 +145,7 @@ export class ListComponent {
           }
 
           let courseCode = student?.active_ojt_class?.course_code;
-          console.log(courseCode);
-
+          
           const level_2 = ['ITP422', 'CS422', 'DAP421'];
           const level_1 = ['ITP131', 'CS131', 'EMC131'];
           let practicum_level;
