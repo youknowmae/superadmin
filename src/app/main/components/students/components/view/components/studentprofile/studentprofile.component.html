@@ -140,9 +140,8 @@
               </div>
           </div>
       </div>
-  
       <!-- seminars and training -->
-      <div class="content">
+      <div class="content" *ngIf="student.practicum_level === 1">
         <h3>Seminars and Training Attended related to IT</h3>
         <div class="table-container">
           <div class="table">
@@ -164,38 +163,146 @@
               </div>
             </div>
             <div class="table-row" *ngFor="let seminar of seminars">
-              <div class="col-md-3"> 
-                <p>{{ seminar.seminar_title }}</p> 
+              <div class="col-md-3">
+                <p>{{ seminar.seminar_title }}</p>
               </div>
-              <div class="col-md-3"> 
-                <p>{{ seminar.venue }}</p> 
+              <div class="col-md-3">
+                <p>{{ seminar.venue }}</p>
               </div>
-              <div class="col-md-2"> 
-                <p>{{ seminar.date }}</p> 
+              <div class="col-md-2">
+                <p>{{ seminar.date }}</p>
               </div>
-              <div class="col-md-2"> 
-                <p>{{ seminar.total_hours }}</p> 
+              <div class="col-md-2">
+                <p>{{ seminar.total_hours }}</p>
               </div>
-              <div class="col-md-2"> 
+              <div class="col-md-2">
                 <div class="actions">
-                  <button class="view" 
-                  mat-raised-button
-                  matTooltip="View"
-                  [matTooltipShowDelay] = "400"
-                  (click)="viewSeminarImage(seminar)">
-                      <i class='bx bx-detail' ></i>
+                  <button
+                    class="view"
+                    mat-raised-button
+                    matTooltip="View"
+                    [matTooltipShowDelay]="400"
+                    (click)="viewSeminarImage(seminar)"
+                  >
+                    <i class="bx bx-detail"></i>
                   </button>
                 </div>
               </div>
             </div>
             <div class="table-row">
-              <p>Total Hours: {{ seminar_total_hours }} </p>
+              <p>Total Hours: {{ seminar_total_hours }}</p>
             </div>
-          </div>  
+          </div>
         </div>
       </div>
       <!-- seminars and training end -->
   
+      <div class="content" *ngIf="student.practicum_level === 1">
+        <h3>Other task/Activities</h3>
+        <div class="table-container">
+          <div class="table">
+            <div class="table-row">
+              <div class="col-md-3">
+                <h4>Task Name</h4>
+              </div>
+              <div class="col-md-3">
+                <h4>Venue</h4>
+              </div>
+              <div class="col-md-2">
+                <h4>Date</h4>
+              </div>
+              <div class="col-md-2">
+                <h4>Number of Hours</h4>
+              </div>
+              <div class="col-md-2">
+                <h4>Evidence</h4>
+              </div>
+            </div>
+            <div class="table-row" *ngFor="let item of other_tasks">
+              <div class="col-md-3">
+                <p>{{ item.task_name }}</p>
+              </div>
+              <div class="col-md-3">
+                <p>{{ item.venue }}</p>
+              </div>
+              <div class="col-md-2">
+                <p>{{ item.date }}</p>
+              </div>
+              <div class="col-md-2">
+                <p>{{ item.total_hours }}</p>
+              </div>
+              <div class="col-md-2">
+                <div class="actions">
+                  <button
+                    class="view"
+                    mat-raised-button
+                    matTooltip="View"
+                    [matTooltipShowDelay]="400"
+                    (click)="viewSeminarImage(item)"
+                  >
+                    <i class="bx bx-detail"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="table-row">
+              <p>Total Hours: {{ other_task_total_hours }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- community service -->
+      <div class="content" *ngIf="student.practicum_level === 2">
+        <h3>Community Service</h3>
+        <div class="table-container">
+          <div class="table">
+            <div class="table-row">
+              <div class="col-md-2">
+                <h4>Date</h4>
+              </div>
+              <div class="col-md-2">
+                <h4>Time in</h4>
+              </div>
+              <div class="col-md-2">
+                <h4>Time out</h4>
+              </div>
+              <div class="col-md-3">
+                <h4>Accomplishment</h4>
+              </div>
+              <div class="col-md-2">
+                <h4>Total Hours</h4>
+              </div>
+              <div class="col-md-1">
+                <h4>Status</h4>
+              </div>
+            </div>
+            <div class="table-row" *ngFor="let item of community_service">
+              <div class="col-md-2">
+                <p>{{ item.date }}</p>
+              </div>
+              <div class="col-md-2">
+                <p>{{ item.time_in }}</p>
+              </div>
+              <div class="col-md-2">
+                <p>{{ item.time_out }}</p>
+              </div>
+              <div class="col-md-3">
+                <p>{{ item.accomplishment }}</p>
+              </div>
+              <div class="col-md-2">
+                <p>{{ item.total_hours }}</p>
+              </div>
+              <div class="col-md-1">
+                <p>{{ (item.is_verified) ? 'Verified' : 'Not verified' }}</p>
+              </div>
+            </div>
+            <div class="table-row">
+              <p>Total Hours: {{ community_service_total_hours }} / 150 Hours </p>
+            </div>
+          </div>
+        </div>
+      </div>
       <!-- skills -->
       <div class="content">
         <p class="text">I have done a self-evaluation of my abilities  based on my past experiences. Listed below is what I consider my strong and weak skill areas. If i work in your company, I would like an opportunity to increase my proficiency in weak areas.</p>

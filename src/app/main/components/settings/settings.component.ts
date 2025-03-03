@@ -15,7 +15,10 @@ export class SettingsComponent {
   isSubmitting: boolean = false;
   isLoading: boolean = true;
 
+  currentAcadSemester: string = ''
+  AcadYearArr: any = [];
   // Dropdown filter
+  selectedAYFilter: string = 'all';
   selectedFilter: string = 'all';
   historyEntries: any[] = [];
   course: any = []
@@ -43,11 +46,14 @@ export class SettingsComponent {
   getOjtHours() {
     this.ds.get('superadmin/settings/required-ojt-hours').subscribe(
       response => {
+        const data = response.data
         console.log(response);
-        response.forEach((element: any) => {
+
+        this.currentAcadSemester = data.acad_year_semester
+        data.practicum_hours.forEach((element: any) => {
           this.course.push(element.course_code)
 
-          const settingForm: FormGroup = this.fb.group({
+          const settingForm: FormGroup = this.fb.group({  
             course_code: [element.course_code, [Validators.required]],
             required_hours: [element.required_hours, [Validators.required, Validators.min(100), Validators.max(900), Validators.pattern("^[0-9]*$")]],
           });
@@ -67,6 +73,11 @@ export class SettingsComponent {
     this.ds.get('superadmin/settings/ojt-hours-history').subscribe(
       response => {
         this.historyEntries = response
+        
+        response.forEach((data: any) => {
+          if (!this.AcadYearArr.includes(data.acad_year))
+            this.AcadYearArr.push(data.acad_year)
+        });
         console.log(response)
       },
       error => {
@@ -78,7 +89,7 @@ export class SettingsComponent {
   filteredHistory() {
     return this.selectedFilter === 'all' ? this.historyEntries : 
         this.historyEntries.filter(item => {
-          return item.action_desc.includes(this.selectedFilter)
+          return item.course_code.includes(this.selectedFilter)
         });
   }
 

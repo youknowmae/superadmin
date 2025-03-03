@@ -6,7 +6,7 @@
     <div class="container">
         <div class="card-container">
             <div class="card" *ngIf="duration.length > 0">
-                <h3>Practicum Hours</h3>
+                <h3>Practicum Hours <span class="sub-text">{{ currentAcadSemester }}</span></h3>
                 <div class="ojt-hours">
                     <form [formGroup]="ojtDurationFormDetails" >
                         <div formArrayName="duration">
@@ -34,8 +34,14 @@
             <div class="card">
                 <div class="history-header">
                     <h3>Modification History</h3>
+                    
                     <div class="filter-dropdown">
-                        <label for="historyFilter">Filter:</label>
+                        <label for="historyFilter">AY:</label>
+                        <select id="historyFilter" [(ngModel)]="selectedAYFilter">
+                            <option value="all">All</option>
+                            <option *ngFor="let item of AcadYearArr" [value]="item">{{ item }}</option>
+                        </select>
+                        <label for="historyFilter">Course:</label>
                         <select id="historyFilter" [(ngModel)]="selectedFilter">
                             <option value="all">All</option>
                             <option *ngFor="let item of course" [value]="item">{{ item }}</option>
@@ -45,7 +51,8 @@
             
                 <div class="history-list" *ngIf="filteredHistory().length > 0; else noItems">
                     <div *ngFor="let entry of filteredHistory()" class="history-entry" >
-                        <p>{{ entry.user.first_name + ' ' + entry.user.last_name }} {{ entry.action_desc }} at {{ entry.created_at }} </p>
+                        <!-- {{ entry.user.first_name + ' ' + entry.user.last_name }}  -->
+                        <p>{{ entry.action_desc }} at {{ entry.created_at }} </p>
                     </div>
                 </div>
             </div>      

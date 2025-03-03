@@ -51,8 +51,13 @@ export class StudentprofileComponent {
     full_address: '',
   }
 
-  seminar_total_hours: any = 0
-  seminars: any = []
+  seminars: any = [];
+  other_tasks: any = [];
+  community_service: any = []
+
+  community_service_total_hours: any = 0
+  seminar_total_hours: number = 0;
+  other_task_total_hours: number = 0;
   skills: any = []
   personality_test: any = null
 
@@ -67,6 +72,20 @@ export class StudentprofileComponent {
     this.getOjtInfo()
     this.student.gender = (this.student.gender == 0) ? 'Female' : 'Male'
     
+    let courseCode = this.student?.active_ojt_class?.course_code;
+
+    const level_2 = ['ITP422', 'CS422', 'DAP421'];
+    const level_1 = ['ITP131', 'CS131', 'EMC131'];
+    let practicum_level;
+
+    if (level_2.includes(courseCode)) {
+      practicum_level = 2;
+    } else {
+      practicum_level = 1;
+    }
+
+    this.student.practicum_level = practicum_level;
+
     if(this.student.student_skills) {
       this.skills = this.student.student_skills.skills
     } else {
@@ -75,8 +94,14 @@ export class StudentprofileComponent {
       this.skills.push({strong_skill: '', weak_skill: ''})
     }
 
-    this.getSeminars();
-    // this.getSkills();
+    if(this.student.practicum_level === 2) {
+      this.getCommunityService();
+    }
+    else {
+      this.getOtherTask();
+      this.getSeminars();
+    }
+
     this.getPersonalityTest();
   }
 
@@ -91,6 +116,35 @@ export class StudentprofileComponent {
       }
     )
   }
+
+  getCommunityService() {
+    this.ds.get('superadmin/students/community-service/', this.student.id).subscribe(
+      response => {
+        this.community_service = response
+        this.community_service.forEach((data: any) => {
+          this.community_service_total_hours += data.total_hours
+        });
+      },
+      error => { 
+        // console.error(error)
+      }
+    )
+  }
+
+  getOtherTask() {
+    this.ds.get('superadmin/students/other-task/', this.student.id).subscribe(
+      (response) => {
+        this.other_tasks = response;
+        this.other_tasks.forEach((data: any) => {
+          this.other_task_total_hours += data.total_hours;
+        });
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+
   getSeminars() {
     this.ds.get('superadmin/students/seminar/', this.student.id).subscribe(
       response => {
