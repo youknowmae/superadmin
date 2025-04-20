@@ -23,12 +23,20 @@ export class ResponseInterceptor implements HttpInterceptor {
         return next.handle(request).pipe(
           map ((event: HttpEvent<any>) => { 
             if (event instanceof HttpResponse && event.body.data) {
-              let data = this.us.recover(event.body.data)
+              try {
 
-              const response = event.clone({
-                body: data
-              })
-              return response
+                let data = this.us.recover(event.body.data)
+
+                const response = event.clone({
+                  body: data
+                })
+                return response
+              }
+              catch {
+                const response = event.clone()
+
+                return response
+              }
             }
 
             return event
