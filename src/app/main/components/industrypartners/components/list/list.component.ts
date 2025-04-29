@@ -39,7 +39,7 @@ export class ListComponent {
       from: 0,
       to: 0,
       total: 0,
-      per_page: 15,
+      per_page: 12,
       last_page: 0,
     }
   }

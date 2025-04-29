@@ -26,7 +26,7 @@ h1 {
     flex-direction: column;
     border: 2px solid var(--primary-color);
     flex: 1;
-    min-width: 300px;
+    min-width: 400px;
     height: fit-content;
     margin: 15px;
     border-radius: 2rem;
@@ -90,17 +90,25 @@ h1 {
 
     .history-header {
         display: flex;
+        align-items: center;
+        flex-wrap: wrap;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 10px;
+
+        & > * {
+            flex: 1;
+        }
 
         h3 {
             font-size: 18px;
             font-weight: bold;
             color: var(--primary-color);
+            margin: 0;
         }
 
         .filter-dropdown {
+            min-width: 350px;
             display: flex;
             align-items: center;
             gap: 5px;
@@ -150,6 +158,10 @@ h1 {
 
 
 @media only screen and (max-width: 680px) {
+    .card-container {
+        padding: 0
+    }
+
     .ojt-hours {
         .practicum {
             .input {

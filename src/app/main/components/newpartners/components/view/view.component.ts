@@ -68,6 +68,9 @@ export class ViewComponent {
         let supervisor = industryPartner.immediate_supervisor;
         let supervisorFullName = `${supervisor?.first_name || ''} ${supervisor?.last_name || ''} ${supervisor?.ext_name || ''}`.trim();
         industryPartner.immediate_supervisor.full_name = supervisorFullName;
+
+        let full_address = `${industryPartner?.street || ''} ${industryPartner?.barangay || ''}, ${industryPartner?.municipality || ''}`
+        industryPartner.full_address = full_address
         
         this.industryPartner = industryPartner
         
@@ -135,7 +138,7 @@ export class ViewComponent {
       error => {
         this.isSubmitting = false
         if(error.status == 422) {
-          this.gs.errorAlert('Invalid Input!', 'Please check your input')
+          this.gs.errorAlert(error.error.title || 'Invalid Input!', error.error.error || 'Please check your input')
         }
         else {
           this.gs.errorAlert('Oops', 'Something went wrong. Please try again later.')

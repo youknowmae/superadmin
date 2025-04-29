@@ -151,7 +151,6 @@
                 <mat-step [stepControl]="accountDetails"  *ngIf="industryPartner.status === 2">
                   <ng-template matStepLabel>Review</ng-template>
                   <div class="step-content">
-                    <p class="sub-text">You are now done. Please review the content before proceeding.</p>
                     <h2>Company Details</h2>
                     <div class="details">
                         <div class="image">
@@ -237,63 +236,6 @@
                 </mat-step>
             </mat-stepper>
         </div>
-        
-        <!-- <div class="content">
-            <div class="image">
-                <img [src]="(industryPartner.image) ? industryPartner.image : '/assets/images/LOGO.png'" alt="logo image">
-            </div>
-            <div class="container-info">
-                <div class="info">
-                    <h2>{{ industryPartner.company_name }}</h2>
-                    <p>{{ industryPartner.description }}</p>
-    
-                    <h3 style="margin: 0; font-weight: 600;" >Company Head:</h3>
-                    <p> {{ industryPartner.company_head.full_name }}, {{ industryPartner.head_position }}</p>
-    
-                    <h3 style="margin: 0; font-weight: 600;" >Immediate Supervisor :</h3>
-                    <p> {{ industryPartner.immediate_supervisor.full_name }}, {{ industryPartner.supervisor_position }}</p>
-                    
-                    <ul>
-                        <li>
-                            <b>Company Address: </b>
-                            {{  industryPartner.street }}
-                            {{  industryPartner.barangay }}
-                            {{  industryPartner.municipality }}
-                        </li>
-                        <li><b>Official Email Address:</b> {{ industryPartner.email }}</li>
-                        <li *ngIf="industryPartner.telephone_number"><b>Telephone Number:</b> {{ industryPartner.telephone_number }}</li>
-                        <li *ngIf="industryPartner.fax_number"><b>Fax Number:</b> {{ industryPartner.fax_number }}</li>
-                        <li><b>Contact Number:</b> {{ industryPartner.mobile_number }}</li>
-                        <li *ngIf="industryPartner.website"><b>Website:</b> {{ industryPartner.website }}</li>
-                    </ul>
-                </div>
-            </div> 
-        </div> -->
-        
-        <!-- <div class="account">
-            <form [formGroup]="accountDetails" (submit)="approvePartner()">
-            
-                <h3>Partner's Account</h3>
-                <p>All fields are required for account creation, and the password must be at least 8 characters long.</p>
-                <div class="col-md-3">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Email</mat-label>
-                        <input type="text" matInput formControlName="email">
-                    </mat-form-field>
-                </div>
-                <div class="col-md-3">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Password</mat-label>
-                        <input type="password" matInput formControlName="password">
-                    </mat-form-field>
-                </div>
-                
-                <div class="btn">
-                <button type="submit" [class.invalid]="accountDetails.invalid">Create</button>
-                </div>
-            </form>
-        </div> -->
-        
     </div>
 
 </ng-container>

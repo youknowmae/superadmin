@@ -227,3 +227,31 @@
     grid-template-columns: repeat(2, minmax(40%, 1fr));
   }
 }
+
+@media only screen and (max-width: 768px) {
+  .card-container {
+    grid-template-columns: repeat(1, minmax(90% , 1fr));
+  }
+
+  .pagination {
+    padding: 10px 8px;
+    div {
+      padding: 0;
+    }
+    p {
+      font-size: medium;
+    }
+  
+    .icons {
+      button {
+        margin: 0 5px;
+      }
+      img {
+        padding: 8px;
+        transform: scale(1);
+
+      }
+    }
+  }
+}
+
