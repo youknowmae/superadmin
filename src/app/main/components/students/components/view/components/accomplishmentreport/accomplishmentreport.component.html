@@ -1,11 +1,11 @@
 <ng-container *ngIf="!isLoading; else loading">
     <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" *ngIf="weekly_attendance.length > 0; else noItems">
         <mat-tab class="weekly_report" *ngFor="let report of weekly_attendance; index as i">
-            <ng-template mat-tab-label>Week {{ i + 1 }}</ng-template> 
+            <ng-template mat-tab-label>Week {{ i + 1 }}</ng-template>
             <table>
                 <thead>
                     <th>Date</th>
-                    <th>Description of Activities</th>
+                    <th>Accomplished Task</th>
                     <th>Time of Work</th>
                     <th>No. of Hours</th>
                 </thead>
