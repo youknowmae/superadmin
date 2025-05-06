@@ -8,12 +8,12 @@
                 Back
             </p>
         </button>
-    
+
         <div class="card">
             <mat-stepper [linear]="true" #stepper>
                 <mat-step>
                     <ng-template matStepLabel>Company Details</ng-template>
-                    
+
                     <div class="details">
                         <div class="image">
                             <img [src]="(industryPartner.image) ? industryPartner.image : 'assets/images/logo.png'" alt="logo image">
@@ -24,21 +24,21 @@
                                     <h2>{{ industryPartner.company_name }}</h2>
                                     <p>{{ industryPartner.description }}</p>
                                 </div>
-                                
+
                                 <div class="details-section">
                                     <p> <b>Company Head:</b> {{ industryPartner.company_head.full_name }}, {{ industryPartner.head_position }}</p>
                                 </div>
-                                
+
                                 <div class="details-section">
                                     <p> <b>Immediate Supervisor :</b> {{ industryPartner.immediate_supervisor.full_name }}, {{ industryPartner.supervisor_position }}</p>
                                 </div>
-                
-                                
+
+
                                 <div class="details-section">
                                     <ul>
                                         <li>
                                             <mat-icon>location_on</mat-icon>
-                                            <p><b>Company Address: </b> {{  industryPartner.full_address }}</p> 
+                                            <p><b>Company Address: </b> {{  industryPartner.full_address }}</p>
                                         </li>
                                         <li>
                                             <mat-icon>mail</mat-icon>
@@ -60,12 +60,12 @@
                                             <mat-icon>public</mat-icon>
                                             <p><b>Website:</b> {{ industryPartner.website }}</p>
                                         </li>
-                                    </ul>   
+                                    </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
-    
+
                     <div class="step-content"  *ngIf="industryPartner.remarks">
                         <div>
                             <h4 style="margin: 0; font-weight: 600;" >Remarks:</h4>
@@ -74,27 +74,27 @@
                     </div>
                     <div>
                         <button mat-button mat-ripple *ngIf="industryPartner.status != 3" matStepperNext>Next</button>
-                        <button class="warning" mat-ripple *ngIf="industryPartner.status === 2" (click)="reject()">Not Approved</button>
+                        <button class="warning" mat-ripple *ngIf="industryPartner.status === 2" (click)="reject()">Decline</button>
                     </div>
                 </mat-step>
                 <mat-step *ngIf="industryPartner.status != 3">
                     <ng-template matStepLabel>MOU</ng-template>
-                    
+
                     <div class="step-content">
                         <div class="preview-container" *ngIf="industryPartner.status === 4">
                             <object [data]="sanitizeUrl(industryPartner.mou.file_location)" width="100%" height="550px"></object>
                         </div>
-                        
+
                         <!-- ;else mouPreview -->
                         <div class="stepper-content" *ngIf="industryPartner.status === 2">
                             <div class="row" style="flex-direction: row; display: flex; justify-content: space-between;">
                                 <div class="col-md-4">
-                                    <div class="file-input-container"> 
+                                    <div class="file-input-container">
                                         <div class="label"> Upload MOU </div>
-                                        <input class="file-input" type="file" accept=".jpeg, .png, .jpg, .svg, .pdf" (change)="uploadFile($event)"> 
+                                        <input class="file-input" type="file" accept=".jpeg, .png, .jpg, .svg, .pdf" (change)="uploadFile($event)">
                                     </div>
                                 </div>
-                                
+
                                 <div class="download" matTooltip="Download Prefilled MOU">
                                     <div class="icon" (click)="downloadDocx()"> <!--(click)="toggleDownloadOptions($event)"-->
                                     <i class='bx bxs-download' title="Download"></i>
@@ -107,7 +107,7 @@
                             </div>
                         </div>
                     </div>
-    
+
                     <div>
                         <button mat-button matStepperNext (click)="showPassword = false"  *ngIf="industryPartner.status === 2" [disabled]="!file">Next</button>
                         <button mat-button matStepperPrevious>Back</button>
@@ -140,14 +140,14 @@
                                     </mat-form-field>
                                 </div>
                             </div>
-                            
+
                             <div>
                                 <button mat-button matStepperNext (click)="showPassword = false">Next</button>
                                 <button mat-button matStepperPrevious>Back</button>
                             </div>
                         </form>
                 </mat-step>
-    
+
                 <mat-step [stepControl]="accountDetails"  *ngIf="industryPartner.status === 2">
                   <ng-template matStepLabel>Review</ng-template>
                   <div class="step-content">
@@ -162,21 +162,21 @@
                                     <h2>{{ industryPartner.company_name }}</h2>
                                     <p>{{ industryPartner.description }}</p>
                                 </div>
-                                
+
                                 <div class="details-section">
                                     <p> <b>Company Head:</b> {{ industryPartner.company_head.full_name }}, {{ industryPartner.head_position }}</p>
                                 </div>
-                                
+
                                 <div class="details-section">
                                     <p> <b>Immediate Supervisor :</b> {{ industryPartner.immediate_supervisor.full_name }}, {{ industryPartner.supervisor_position }}</p>
                                 </div>
-                
-                                
+
+
                                 <div class="details-section">
                                     <ul>
                                         <li>
                                             <mat-icon>location_on</mat-icon>
-                                            <p><b>Company Address: </b> {{  industryPartner.full_address }}</p> 
+                                            <p><b>Company Address: </b> {{  industryPartner.full_address }}</p>
                                         </li>
                                         <li>
                                             <mat-icon>mail</mat-icon>
@@ -198,7 +198,7 @@
                                             <mat-icon>public</mat-icon>
                                             <p><b>Website:</b> {{ industryPartner.website }}</p>
                                         </li>
-                                    </ul>   
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -220,7 +220,7 @@
                                 </mat-icon>
                             </mat-form-field>
                         </div>
-                        
+
                         <div class="col-md-4">
                             <mat-form-field appearance="outline">
                                 <mat-label>Slots</mat-label>

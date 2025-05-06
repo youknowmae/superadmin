@@ -14,13 +14,13 @@ import { saveAs } from 'file-saver';
   styleUrl: './view.component.scss'
 })
 export class ViewComponent {
-  industryPartner: any 
+  industryPartner: any
 
   accountDetails: FormGroup
 
   showPassword: boolean = false
   isSubmitting: boolean = false
-  
+
   file: any
   filePreview: any
   isImage: boolean = false
@@ -29,7 +29,7 @@ export class ViewComponent {
 
   constructor(
     private us: UserService,
-    private ds: DataService, 
+    private ds: DataService,
     private gs: GeneralService,
     private fb: FormBuilder,
     private router: Router,
@@ -38,9 +38,9 @@ export class ViewComponent {
     this.accountDetails = this.fb.group({
       email: [null, [Validators.required, Validators.email]],
       password: [null, [Validators.required, Validators.minLength(8)]],
-      slots: [null,[Validators.required, Validators.min(1), Validators.max(50)]] 
+      slots: [null,[Validators.required, Validators.min(1), Validators.max(50)]]
     })
-    
+
   }
 
   ngOnInit() {
@@ -54,7 +54,7 @@ export class ViewComponent {
       this.router.navigate(['main/newpartners/list'])
       return
     }
-    
+
     this.ds.get('superadmin/request/industryPartners/', id).subscribe(
       response => {
         console.log(response)
@@ -71,9 +71,9 @@ export class ViewComponent {
 
         let full_address = `${industryPartner?.street || ''} ${industryPartner?.barangay || ''}, ${industryPartner?.municipality || ''}`
         industryPartner.full_address = full_address
-        
+
         this.industryPartner = industryPartner
-        
+
         this.accountDetails.patchValue({
           email: industryPartner.email
         })
@@ -150,7 +150,7 @@ export class ViewComponent {
 
   downloadDocx() {
     this.isSubmitting = true
-    
+
     this.ds.download('superadmin/request/industryPartners/mou/', this.industryPartner.id).subscribe(
       (response: Blob) => {
         saveAs(response, 'MOU.docx');
@@ -164,7 +164,7 @@ export class ViewComponent {
       }
     )
   }
-  
+
   sanitizeUrl(url: string) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url)
   }
@@ -183,7 +183,7 @@ export class ViewComponent {
           this.filePreview = e.target.result;
         };
         reader.readAsDataURL(file);
-      } 
+      }
 
       else if (fileType === 'application/pdf') {
         this.isImage = false;
@@ -192,13 +192,13 @@ export class ViewComponent {
           this.filePreview = this.sanitizer.bypassSecurityTrustResourceUrl(e.target.result +  '#toolbar=0&navpanes=0&scrollbar=0');
         };
         reader.readAsDataURL(file);
-      } 
+      }
     }
 
 
     reject() {
       Swal.fire({
-        title: "Please state the reason for not approving.",
+        title: "Please state the reason for declining.",
         input: "text",
         inputAttributes: {
           autocapitalize: "off"
@@ -223,7 +223,7 @@ export class ViewComponent {
               if(error.status === 409) {
                 this.gs.errorAlert(error.error.title, error.error.message)
               }
-              else if(error.status === 422) { 
+              else if(error.status === 422) {
                 this.gs.errorAlert(error.error.title, error.error.error)
               }
               else {
