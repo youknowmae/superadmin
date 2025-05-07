@@ -2,6 +2,25 @@
   <h1>Students</h1>
 </div>
 
+<div class="options">
+  <mat-form-field class="academic_year">
+    <mat-label>Select Academic Year</mat-label>
+    <mat-select disableRipple>
+      <mat-option value="1">A.Y. 2024-2025 2nd Semester</mat-option>
+      <mat-option value="2">A.Y. 2024-2025 1st Semester</mat-option>
+      <mat-option value="3">A.Y. 2023-2024 Midterm</mat-option>
+      <mat-option value="4">A.Y. 2023-2024 2nd Semester</mat-option>
+      <mat-option value="5">A.Y. 2023-2024 1st Semester</mat-option>
+      <mat-option value="6">A.Y. 2022-2023 Midterm</mat-option>
+      <mat-option value="7">A.Y. 2022-2023 2nd Semester</mat-option>
+      <mat-option value="8">A.Y. 2022-2023 1st Semester</mat-option>
+      <mat-option value="9">A.Y. 2021-2022 Midterm</mat-option>
+      <mat-option value="10">A.Y. 2021-2022 2nd Semester</mat-option>
+      <mat-option value="11">A.Y. 2021-2022 1st Semester</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
 <div class="buttons">
   <div class="filter-container">
     <div [class.active]="statusFilter == 'all'" class="filter">

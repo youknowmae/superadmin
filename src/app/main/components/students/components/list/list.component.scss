@@ -7,6 +7,18 @@ h1 {
     margin-bottom: 30px;
 }
 
+.academic_year{
+  width: 300px;
+}
+
+.options {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+
 .buttons {
     display: flex;
     flex-direction: row;
@@ -36,7 +48,7 @@ h1 {
 
     .filter::before {
         content: '';
-        position: absolute; 
+        position: absolute;
         transform: translateY(45px);
         width: 0px;
         height: 2px;
@@ -101,7 +113,7 @@ h1 {
         justify-content: center;
         align-items: center;
     }
-    
+
     tr {
         display: flex;
     }
