@@ -22,6 +22,21 @@
       padding: 10px;
       margin: 0;
   }
+}
+
+.search {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+
+  form {
+    width: 400px;
+  }
+
+  mat-icon {
+    cursor: pointer;
+  } 
 
   .btn {
     button {
@@ -38,126 +53,171 @@
       background-color: var(--secondary-color);
       color: #ffffff;
     }
-}
+  }
 }
 
-.search {
-  width: 300px;
-  padding: 10px;
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 10px 20px;
 
-  mat-icon {
-    cursor: pointer;
-  } 
+  button {
+      padding: 2px 8px;
+      font-size: 18px;
+      background-color: var(--main-bg-color);
+      border: none;
+      cursor: pointer;
+      color: var(--primary-color);
+      margin-bottom: 10px;
+  }
+
+  .filter-container {
+      display: flex;
+      flex-direction: row;
+      
+      .filter {
+          display: flex;
+          justify-content: center;
+          margin-right: 40px;
+          position: relative;
+      }
+
+      .filter::before {
+          content: '';
+          position: absolute; 
+          transform: translateY(50px);
+          width: 0px;
+          height: 2px;
+          background: var(--primary-color);
+          transition: all .3s ease-in-out;
+      }
+
+      .filter.active::before {
+          width: 120px;
+      }
+  }
+
+  .filter-view {
+    button {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+  }
 }
+
   .card-container {
     padding: 10px 0px;
     height: 50%;
     display: grid;
     grid-template-columns: repeat(3, minmax(30%, 1fr));
     gap: 8px;
-  }
-  .card {
-    width: auto;
-    height: fit-content;
-    background-color: #ffffff; /* White background */
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.5);  /*Card shadow */
-    border: solid 2px var(--border-color);
-    margin: 10px;
-    padding: 20px;
-    transform: scale(1);
-    transition: all .2s ease-in;
 
-    animation: fade-in 1s forwards; 
-    opacity: 0;         
-    will-change: opacity;  
-
-    h2 {
-      line-height: normal;
-      font-size: medium; 
-      margin: 0;
-    }
-
-    p {
-      font-size:small;
-    }
-
-    .info-section {
-      display: flex;
-      align-items: center;
-      margin-bottom: 6px;
-
-      mat-icon {
-        color: rgba(0,0,0,0.60);
-        margin-right: 5px;
-        overflow: visible;
+    .card {
+      width: auto;
+      height: fit-content;
+      background-color: #ffffff; /* White background */
+      border-radius: 10px; /* Rounded corners */
+      box-shadow: 0 4px 8px rgba(0,0,0,0.5);  /*Card shadow */
+      border: solid 2px var(--border-color);
+      margin: 10px;
+      padding: 20px;
+      transform: scale(1);
+      transition: all .2s ease-in;
+  
+      animation: fade-in 1s forwards; 
+      opacity: 0;         
+      will-change: opacity;  
+  
+      h2 {
+        line-height: normal;
+        font-size: medium; 
+        margin: 0;
+      }
+  
+      p {
+        font-size:small;
+      }
+  
+      .info-section {
+        display: flex;
+        align-items: center;
+        margin-bottom: 6px;
+  
+        mat-icon {
+          color: rgba(0,0,0,0.60);
+          margin-right: 5px;
+          overflow: visible;
+        }
       }
     }
-  }
-
-  .card:hover{
-    transform: scale(1.05);
-    transition: all .2s ease-in;
-  }
-
-/* CARD CONTENTS */
-.card-image {
-    width: 100%; /* or any specific width */
-    height: 200px; /* or any specific height */
-    background-color: #f3f3f3; /* a light grey placeholder color */
-    border-radius: 5px; /* if you want rounded corners */
-    margin-bottom: 10px; /* space between the image and the text below */
-    object-fit: contain;
-  }
-
- /* CARD BUTTON */
-  .action-buttons {
-    display: flex;
-    height: 35px;
-    flex-direction: row-reverse;
-  }
-
-  .card button {
-    border: 2px solid; 
-    border-radius: 5px;
-    color: #ffffff;
-    padding: 2px 12px;
-    text-transform:none;
-    font-size: large;
-    cursor: pointer;
-
-    i {
-      font-size: 18px;
-      transform: translateY(1px);
+  
+    .card:hover{
+      transform: scale(1.05);
+      transition: all .2s ease-in;
     }
-  }
-  .view {
-    background-color: gray;
-  }
-
-  .edit{     
-    background-color: var(--primary-color);
-  }
-  .delete{     
-    background-color: var(--warning-color);
-  }
-
-  .card button:hover {
-    box-shadow: 0px 8px 15px -10px rgb(61, 61, 61);
-    transform: translate(0px, -2px);
-    background: white;
-  }
-
-
-  .view:hover {
-    color: gray !important;
-  }
-
-  .edit:hover {
-    color: var(--primary-color) !important;
-  }
-  .delete:hover {
-    color: var(--warning-color) !important;
+  
+  /* CARD CONTENTS */
+  .card-image {
+      width: 100%; /* or any specific width */
+      height: 200px; /* or any specific height */
+      background-color: #f3f3f3; /* a light grey placeholder color */
+      border-radius: 5px; /* if you want rounded corners */
+      margin-bottom: 10px; /* space between the image and the text below */
+      object-fit: contain;
+    }
+  
+   /* CARD BUTTON */
+    .action-buttons {
+      display: flex;
+      height: 35px;
+      flex-direction: row-reverse;
+    }
+  
+    .card button {
+      border: 2px solid; 
+      border-radius: 5px;
+      color: #ffffff;
+      padding: 2px 12px;
+      text-transform:none;
+      font-size: large;
+      cursor: pointer;
+  
+      i {
+        font-size: 18px;
+        transform: translateY(1px);
+      }
+    }
+  
+    .view {
+      background-color: gray;
+    }
+  
+    .edit{     
+      background-color: var(--primary-color);
+    }
+    .delete{     
+      background-color: var(--warning-color);
+    }
+  
+    .card button:hover {
+      box-shadow: 0px 8px 15px -10px rgb(61, 61, 61);
+      transform: translate(0px, -2px);
+      background: white;
+    }
+  
+  
+    .view:hover {
+      color: gray !important;
+    }
+  
+    .edit:hover {
+      color: var(--primary-color) !important;
+    }
+    .delete:hover {
+      color: var(--warning-color) !important;
+    }
   }
 
 .pagination-container {
@@ -214,6 +274,101 @@
   transition: all .2s ease-in-out;
 }
 
+/* Container for nice padding and rounded corners */
+.table-wrapper {
+  margin: 0px 20px;
+  background-color: white;
+  overflow-y: auto;
+  border: 1px solid var(--primary-color);
+  height: fit-content;
+  padding: 0px 30px;
+  border-radius: 30px;
+  box-shadow: var(--shadow);
+}
+
+/* Table styling */
+.table-wrapper table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-wrapper th {
+  color: var(--primary-color);
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #e0e0e0;
+  white-space: nowrap;
+}
+
+/* Body row styling */
+.table-wrapper td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+  white-space: nowrap;
+  text-align: center;
+
+  .view,
+  .edit,
+  .delete {
+    background-color: transparent;
+  }
+
+  .view {
+    color: gray;
+  }
+
+  .edit{     
+    color: var(--primary-color);
+  }
+  .delete{     
+    color: var(--warning-color);
+  }
+}
+
+/* Alternating row background (optional) */
+.table-wrapper .row:hover {
+  background-color: rgba(var(--secondary-color-semi-transparent));
+  transition: all ease-in-out .2s;
+}
+
+/* Action button */
+.table-wrapper .view-button {
+  background-color: #4f7942;
+  color: #fff;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s;
+}
+
+.table-wrapper .view-button:hover {
+  background-color: #3e6335;
+}
+
+/* Pagination footer */
+.table-wrapper .pagination-footer {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  padding: 0 8px;
+}
+
+.table-wrapper .pagination-footer button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  margin: 0 2px;
+}
+
+mat-paginator {
+  background: none
+}
 
 
 @media only screen and (min-width: 1900px) {

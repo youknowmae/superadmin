@@ -10,6 +10,10 @@ import { AddIndustryPartnerComponent } from './components/add-industry-partner/a
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoadingSpinnerComponent } from '../../../components/login/loading-spinner/loading-spinner.component';
 
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table'; // For tables
+import { MatButtonModule } from '@angular/material/button'; // For paginator buttons
+import { MatIconModule } from '@angular/material/icon'; // For icons in your buttons
 
 @NgModule({
   declarations: [
@@ -23,7 +27,11 @@ import { LoadingSpinnerComponent } from '../../../components/login/loading-spinn
     ReactiveFormsModule,
     IndustrypartnersRoutingModule,
     MaterialsModules,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    MatPaginatorModule,
+    MatTableModule,
+    MatButtonModule,
+    MatIconModule,
   ]
 })
 export class IndustrypartnersModule { }

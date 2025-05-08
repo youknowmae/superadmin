@@ -16,6 +16,8 @@ export class ViewComponent {
   
   isLoading: boolean = true
 
+  displayedColumns: string[] = ['name', 'student_number', 'course', 'year_level', 'status'];
+
   constructor(
     private gs: GeneralService,
     private us: UserService,

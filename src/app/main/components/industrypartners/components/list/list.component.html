@@ -1,97 +1,172 @@
 <main>
-  <div class="container-header">
+    <div class="container-header">
       <h1>Industry Partners</h1>
-      <div class="btn">
-          <!-- <button [routerLink]="['../addnew']" routerLinkActive="router-link-active" >+ New</button> -->
-          <button mat-ripple (click)="addIndustryPartner()" >+ New</button>
-      </div>
-  </div>
-
-  <ng-container *ngIf="!isLoading; else loading">
-    <div class="search">
-      <form>
-          <mat-form-field>
-              <input #searchValue matInput type="email" (keyup)="search(searchValue.value)" placeholder="Search...">
-              <mat-icon *ngIf="searchValue.value" matIconSuffix (click)="searchValue.value = ''"> close</mat-icon>
-          </mat-form-field>
-      </form>
     </div>
   
-    <div class="card-container" *ngIf="filteredIndustryPartners.length > 0; else noItems">
-        <div class="card" *ngFor="let industryPartner of filteredIndustryPartners; let i = index" [ngStyle]="{'animation-delay': (i * 0.1) + 's'} ">
-          <img [src]="(industryPartner.image) ? industryPartner.image : 'assets/images/logo.png'" alt="logo image" class="card-image">
-          
-          <div class="info-section"> 
-            <mat-icon>apartment</mat-icon>
-            <h2>{{ industryPartner.company_name }}</h2>
+    <ng-container *ngIf="!isLoading; else loading">
+      <!-- Search & Add -->
+      <div class="search">
+        <form>
+          <mat-form-field>
+            <input #searchValue matInput type="email" (keyup)="search(searchValue.value)" placeholder="Search...">
+            <mat-icon *ngIf="searchValue.value" matIconSuffix (click)="searchValue.value = ''">close</mat-icon>
+          </mat-form-field>
+        </form>
+  
+        <div class="btn">
+          <button mat-ripple (click)="addIndustryPartner()">+ New</button>
+        </div>
+      </div>
+  
+      <!-- Filters + Toggle -->
+      <div class="buttons">
+        <div class="filter-container">
+          <div class="filter">
+            <button>Active Partners</button>
           </div>
-
-          <div class="info-section"> 
+          <div class="filter">
+            <button>Inactive Partners</button>
+          </div>
+        </div>
+  
+        <div class="filter-view">
+          <button (click)="toggleView()" mat-ripple class="view-toggle-btn">
+            <mat-icon>{{ isGridView ? 'view_list' : 'grid_view' }}</mat-icon>
+            {{ isGridView ? 'Table View' : 'Grid View' }}
+          </button>
+        </div>
+      </div>
+  
+      <!-- Grid View -->
+      <div *ngIf="isGridView">
+        <div class="card-container" *ngIf="filteredIndustryPartners.length > 0; else noItems">
+          <div class="card" *ngFor="let industryPartner of filteredIndustryPartners; let i = index"
+            [ngStyle]="{'animation-delay': (i * 0.1) + 's'} ">
+            <img [src]="(industryPartner.image) ? industryPartner.image : 'assets/images/logo.png'" alt="logo image"
+              class="card-image">
+  
+            <div class="info-section">
+              <mat-icon>apartment</mat-icon>
+              <h2>{{ industryPartner.company_name }}</h2>
+            </div>
+  
+            <div class="info-section">
               <mat-icon>location_on</mat-icon>
-              <p>{{ industryPartner.municipality }}<span *ngIf="industryPartner.province">, {{ industryPartner.province }}</span></p>
-          </div>
+              <p>{{ industryPartner.municipality }}<span *ngIf="industryPartner.province">, {{
+                  industryPartner.province }}</span></p>
+            </div>
   
             <div class="action-buttons">
-                <button class="delete" 
-                      mat-raised-button
-                      mat-ripple
-                      matTooltip="Delete"
-                      [matTooltipShowDelay] = "400" 
-                      (click)="deleteConfirmation(industryPartner.id)">
-                      <i class='bx bxs-trash'></i>
-                  </button>
+              <button class="delete" mat-raised-button mat-ripple matTooltip="Archive" [matTooltipShowDelay]="400"
+                (click)="deleteConfirmation(industryPartner.id)">
+                <i class='bx bxs-archive'></i>
+              </button>
   
-                  <button class="edit" 
-                  mat-raised-button
-                  mat-ripple
-                  matTooltip="Edit"
-                  [matTooltipShowDelay] = "400"
-                  (click)="editIndustryPartner(industryPartner.id)">
-                      <i class='bx bxs-edit'></i>
-                  </button>
+              <button class="edit" mat-raised-button mat-ripple matTooltip="Edit" [matTooltipShowDelay]="400"
+                (click)="editIndustryPartner(industryPartner.id)">
+                <i class='bx bxs-edit'></i>
+              </button>
   
-                  <button class="view" 
-                  mat-raised-button
-                  mat-ripple
-                  matTooltip="View"
-                  [matTooltipShowDelay] = "400"
-                  (click)="getIndustryPartner(industryPartner.id)" 
-                  routerLinkActive="router-link-active" >
-                      <i class='bx bx-detail' ></i>
-                  </button>
-            </div>
-        </div>
-        <div class="pagination-container">
-          <div class="pagination">
-            <div>
-                <p> {{ pagination.from}} - {{ pagination.to }} of {{ pagination.total }} </p>
-            </div>
-            <div class="icons">
-              <button (click)="jumpPage(1)" [disabled]="pagination.current_page === 1">
-                  <img src="assets/images/chevron-bar-left.svg" >
-              </button>
-              <button (click)="changePage(-1)" [disabled]="pagination.current_page === 1">
-                  <img src="assets/images/chevron-left.svg" >
-              </button>
-              <button (click)="changePage(1)"[disabled]="pagination.current_page === pagination.last_page">
-                  <img src="assets/images/chevron-right.svg">
-              </button>
-              <button (click)="jumpPage(pagination.last_page)" [disabled]="pagination.current_page === pagination.last_page">
-                  <img src="assets/images/chevron-bar-right.svg">
+              <button class="view" mat-raised-button mat-ripple matTooltip="View" [matTooltipShowDelay]="400"
+                (click)="getIndustryPartner(industryPartner.id)" routerLinkActive="router-link-active">
+                <i class='bx bx-detail'></i>
               </button>
             </div>
           </div>
-        </div> 
-    </div>
-  </ng-container>
-</main>
-
-<ng-template #loading>
+  
+          <!-- Pagination -->
+          <div class="pagination-container">
+            <div class="pagination">
+              <div>
+                <p>{{ pagination.from }} - {{ pagination.to }} of {{ pagination.total }}</p>
+              </div>
+              <div class="icons">
+                <button (click)="jumpPage(1)" [disabled]="pagination.current_page === 1">
+                  <img src="assets/images/chevron-bar-left.svg">
+                </button>
+                <button (click)="changePage(-1)" [disabled]="pagination.current_page === 1">
+                  <img src="assets/images/chevron-left.svg">
+                </button>
+                <button (click)="changePage(1)" [disabled]="pagination.current_page === pagination.last_page">
+                  <img src="assets/images/chevron-right.svg">
+                </button>
+                <button (click)="jumpPage(pagination.last_page)"
+                  [disabled]="pagination.current_page === pagination.last_page">
+                  <img src="assets/images/chevron-bar-right.svg">
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Table View -->
+      <div *ngIf="!isGridView && filteredIndustryPartners.length > 0; else noItems" class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Company</th>
+              <th>Location</th>
+              <th>No. of Applicants</th>
+              <th>Accepted Students</th>
+              <th>Completed</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let industryPartner of filteredIndustryPartners">
+              <td>{{ industryPartner.company_name }}</td>
+              <td>{{ industryPartner.municipality }}, {{ industryPartner.province }}</td>
+              <td>0</td>
+              <td></td>
+              <td></td>
+              <td>
+                <button class="view" mat-icon-button matTooltip="View" (click)="getIndustryPartner(industryPartner.id)">
+                  <i class='bx bx-detail'></i>
+                </button>
+                <button class="edit" mat-icon-button matTooltip="Edit" (click)="editIndustryPartner(industryPartner.id)">
+                  <i class='bx bxs-edit'></i>
+                </button>
+                <button class="delete" mat-icon-button matTooltip="Archive" (click)="deleteConfirmation(industryPartner.id)">
+                  <i class='bx bxs-archive'></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      
+        <div class="pagination-footer">
+          <div>
+            <p>{{ pagination.from }} - {{ pagination.to }} of {{ pagination.total }}</p>
+          </div>
+          <div class="icons">
+            <button (click)="jumpPage(1)" [disabled]="pagination.current_page === 1">
+              <img src="assets/images/chevron-bar-left.svg">
+            </button>
+            <button (click)="changePage(-1)" [disabled]="pagination.current_page === 1">
+              <img src="assets/images/chevron-left.svg">
+            </button>
+            <button (click)="changePage(1)" [disabled]="pagination.current_page === pagination.last_page">
+              <img src="assets/images/chevron-right.svg">
+            </button>
+            <button (click)="jumpPage(pagination.last_page)" [disabled]="pagination.current_page === pagination.last_page">
+              <img src="assets/images/chevron-bar-right.svg">
+            </button>
+          </div>
+        </div>
+      </div>      
+    </ng-container>
+  </main>
+  
+  <!-- Loading Spinner -->
+  <ng-template #loading>
     <app-loading-spinner></app-loading-spinner>
-</ng-template>
-
-<ng-template #noItems>
-<div class="no-items-container">
-    <p>Sorry, no data found</p>
-</div>
-</ng-template>
+  </ng-template>
+  
+  <!-- No Items Template -->
+  <ng-template #noItems>
+    <div class="no-items-container">
+      <p>Sorry, no data found</p>
+    </div>
+  </ng-template>
+  

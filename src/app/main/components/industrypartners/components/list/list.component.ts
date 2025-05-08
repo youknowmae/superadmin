@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IndustryPartner } from '../../../../../model/industry-partner.model';
 import { DataService } from '../../../../../services/data.service';
 import { GeneralService } from '../../../../../services/general.service';
@@ -9,6 +9,9 @@ import { AddIndustryPartnerComponent } from '../add-industry-partner/add-industr
 import { MatDialog } from '@angular/material/dialog';
 import { pagination } from '../../../../../model/pagination.model';
 import Swal from 'sweetalert2';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import {MatSort, Sort} from '@angular/material/sort';
 
 @Component({
   selector: 'app-list-industry-partners',
@@ -16,15 +19,29 @@ import Swal from 'sweetalert2';
   styleUrl: './list.component.scss'
 })
 export class ListComponent {
+  @ViewChild(MatPaginator, {static:true}) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
+  ngAfterViewInit() {
+    console.log(this.sort)
+    this.dataSource.sort = this.sort;
+  }
+
+  displayedColumns: string[] = ['company', 'location', 'noOfApplicants', 'acceptedStudents', 'completed', 'actions'];
+
   filteredIndustryPartners: IndustryPartner[] = []
   industryPartners: IndustryPartner[] = []
   isLoading: boolean = true
   isGettingPartner: boolean = false
   isSubmitting: boolean = false
+  isGridView: boolean = true;
 
   searchValue: string = ''
 
   pagination: pagination = <pagination>{};
+
+    // Initialize MatTableDataSource
+    dataSource = new MatTableDataSource(this.filteredIndustryPartners);
 
 
   constructor(
@@ -211,5 +228,10 @@ export class ListComponent {
   jumpPage(page: number){
     this.pagination.current_page = page
     this.filterIndustryPartners()
+  }
+
+  
+  toggleView(): void {
+    this.isGridView = !this.isGridView;
   }
 }
