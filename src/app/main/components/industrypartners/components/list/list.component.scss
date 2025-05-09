@@ -151,6 +151,20 @@
           overflow: visible;
         }
       }
+
+      .status {
+        width: 250px;
+        height: 30px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+  
+        h3 {
+          padding: 0;
+          text-align: center;
+          color: var(--primary-font-color);
+          width: 100%;
+        }
+      }
     }
   
     .card:hover{

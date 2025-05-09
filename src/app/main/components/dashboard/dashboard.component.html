@@ -25,22 +25,22 @@
 
     <div class="content">
         <div class="total">
-            <div style="background-color: var(--primary-color);">
+            <div style="background-color: #FFF8E8;">
                 <p>Total Students Enrolled</p>
                 <h1>{{ enrolled_student }}</h1>
             </div>
 
-            <div style="background-color: #FABC3F;">
+            <div style="background-color: #FFF8E8;">
                 <p>Pending Student Applicants</p>
                 <h1>{{ student_ojt_status_count.pending }}</h1>
             </div>
 
-            <div style="background-color: var(--secondary-color);">
+            <div style="background-color: #FFF8E8;">
                 <p>Students in Ongoing OJT</p>
                 <h1>{{ student_ojt_status_count.ongoing }}</h1>
             </div>
 
-            <div style="background-color: #7C93C3;">
+            <div style="background-color: #FFF8E8;">
                 <p>OJT-Completed Students</p>
                 <h1>{{ student_ojt_status_count.completed }}</h1>
             </div>
@@ -49,6 +49,22 @@
         <div class="graph">
             <div class="pie">
                 <h1>Students Enrolled</h1>
+
+                <div class="chart-data-summary">
+                    <div class="data-item">
+                        <span class="label">ITP414</span>
+                        <span class="value">31</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="label">CSP415</span>
+                        <span class="value">31</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="label">EMCP416</span>
+                        <span class="value">31</span>
+                    </div>
+                  </div>
+
                 <canvas id="pieChart"></canvas>
             </div>
 

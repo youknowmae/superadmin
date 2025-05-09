@@ -42,6 +42,11 @@
         <div class="card-container" *ngIf="filteredIndustryPartners.length > 0; else noItems">
           <div class="card" *ngFor="let industryPartner of filteredIndustryPartners; let i = index"
             [ngStyle]="{'animation-delay': (i * 0.1) + 's'} ">
+
+            <div class="status">
+              <p>For Renewal</p>
+            </div>
+
             <img [src]="(industryPartner.image) ? industryPartner.image : 'assets/images/logo.png'" alt="logo image"
               class="card-image">
   
@@ -110,6 +115,7 @@
               <th>No. of Applicants</th>
               <th>Accepted Students</th>
               <th>Completed</th>
+              <th>Status</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -118,8 +124,9 @@
               <td>{{ industryPartner.company_name }}</td>
               <td>{{ industryPartner.municipality }}, {{ industryPartner.province }}</td>
               <td>0</td>
-              <td></td>
-              <td></td>
+              <td>25</td>
+              <td>10</td>
+              <td>For Renewal</td>
               <td>
                 <button class="view" mat-icon-button matTooltip="View" (click)="getIndustryPartner(industryPartner.id)">
                   <i class='bx bx-detail'></i>

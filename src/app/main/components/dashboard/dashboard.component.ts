@@ -29,7 +29,6 @@ export class DashboardComponent implements AfterViewInit {
   public config: ChartConfiguration<'pie'> = {
     type: 'pie',
     data: {
-      labels: ['BSIT', 'BSCS', 'BSEMC'],
       datasets: [{
         data: [0, 0, 0, 0],
         backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
@@ -85,12 +84,20 @@ export class DashboardComponent implements AfterViewInit {
       },
       scales: {
         x: {
-          stacked: true
+          stacked: false,
+          ticks: {
+            callback: (value: any, index: number) => {
+              const labels = ['BSIT', 'BSCS', 'BSEMC'];
+              return [labels[index], 'ITP414']; // Return array → two lines
+            },
+            maxRotation: 0,
+            minRotation: 0
+          }
         },
         y: {
-          stacked: true
+          stacked: false
         }
-      }
+      }      
     }
   };
 
