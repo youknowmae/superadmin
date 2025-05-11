@@ -34,9 +34,9 @@
         <div class="card-container" *ngIf="industryPartners.length > 0; else noItems">
             <div class="card" *ngFor="let industryPartner of industryPartners; let i = index" [ngStyle]="{'animation-delay': (i * 0.1) + 's'} ">
                 <div class="status"
-                [class.pending]="industryPartner.status == 2"
-                [class.rejected]="industryPartner.status == 3"
-                [class.approved]="industryPartner.status == 4"
+                [class.pending]="industryPartner.request_status == 2"
+                [class.rejected]="industryPartner.request_status == 3"
+                [class.approved]="industryPartner.request_status == 4"
                 >
                     <h3>{{ industryPartner.status_text  }}</h3>
                 </div>
@@ -52,7 +52,7 @@
                     <p>{{ industryPartner.municipality }}<span *ngIf="industryPartner.province">, {{ industryPartner.province }}</span></p>
                 </div>
 
-                <div class="action-buttons" *ngIf="industryPartner.status">
+                <div class="action-buttons" *ngIf="industryPartner.request_status">
                       <button class="view"
                       mat-ripple
                       mat-raised-button

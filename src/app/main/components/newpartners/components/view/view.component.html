@@ -73,20 +73,20 @@
                         </div>
                     </div>
                     <div>
-                        <button mat-button mat-ripple *ngIf="industryPartner.status != 3" matStepperNext>Next</button>
-                        <button class="warning" mat-ripple *ngIf="industryPartner.status === 2" (click)="reject()">Decline</button>
+                        <button mat-button mat-ripple *ngIf="industryPartner.request_status != 3" matStepperNext>Next</button>
+                        <button class="warning" mat-ripple *ngIf="industryPartner.request_status === 2" (click)="reject()">Decline</button>
                     </div>
                 </mat-step>
-                <mat-step *ngIf="industryPartner.status != 3">
+                <mat-step *ngIf="industryPartner.request_status != 3">
                     <ng-template matStepLabel>MOU</ng-template>
 
                     <div class="step-content">
-                        <div class="preview-container" *ngIf="industryPartner.status === 4">
+                        <div class="preview-container" *ngIf="industryPartner.request_status === 4">
                             <object [data]="sanitizeUrl(industryPartner.mou.file_location)" width="100%" height="550px"></object>
                         </div>
 
                         <!-- ;else mouPreview -->
-                        <div class="stepper-content" *ngIf="industryPartner.status === 2">
+                        <div class="stepper-content" *ngIf="industryPartner.request_status === 2">
                             <div class="row" style="flex-direction: row; display: flex; justify-content: space-between;">
                                 <div class="col-md-4">
                                     <div class="file-input-container">
@@ -109,11 +109,11 @@
                     </div>
 
                     <div>
-                        <button mat-button matStepperNext (click)="showPassword = false"  *ngIf="industryPartner.status === 2" [disabled]="!file">Next</button>
+                        <button mat-button matStepperNext (click)="showPassword = false"  *ngIf="industryPartner.request_status === 2" [disabled]="!file">Next</button>
                         <button mat-button matStepperPrevious>Back</button>
                     </div>
                 </mat-step>
-                <mat-step [stepControl]="accountDetails" *ngIf="industryPartner.status === 2">
+                <mat-step [stepControl]="accountDetails" *ngIf="industryPartner.request_status === 2">
                     <ng-template matStepLabel>Account Details</ng-template>
                         <form [formGroup]="accountDetails" class="step-content">
                             <p class="sub-text">All fields are required for account creation, and the password must be at least 8 characters long.</p>
@@ -148,7 +148,7 @@
                         </form>
                 </mat-step>
 
-                <mat-step [stepControl]="accountDetails"  *ngIf="industryPartner.status === 2">
+                <mat-step [stepControl]="accountDetails"  *ngIf="industryPartner.request_status === 2">
                   <ng-template matStepLabel>Review</ng-template>
                   <div class="step-content">
                     <h2>Company Details</h2>
