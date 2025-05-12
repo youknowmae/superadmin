@@ -14,12 +14,12 @@ import { response } from 'express';
 })
 export class AddIndustryPartnerComponent {
   file: any = null
-  
+
   titles: string[] = ['Sr', 'Jr', 'II', 'III', 'IV', 'V'];
 
   showPassword: boolean = false
-  
-  formDetails: FormGroup 
+
+  formDetails: FormGroup
 
   isSubmitting: boolean = false
 
@@ -27,6 +27,70 @@ export class AddIndustryPartnerComponent {
   provinces: any = []
   municipalities: any = []
   barangays: any = []
+
+  selectedFile: File | null = null;
+  isDragOver = false;
+  filePreviewUrl: string | null = null;
+  fileName: string | null = null;
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files?.length) {
+      this.handleFile(input.files[0]);
+    }
+  }
+
+  onDrop(event: DragEvent): void {
+    event.preventDefault();
+    this.isDragOver = false;
+
+    if (event.dataTransfer?.files.length) {
+      this.handleFile(event.dataTransfer.files[0]);
+    }
+  }
+
+  handleFile(file: File): void {
+    const validTypes = [
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'application/pdf',
+      'image/png',
+      'image/webp',
+      'text/csv',
+      'text/plain',
+      'application/zip'
+    ];
+    const maxSize = 10 * 1024 * 1024; // 10MB
+
+    if (validTypes.includes(file.type) && file.size <= maxSize) {
+      this.selectedFile = file;
+      this.fileName = file.name;
+
+      if (file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.filePreviewUrl = reader.result as string;
+        };
+        reader.readAsDataURL(file);
+      } else {
+        this.filePreviewUrl = null;
+      }
+    } else {
+      alert('Invalid file type or size exceeds 10MB.');
+      this.selectedFile = null;
+      this.fileName = null;
+      this.filePreviewUrl = null;
+    }
+  }
+
+  onDragOver(event: DragEvent): void {
+    event.preventDefault();
+    this.isDragOver = true;
+  }
+
+  onDragLeave(event: DragEvent): void {
+    this.isDragOver = false;
+  }
+
 
   constructor(
     private ref: MatDialogRef<AddIndustryPartnerComponent>,
@@ -38,17 +102,17 @@ export class AddIndustryPartnerComponent {
     this.formDetails = this.fb.group({
       company_name: [null, [Validators.required, Validators.maxLength(64)]],
       description: [null, [Validators.required, Validators.maxLength(2048)]],
-  
+
       // company_head: [null, [Validators.required, Validators.maxLength(128)]],
       company_head: this.fb.group({
         first_name: [null, [Validators.required, Validators.maxLength(64)]],
         middle_name: [null, [Validators.maxLength(64)]],
         last_name: [null, [Validators.required, Validators.maxLength(64)]],
-        ext_name: [null], 
+        ext_name: [null],
         sex: [null, Validators.required],
       }),
       head_position: [null, [Validators.required, Validators.maxLength(64)]],
-      
+
       // immediate_supervisor: [null, [Validators.required, Validators.maxLength(128)]],
       immediate_supervisor: this.fb.group({
         first_name: [null, [Validators.required, Validators.maxLength(64)]],
@@ -58,14 +122,14 @@ export class AddIndustryPartnerComponent {
         sex: [null, Validators.required],
       }),
       supervisor_position: [null, [Validators.required, Validators.maxLength(64)]],
-  
+
       region: [null, [Validators.required]],
       province: [null, [Validators.required]],
       municipality: [null, [Validators.required]],
       barangay: [null, [Validators.required]],
       street: [null, [Validators.required, Validators.maxLength(128)]],
       // zip_code: [null, [Validators.required, Validators.pattern('[0-9]{4}')]],
-  
+
       telephone_number: ['', [Validators.pattern('^[0-9 ()-]+$')]],
       mobile_number: [null, [Validators.required, Validators.pattern('^[0-9 ()-]+$')]],
       fax_number: ['', [Validators.pattern('^[0-9 ()-]+$')]],
@@ -74,8 +138,8 @@ export class AddIndustryPartnerComponent {
 
       email_2: [null, [Validators.required, Validators.email]],
       password: [null, [Validators.required, Validators.minLength(8)]],
-      
-      slots: [null,[Validators.required, Validators.min(1), Validators.max(50)]] 
+
+      slots: [null,[Validators.required, Validators.min(1), Validators.max(50)]]
     })
 
     this.formDetails.get('email')?.valueChanges.subscribe((newValue) => {
@@ -84,7 +148,9 @@ export class AddIndustryPartnerComponent {
       })
     });
   }
-  
+
+
+
   async ngOnInit() {
     // console.log(this.regions)
     this.regions = await this.ls.getRegions()
@@ -109,7 +175,7 @@ export class AddIndustryPartnerComponent {
 
   async onProvinceChange(province: any) {
     // console.log(province)
-    
+
     this.municipalities = []
     this.barangays = []
 
@@ -122,7 +188,7 @@ export class AddIndustryPartnerComponent {
   }
   async onMunicipalityChange(municipality: any) {
     // console.log(municipality)
-    
+
     this.barangays = []
 
     this.formDetails.patchValue({
@@ -132,7 +198,7 @@ export class AddIndustryPartnerComponent {
     this.barangays = await this.ls.getBarangays(municipality.citymunCode)
   }
 
-  
+
 
   uploadFile(event: any) {
     this.file = event.target.files[0];
@@ -159,11 +225,11 @@ export class AddIndustryPartnerComponent {
   submit() {
     if(this.formDetails.invalid) {
       const firstInvalidControl: HTMLElement = document.querySelector('form .ng-invalid')!;
-      
+
       if (firstInvalidControl) {
         firstInvalidControl.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
-  
+
       this.formDetails.markAllAsTouched();
       return;
     }
@@ -240,7 +306,7 @@ export class AddIndustryPartnerComponent {
     formData.append('supervisor_position', this.formDetails.get('supervisor_position')?.value);
 
     formData.append('image', this.file);
-    
+
     this.ds.post('superadmin/industryPartners', '', formData).subscribe(
       result => {
         this.isSubmitting = false
