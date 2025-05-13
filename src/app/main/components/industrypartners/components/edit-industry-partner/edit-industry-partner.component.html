@@ -249,17 +249,45 @@
                                     </mat-form-field>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="btn">
-                            <button type="submit">Update</button>
+                            <div class="btn">
+                              <button type="submit">Update</button>
+                          </div>
                         </div>
                     </form>
                 </div>
             </div>
 
             <div class="tab-content">
+              <div class="content">
+                <div class="upload-box">
+                  <h3>Reupload MOU/MOA</h3>
 
+                  <div
+                    class="drop-zone"
+                    (drop)="onDrop($event)"
+                    (dragover)="onDragOver($event)"
+                    (dragleave)="onDragLeave($event)"
+                    [class.dragover]="isDragOver"
+                  >
+                    <input type="file" hidden (change)="onFileSelected($event)" #fileInput />
+                    <p>Drop your files here,
+                      <a href="#" (click)="fileInput.click(); $event.preventDefault()">or click to browse</a>
+                    </p>
+                    <p class="file-types">Supported files: .docx, .png, .webp, .cvs, .txt, .zip</p>
+                    <p class="file-size">Maximum size: 10MB</p>
+
+                    <div *ngIf="selectedFile" class="file-preview">
+                      <div *ngIf="filePreviewUrl">
+                        <img [src]="filePreviewUrl" alt="Preview" />
+                      </div>
+
+                      <div *ngIf="!filePreviewUrl">
+                        <p><strong>Selected File:</strong> {{ fileName }}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
         </div>
     </div>
