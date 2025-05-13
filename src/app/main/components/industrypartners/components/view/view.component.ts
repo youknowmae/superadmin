@@ -8,12 +8,12 @@ import { DataService } from '../../../../../services/data.service';
 @Component({
   selector: 'app-view',
   templateUrl: './view.component.html',
-  styleUrl: './view.component.scss'
+  styleUrl: './view.component.scss',
 })
 export class ViewComponent {
   industryPartner: any
   student: any
-  
+
   isLoading: boolean = true
 
   displayedColumns: string[] = ['name', 'student_number', 'course', 'year_level', 'status'];
@@ -30,7 +30,7 @@ export class ViewComponent {
     this.getIndustryPartner()
     this.student = this.us.getUser()
   }
-  
+
   getIndustryPartner() {
     let id = this.us.getIndustryPartner()
 
@@ -38,7 +38,7 @@ export class ViewComponent {
       this.router.navigate(['main/industrypartners/list'])
     }
 
-    
+
     this.ds.get('superadmin/industryPartners/', id).subscribe(
       industryPartner => {
         let companyHead = industryPartner.company_head;
@@ -51,7 +51,7 @@ export class ViewComponent {
 
         let full_address = `${industryPartner?.street || ''} ${industryPartner?.barangay || ''}, ${industryPartner?.municipality || ''}`
         industryPartner.full_address = full_address
-        
+
         console.log(industryPartner)
 
         this.industryPartner = industryPartner
@@ -69,7 +69,7 @@ export class ViewComponent {
           this.gs.errorAlert('Oops!', 'Something went wrong. Please try again later.')
         }
       }
-    )      
+    )
   }
 
   navigateToApplication(id: number) {
