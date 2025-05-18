@@ -1,72 +1,88 @@
 <div class="header">
-    <h1>Settings</h1>
+  <h1>Settings</h1>
+</div>
+
+<div class="options">
+  <mat-form-field class="academic_year">
+    <mat-label>Select Academic Year</mat-label>
+    <mat-select
+      disableRipple
+      (selectionChange)="onAcademicYearFilterChange($event)"
+      [(value)]="academicYearFilter"
+    >
+      <mat-option *ngFor="let item of academicYearOptions" [value]="item">
+        AY{{ item.acad_year }}, {{ item.semester | semesterText }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
 
 <ng-container *ngIf="!isLoading; else loading">
-    <div class="container">
-        <div class="card-container">
-            <div class="card" *ngIf="duration.length > 0">
-                <h3>Practicum Hours <span class="sub-text">{{ currentAcadSemester }}</span></h3>
-                <div class="ojt-hours">
-                    <form [formGroup]="ojtDurationFormDetails" >
-                        <div formArrayName="duration">
-                            <ng-container *ngFor="let durationForm of duration.controls; index as i;">
-                                <div class="practicum" [formGroupName]="i">
-                                    <h4> {{ duration.at(i).get('course_code')?.value }} </h4>
-                        
-                                    <div class="input">
-                                        <mat-form-field appearance="outline" floatLabel="always">
-                                            <mat-label>Practicum Hours</mat-label>
-                                            <input matInput type="number" formControlName="required_hours" placeholder="Duration">
-                                        </mat-form-field>
-                                    </div>
-                                </div>
-                            </ng-container>  
-                        </div>
-                    </form>
-                </div>
-    
-                <div class="btn">
-                    <button type="button" [disabled]="ojtDurationFormDetails.invalid" (click)="savePracticumHours()">Save</button>
-                </div>
-            </div>
+  <div class="container">
+    <div class="card-container">
+      <div class="card" *ngIf="duration.length > 0">
+        <h3>Practicum Hours</h3>
+        <div class="ojt-hours">
+          <form [formGroup]="ojtDurationFormDetails">
+            <div formArrayName="duration">
+              <ng-container
+                *ngFor="let durationForm of duration.controls; index as i"
+              >
+                <div class="practicum" [formGroupName]="i">
+                  <h4>{{ duration.at(i).get("course_code")?.value }}</h4>
 
-            <div class="card">
-                <div class="history-header">
-                    <h3>Modification History</h3>
-                    
-                    <div class="filter-dropdown">
-                        <label for="historyFilter">AY:</label>
-                        <select id="historyFilter" [(ngModel)]="selectedAYFilter">
-                            <option value="all">All</option>
-                            <option *ngFor="let item of AcadYearArr" [value]="item">{{ item }}</option>
-                        </select>
-                        <label for="historyFilter">Course:</label>
-                        <select id="historyFilter" [(ngModel)]="selectedFilter">
-                            <option value="all">All</option>
-                            <option *ngFor="let item of course" [value]="item">{{ item }}</option>
-                        </select>
-                    </div>
+                  <div class="input">
+                    <mat-form-field appearance="outline" floatLabel="always">
+                      <mat-label>Practicum Hours</mat-label>
+                      <input
+                        matInput
+                        type="number"
+                        formControlName="required_hours"
+                        placeholder="Duration"
+                      />
+                    </mat-form-field>
+                  </div>
                 </div>
-            
-                <div class="history-list" *ngIf="filteredHistory().length > 0; else noItems">
-                    <div *ngFor="let entry of filteredHistory()" class="history-entry" >
-                        <!-- {{ entry.user.first_name + ' ' + entry.user.last_name }}  -->
-                        <p>{{ entry.action_desc }} at {{ entry.created_at }} </p>
-                    </div>
-                </div>
-            </div>      
+              </ng-container>
+            </div>
+          </form>
         </div>
-              
-    </div>    
+
+        <div class="btn">
+          <button
+            type="button"
+            [disabled]="ojtDurationFormDetails.invalid"
+            (click)="savePracticumHours()"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="history-header">
+          <h3>Modification History</h3>
+        </div>
+
+        <div
+          class="history-list"
+          *ngIf="historyEntries.length > 0; else noItems"
+        >
+          <div *ngFor="let entry of historyEntries" class="history-entry">
+            <p>{{ entry.action_desc }} at {{ entry.created_at }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </ng-container>
 
 <ng-template #loading>
-    <app-loading-spinner></app-loading-spinner>
+  <app-loading-spinner></app-loading-spinner>
 </ng-template>
 
 <ng-template #noItems>
-    <div class="no-items-container">
-        <p>Sorry, no data found</p>
-    </div>
+  <div class="no-items-container">
+    <p>Sorry, no data found</p>
+  </div>
 </ng-template>

@@ -19,7 +19,9 @@ import { StudentsModule } from './components/students/students.module';
 import { SettingsComponent } from './components/settings/settings.component';
 import { NewpartnersModule } from './components/newpartners/newpartners.module';
 import { NewpartnersComponent } from './components/newpartners/newpartners.component';
-import { LoadingSpinnerComponent } from "../components/login/loading-spinner/loading-spinner.component";
+import { LoadingSpinnerComponent } from '../components/login/loading-spinner/loading-spinner.component';
+import { SemesterTextPipe } from '../pipes/semester-text.pipe';
+import { SharedModule } from '../modules/shared.module';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,7 @@ import { LoadingSpinnerComponent } from "../components/login/loading-spinner/loa
     DashboardComponent,
     StudentsComponent,
     SettingsComponent,
-    NewpartnersComponent
+    NewpartnersComponent,
   ],
   imports: [
     CommonModule,
@@ -37,7 +39,8 @@ import { LoadingSpinnerComponent } from "../components/login/loading-spinner/loa
     StudentsModule,
     NewpartnersModule,
     MaterialsModules,
-    LoadingSpinnerComponent
-],
+    LoadingSpinnerComponent,
+    SharedModule
+  ],
 })
-export class MainModule { }
+export class MainModule {}

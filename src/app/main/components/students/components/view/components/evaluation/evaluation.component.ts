@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { UserService } from '../../../../../../../services/user.service';
 import { GeneralService } from '../../../../../../../services/general.service';
+import { AcademicYear } from '../../../../../../../model/academicYear.model';
 
 // import { jsPDF } from 'jspdf';
 // import 'jspdf-autotable';
@@ -13,11 +14,11 @@ import { GeneralService } from '../../../../../../../services/general.service';
 @Component({
   selector: 'app-evaluation',
   templateUrl: './evaluation.component.html',
-  styleUrl: './evaluation.component.scss'
+  styleUrl: './evaluation.component.scss',
 })
 export class EvaluationComponent {
-  isLoading: boolean = true
-  isEmpty: boolean = false
+  isLoading: boolean = true;
+  isEmpty: boolean = false;
 
   exitPollDetails: any = {
     user: '',
@@ -25,14 +26,14 @@ export class EvaluationComponent {
       supervisor_position: '',
       immediate_supervisor: '',
       full_address: '',
-      company_name: ''
+      company_name: '',
     },
-    total_hours_completed: ''
-  }
+    total_hours_completed: '',
+  };
 
-  evaluation: any
-  formDetails: FormGroup 
-  
+  evaluation: any;
+  formDetails: FormGroup;
+
   constructor(
     private fb: FormBuilder,
     private ds: DataService,
@@ -45,36 +46,39 @@ export class EvaluationComponent {
         this.fb.control(null, Validators.required),
         this.fb.control(null, Validators.required),
         this.fb.control(null, Validators.required),
-        this.fb.control(null, Validators.required), 
+        this.fb.control(null, Validators.required),
       ]),
       skills: this.fb.array([
         this.fb.control(null, Validators.required),
         this.fb.control(null, Validators.required),
         this.fb.control(null, Validators.required),
         this.fb.control(null, Validators.required),
-        this.fb.control(null, Validators.required), 
         this.fb.control(null, Validators.required),
         this.fb.control(null, Validators.required),
-        this.fb.control(null, Validators.required), 
+        this.fb.control(null, Validators.required),
+        this.fb.control(null, Validators.required),
       ]),
       attitude: this.fb.array([
         this.fb.control(null, Validators.required),
         this.fb.control(null, Validators.required),
         this.fb.control(null, Validators.required),
         this.fb.control(null, Validators.required),
-        this.fb.control(null, Validators.required), 
         this.fb.control(null, Validators.required),
         this.fb.control(null, Validators.required),
         this.fb.control(null, Validators.required),
         this.fb.control(null, Validators.required),
         this.fb.control(null, Validators.required),
         this.fb.control(null, Validators.required),
-        this.fb.control(null, Validators.required), 
+        this.fb.control(null, Validators.required),
+        this.fb.control(null, Validators.required),
         this.fb.control(null, Validators.required),
       ]),
       suggestions: this.fb.group({
         strong_point: [null, [Validators.required, Validators.maxLength(256)]],
-        utilized_effectively: [null, [Validators.required, Validators.maxLength(256)]],
+        utilized_effectively: [
+          null,
+          [Validators.required, Validators.maxLength(256)],
+        ],
         weak_point: [null, [Validators.required, Validators.maxLength(256)]],
         corrected_by: [null, [Validators.required, Validators.maxLength(256)]],
         other_comment: [null, [Validators.required, Validators.maxLength(256)]],
@@ -87,49 +91,60 @@ export class EvaluationComponent {
           this.fb.control(null),
           this.fb.control(null),
           this.fb.control(null),
-          this.fb.control(null), 
           this.fb.control(null),
-        ])
-      })
-    })
+          this.fb.control(null),
+        ]),
+      }),
+    });
   }
 
   ngOnInit() {
-    this.getEvaluation()
+    this.getEvaluation();
   }
 
-
-
   getEvaluation() {
-    let user = this.us.getStudentProfile()
+    const acadYear: AcademicYear = this.us.getSelectedAcademicYears();
+    let user = this.us.getStudentProfile();
 
-    this.ds.get('superadmin/students/evaluation/', user.id).subscribe(
-      evaluation => {
-        this.isLoading = false
-        this.evaluation = evaluation
-    
-        this.formDetails.patchValue({
-          ...evaluation.evaluation
-        })
+    this.ds
+      .get(
+        `superadmin/students/evaluation/${user.id}`,
+        `?acad_year=${acadYear.acad_year}&semester=${acadYear.semester}`
+      )
+      .subscribe(
+        (evaluation) => {
+          this.isLoading = false;
+          this.evaluation = evaluation;
 
-        let further_employment =  this.formDetails.get('further_employment.response')?.value
+          this.formDetails.patchValue({
+            ...evaluation.evaluation,
+          });
 
-        const ifNotArray = this.formDetails.get('further_employment.if_not') as FormArray;
+          let further_employment = this.formDetails.get(
+            'further_employment.response'
+          )?.value;
 
-        if (further_employment === '1') {
-          ifNotArray.disable();  
+          const ifNotArray = this.formDetails.get(
+            'further_employment.if_not'
+          ) as FormArray;
+
+          if (further_employment === '1') {
+            ifNotArray.disable();
+          }
+        },
+        (error) => {
+          if (error.status === 404) {
+            this.isEmpty = true;
+          } else {
+            this.gs.makeAlert(
+              'Oops!',
+              'Something went wrong. Please try again later.',
+              'error'
+            );
+          }
+          this.isLoading = false;
+          console.error(error);
         }
-      },
-      error => {
-        if(error.status === 404) {
-          this.isEmpty = true
-        }
-        else {
-          this.gs.errorAlert('Oops!', 'Something went wrong. Please try again later.')
-        }
-        this.isLoading = false
-        console.error(error)
-      }
-    )
+      );
   }
 }

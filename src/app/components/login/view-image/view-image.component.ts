@@ -15,7 +15,7 @@ export class ViewImageComponent {
 
   }
   
-  closepopup() {
+  closePopup() {
     this.ref.close(null);
   }
 }

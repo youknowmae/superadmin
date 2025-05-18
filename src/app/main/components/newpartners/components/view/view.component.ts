@@ -91,14 +91,16 @@ export class ViewComponent {
       (error) => {
         if (error.status === 404) {
           this.router.navigate(['main/newpartners/list']);
-          this.gs.errorAlert(
+          this.gs.makeAlert(
             'Not Found!',
-            'The industry partner approval not found.'
+            'The industry partner approval not found.',
+            'error'
           );
         } else {
-          this.gs.errorAlert(
+          this.gs.makeAlert(
             'Oops!',
-            'Something went wrong. Please try again later.'
+            'Something went wrong. Please try again later.',
+            'error'
           );
         }
 
@@ -149,22 +151,24 @@ export class ViewComponent {
         (response) => {
           this.isSubmitting = false;
           console.log(response);
-          this.gs.successAlert(response.title, response.message);
+          this.gs.makeAlert(response.title, response.message, 'success');
           this.router.navigate(['main/newpartners/list']);
         },
         (error) => {
           this.isSubmitting = false;
           if (error.status === 409) {
-            this.gs.errorAlert(error.error.title, error.error.message);
+            this.gs.makeAlert(error.error.title, error.error.message, 'error');
           } else if (error.status == 422) {
-            this.gs.errorAlert(
+            this.gs.makeAlert(
               error.error.title || 'Invalid Input!',
-              error.error.error || 'Please check your input'
+              error.error.error || 'Please check your input',
+              'error'
             );
           } else {
-            this.gs.errorAlert(
+            this.gs.makeAlert(
               'Oops',
-              'Something went wrong. Please try again later.'
+              'Something went wrong. Please try again later.',
+              'error'
             );
           }
           console.log(error);
@@ -186,9 +190,10 @@ export class ViewComponent {
           this.isSubmitting = false;
         },
         (error) => {
-          this.gs.errorAlert(
+          this.gs.makeAlert(
             'Error!',
-            'Something went wrong. Please try again later.'
+            'Something went wrong. Please try again later.',
+            'error'
           );
           console.error(error);
           this.isSubmitting = false;
@@ -250,20 +255,29 @@ export class ViewComponent {
           )
           .subscribe(
             (response) => {
-              this.gs.successAlert(response.title, response.message);
+              this.gs.makeAlert(response.title, response.message, 'success');
               this.router.navigate(['main/newpartners/list']);
               this.industryPartner.status = 3;
             },
             (error) => {
               console.error(error);
               if (error.status === 409) {
-                this.gs.errorAlert(error.error.title, error.error.message);
+                this.gs.makeAlert(
+                  error.error.title,
+                  error.error.message,
+                  'error'
+                );
               } else if (error.status === 422) {
-                this.gs.errorAlert(error.error.title, error.error.message);
+                this.gs.makeAlert(
+                  error.error.title,
+                  error.error.message,
+                  'error'
+                );
               } else {
-                this.gs.errorAlert(
+                this.gs.makeAlert(
                   'Oops!',
-                  'Something went wrong. Please try again later.'
+                  'Something went wrong. Please try again later.',
+                  'error'
                 );
               }
             }

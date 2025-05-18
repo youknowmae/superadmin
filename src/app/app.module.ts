@@ -1,23 +1,35 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
+import {
+  BrowserModule,
+  provideClientHydration,
+} from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/common';
+import {
+  CommonModule,
+  HashLocationStrategy,
+  LocationStrategy,
+} from '@angular/common';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { LoginComponent } from './components/login/login.component';
 import { MainComponent } from './main/main.component';
 import { ViewImageComponent } from './components/login/view-image/view-image.component';
-import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialsModules } from './modules/materials.module';
 import { ResponseInterceptor } from './interceptors/response.interceptor';
+import { SemesterTextPipe } from './pipes/semester-text.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent, 
+    LoginComponent,
     MainComponent,
     ViewImageComponent,
   ],
@@ -26,18 +38,16 @@ import { ResponseInterceptor } from './interceptors/response.interceptor';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    MaterialsModules
+    MaterialsModules,
   ],
   providers: [
     provideClientHydration(),
-    provideHttpClient(
-      withInterceptorsFromDi()
-    ),
+    provideHttpClient(withInterceptorsFromDi()),
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ResponseInterceptor, multi: true },
     { provide: LocationStrategy, useClass: HashLocationStrategy },
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

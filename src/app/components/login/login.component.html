@@ -1,53 +1,82 @@
 <div class="container">
-    <div class="content">
-        <div class="left-content">
-            <div class="upper">
-                <img src="assets/images/logo.png" alt="Logo">
-  
-                <div class="titles">
-                    <p class="app-name">ITrack</p>
-                    <p>College of Computer Studies</p>
-                    <p>Gordon College</p>
-                </div>
-            </div>
+  <div class="content">
+    <div class="left-content">
+      <div class="upper">
+        <img src="assets/images/logo.png" alt="Logo" />
 
-            <div class="lower">
-                <div class="clipart">
-                    <img src="assets/images/clipartstudent.svg">
-                </div>
-            </div>
+        <div class="titles">
+          <p class="app-name">ITrack</p>
+          <p>College of Computer Studies</p>
+          <p>Gordon College</p>
         </div>
+      </div>
 
-        <div class="right-content">
-            <div class="upper-clipart">
-                <img src="assets/images/circle.png">
-            </div>
-            <div class="login-content">
-                <img src="assets/images/logo.png" alt="Logo">
-                
-                <h1>Welcome Admin</h1>
-
-                <form (submit)="login()" [formGroup]="loginForm" ngNativeValidate autocomplete="on">
-                    <div class="input">
-                        <div class="input-container">
-                            <mat-icon matPrefix>account_circle</mat-icon>
-                            <input type="text" placeholder="Username" formControlName="email" required>
-                        </div>
-                        <div class="input-container">
-                            <mat-icon matPrefix>lock</mat-icon>
-                            <input type="password" placeholder="Password" formControlName="password" required>
-                        </div>
-                    </div>
-
-                    <div class="btn">
-                    <button type="submit">Login</button>
-                    </div>
-                </form>
-            </div>
-
-            <div class="lower-clipart">
-                <img src="assets/images/circle.png">
-            </div>
+      <div class="lower">
+        <div class="clipart">
+          <img src="assets/images/clipartstudent.svg" />
         </div>
+      </div>
     </div>
+
+    <div class="right-content">
+      <div class="upper-clipart">
+        <img src="assets/images/circle.png" />
+      </div>
+      <div class="login-content">
+        <img src="assets/images/logo.png" alt="Logo" />
+
+        <h1>Welcome Admin</h1>
+
+        <form
+          (submit)="login()"
+          [formGroup]="loginForm"
+          ngNativeValidate
+          autocomplete="on"
+        >
+          <div class="input">
+            <div class="input-container">
+              <mat-icon matPrefix>account_circle</mat-icon>
+              <input
+                type="text"
+                placeholder="Username"
+                formControlName="email"
+                required
+              />
+            </div>
+            <div class="input-container">
+              <mat-icon matPrefix>lock</mat-icon>
+              <input
+                type="password"
+                placeholder="Password"
+                formControlName="password"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="btn">
+            <button type="submit">
+              <ng-container *ngIf="!isLoggingIn; else loginIndicator">
+                Login
+              </ng-container>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="lower-clipart">
+        <img src="assets/images/circle.png" />
+      </div>
+    </div>
+  </div>
 </div>
+
+<ng-template #loginIndicator>
+  <mat-progress-spinner
+    diameter="24"
+    mode="indeterminate"
+    color="primary"
+    strokeWidth="3"
+  >
+  </mat-progress-spinner>
+</ng-template>

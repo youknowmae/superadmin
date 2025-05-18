@@ -15,12 +15,12 @@
   align-items: center;
   justify-content: space-between;
   h1 {
-      color: var(--main-orange);
-      opacity: .7;
-      font-size: 40px;
-      font-weight: 400;
-      padding: 10px;
-      margin: 0;
+    color: var(--main-orange);
+    opacity: 0.7;
+    font-size: 40px;
+    font-weight: 400;
+    padding: 10px;
+    margin: 0;
   }
 }
 
@@ -36,17 +36,17 @@
 
   mat-icon {
     cursor: pointer;
-  } 
+  }
 
   .btn {
     button {
-        border: 2px solid var(--secondary-color);
-        background-color: #ffffff;
-        font-size: 20px;
-        border-radius: 30px;
-        padding: 10px;
-        width: 120px;
-        cursor: pointer;
+      border: 2px solid var(--secondary-color);
+      background-color: #ffffff;
+      font-size: 20px;
+      border-radius: 30px;
+      padding: 10px;
+      width: 120px;
+      cursor: pointer;
     }
 
     button:hover {
@@ -63,39 +63,39 @@
   margin: 10px 20px;
 
   button {
-      padding: 2px 8px;
-      font-size: 18px;
-      background-color: var(--main-bg-color);
-      border: none;
-      cursor: pointer;
-      color: var(--primary-color);
-      margin-bottom: 10px;
+    padding: 2px 8px;
+    font-size: 18px;
+    background-color: var(--main-bg-color);
+    border: none;
+    cursor: pointer;
+    color: var(--primary-color);
+    margin-bottom: 10px;
   }
 
   .filter-container {
+    display: flex;
+    flex-direction: row;
+
+    .filter {
       display: flex;
-      flex-direction: row;
-      
-      .filter {
-          display: flex;
-          justify-content: center;
-          margin-right: 40px;
-          position: relative;
-      }
+      justify-content: center;
+      margin-right: 40px;
+      position: relative;
+    }
 
-      .filter::before {
-          content: '';
-          position: absolute; 
-          transform: translateY(50px);
-          width: 0px;
-          height: 2px;
-          background: var(--primary-color);
-          transition: all .3s ease-in-out;
-      }
+    .filter::before {
+      content: "";
+      position: absolute;
+      transform: translateY(50px);
+      width: 0px;
+      height: 2px;
+      background: var(--primary-color);
+      transition: all 0.3s ease-in-out;
+    }
 
-      .filter.active::before {
-          width: 120px;
-      }
+    .filter.active::before {
+      width: 120px;
+    }
   }
 
   .filter-view {
@@ -107,138 +107,138 @@
   }
 }
 
-  .card-container {
-    padding: 10px 0px;
-    height: 50%;
-    display: grid;
-    grid-template-columns: repeat(3, minmax(30%, 1fr));
-    gap: 8px;
+.card-container {
+  padding: 10px 0px;
+  height: 50%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(30%, 1fr));
+  gap: 8px;
 
-    .card {
-      width: auto;
-      height: fit-content;
-      background-color: #ffffff; /* White background */
-      border-radius: 10px; /* Rounded corners */
-      box-shadow: 0 4px 8px rgba(0,0,0,0.5);  /*Card shadow */
-      border: solid 2px var(--border-color);
-      margin: 10px;
-      padding: 20px;
-      transform: scale(1);
-      transition: all .2s ease-in;
-  
-      animation: fade-in 1s forwards; 
-      opacity: 0;         
-      will-change: opacity;  
-  
-      h2 {
-        line-height: normal;
-        font-size: medium; 
-        margin: 0;
-      }
-  
-      p {
-        font-size:small;
-      }
-  
-      .info-section {
-        display: flex;
-        align-items: center;
-        margin-bottom: 6px;
-  
-        mat-icon {
-          color: rgba(0,0,0,0.60);
-          margin-right: 5px;
-          overflow: visible;
-        }
-      }
+  .card {
+    width: auto;
+    height: fit-content;
+    background-color: #ffffff; /* White background */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /*Card shadow */
+    border: solid 2px var(--border-color);
+    margin: 10px;
+    padding: 20px;
+    transform: scale(1);
+    transition: all 0.2s ease-in;
 
-      .status {
-        width: 250px;
-        height: 30px;
-        margin-bottom: 15px;
-        border-radius: 5px;
-  
-        h3 {
-          padding: 0;
-          text-align: center;
-          color: var(--primary-font-color);
-          width: 100%;
-        }
-      }
+    animation: fade-in 1s forwards;
+    opacity: 0;
+    will-change: opacity;
+
+    h2 {
+      line-height: normal;
+      font-size: medium;
+      margin: 0;
     }
-  
-    .card:hover{
-      transform: scale(1.05);
-      transition: all .2s ease-in;
+
+    p {
+      font-size: small;
     }
-  
-  /* CARD CONTENTS */
-  .card-image {
-      width: 100%; /* or any specific width */
-      height: 200px; /* or any specific height */
-      background-color: #f3f3f3; /* a light grey placeholder color */
-      border-radius: 5px; /* if you want rounded corners */
-      margin-bottom: 10px; /* space between the image and the text below */
-      object-fit: contain;
-    }
-  
-   /* CARD BUTTON */
-    .action-buttons {
+
+    .info-section {
       display: flex;
-      height: 35px;
-      flex-direction: row-reverse;
-    }
-  
-    .card button {
-      border: 2px solid; 
-      border-radius: 5px;
-      color: #ffffff;
-      padding: 2px 12px;
-      text-transform:none;
-      font-size: large;
-      cursor: pointer;
-  
-      i {
-        font-size: 18px;
-        transform: translateY(1px);
+      align-items: center;
+      margin-bottom: 6px;
+
+      mat-icon {
+        color: rgba(0, 0, 0, 0.6);
+        margin-right: 5px;
+        overflow: visible;
       }
     }
-  
-    .view {
-      background-color: gray;
-    }
-  
-    .edit{     
-      background-color: var(--primary-color);
-    }
-    .delete{     
-      background-color: var(--warning-color);
-    }
-  
-    .card button:hover {
-      box-shadow: 0px 8px 15px -10px rgb(61, 61, 61);
-      transform: translate(0px, -2px);
-      background: white;
-    }
-  
-  
-    .view:hover {
-      color: gray !important;
-    }
-  
-    .edit:hover {
-      color: var(--primary-color) !important;
-    }
-    .delete:hover {
-      color: var(--warning-color) !important;
+
+    .status {
+      width: 250px;
+      height: 30px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+
+      h3 {
+        padding: 0;
+        text-align: center;
+        color: var(--primary-font-color);
+        width: 100%;
+      }
     }
   }
+
+  .card:hover {
+    transform: scale(1.05);
+    transition: all 0.2s ease-in;
+  }
+
+  /* CARD CONTENTS */
+  .card-image {
+    width: 100%; /* or any specific width */
+    height: 200px; /* or any specific height */
+    background-color: #f3f3f3; /* a light grey placeholder color */
+    border-radius: 5px; /* if you want rounded corners */
+    margin-bottom: 10px; /* space between the image and the text below */
+    object-fit: contain;
+  }
+
+  /* CARD BUTTON */
+  .action-buttons {
+    display: flex;
+    gap: 5px;
+    height: 35px;
+    flex-direction: row-reverse;
+  }
+
+  .card button {
+    border: 2px solid;
+    border-radius: 5px;
+    color: #ffffff;
+    padding: 2px 12px;
+    text-transform: none;
+    font-size: large;
+    cursor: pointer;
+
+    i {
+      font-size: 18px;
+      transform: translateY(1px);
+    }
+  }
+
+  .view {
+    background-color: gray;
+  }
+
+  .edit {
+    background-color: var(--primary-color);
+  }
+  .delete {
+    background-color: var(--warning-color);
+  }
+
+  .card button:hover {
+    box-shadow: 0px 8px 15px -10px rgb(61, 61, 61);
+    transform: translate(0px, -2px);
+    background: white;
+  }
+
+  .view:hover {
+    color: gray !important;
+  }
+
+  .edit:hover {
+    color: var(--primary-color) !important;
+  }
+  .delete:hover {
+    color: var(--warning-color) !important;
+  }
+}
 
 .pagination-container {
   grid-column: 1 / -1;
   margin-top: 20px;
   display: flex;
-  justify-content: flex-end ;
+  justify-content: flex-end;
 }
 
 .pagination {
@@ -280,12 +280,12 @@
   border-radius: 50%;
   padding: 0px 10px;
   transform: scale(1.4);
-  transition: all .2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
-.icons img:hover{
+.icons img:hover {
   background-color: #e2e2e2;
-  transition: all .2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 /* Container for nice padding and rounded corners */
@@ -332,10 +332,10 @@
     color: gray;
   }
 
-  .edit{     
+  .edit {
     color: var(--primary-color);
   }
-  .delete{     
+  .delete {
     color: var(--warning-color);
   }
 }
@@ -343,7 +343,7 @@
 /* Alternating row background (optional) */
 .table-wrapper .row:hover {
   background-color: rgba(var(--secondary-color-semi-transparent));
-  transition: all ease-in-out .2s;
+  transition: all ease-in-out 0.2s;
 }
 
 /* Action button */
@@ -381,9 +381,8 @@
 }
 
 mat-paginator {
-  background: none
+  background: none;
 }
-
 
 @media only screen and (min-width: 1900px) {
   .card-container {
@@ -399,7 +398,7 @@ mat-paginator {
 
 @media only screen and (max-width: 768px) {
   .card-container {
-    grid-template-columns: repeat(1, minmax(90% , 1fr));
+    grid-template-columns: repeat(1, minmax(90%, 1fr));
   }
 
   .pagination {
@@ -410,7 +409,7 @@ mat-paginator {
     p {
       font-size: medium;
     }
-  
+
     .icons {
       button {
         margin: 0 5px;
@@ -418,9 +417,7 @@ mat-paginator {
       img {
         padding: 8px;
         transform: scale(1);
-
       }
     }
   }
 }
-

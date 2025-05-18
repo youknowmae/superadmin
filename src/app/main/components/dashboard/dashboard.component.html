@@ -1,81 +1,64 @@
-    <div class="container">
-    <div class="header">
-        <h1 class="head">Dashboard</h1>
+<div class="container">
+  <div class="header">
+    <h1 class="head">Dashboard</h1>
+  </div>
+  <div class="options">
+    <mat-form-field class="academic_year">
+      <mat-label>Select Academic Year</mat-label>
+      <mat-select
+        disableRipple
+        (selectionChange)="onAcademicYearFilterChange($event)"
+        [(value)]="academicYearFilter"
+      >
+        <mat-option *ngFor="let item of academicYearOptions" [value]="item">
+          AY{{ item.acad_year }}, {{ item.semester | semesterText }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button class="export">Export</button>
+  </div>
+
+  <div class="content">
+    <div class="total">
+      <div style="background-color: #fff8e8">
+        <p>Total Students Enrolled</p>
+        <h1>{{ enrolled_student }}</h1>
+      </div>
+
+      <div style="background-color: #fff8e8">
+        <p>Pending Student Applicants</p>
+        <h1>{{ ojtStatusCount.pending }}</h1>
+      </div>
+
+      <div style="background-color: #fff8e8">
+        <p>Students in Ongoing OJT</p>
+        <h1>{{ ojtStatusCount.ongoing }}</h1>
+      </div>
+
+      <div style="background-color: #fff8e8">
+        <p>OJT-Completed Students</p>
+        <h1>{{ ojtStatusCount.completed }}</h1>
+      </div>
     </div>
-    <div class="options">
-      <mat-form-field class="academic_year">
-        <mat-label>Select Academic Year</mat-label>
-        <mat-select disableRipple>
-          <mat-option value="1">A.Y. 2024-2025 2nd Semester</mat-option>
-          <mat-option value="2">A.Y. 2024-2025 1st Semester</mat-option>
-          <mat-option value="3">A.Y. 2023-2024 Midterm</mat-option>
-          <mat-option value="4">A.Y. 2023-2024 2nd Semester</mat-option>
-          <mat-option value="5">A.Y. 2023-2024 1st Semester</mat-option>
-          <mat-option value="6">A.Y. 2022-2023 Midterm</mat-option>
-          <mat-option value="7">A.Y. 2022-2023 2nd Semester</mat-option>
-          <mat-option value="8">A.Y. 2022-2023 1st Semester</mat-option>
-          <mat-option value="9">A.Y. 2021-2022 Midterm</mat-option>
-          <mat-option value="10">A.Y. 2021-2022 2nd Semester</mat-option>
-          <mat-option value="11">A.Y. 2021-2022 1st Semester</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <button class="export">Export</button>
-    </div>
 
+    <div class="graph">
+      <div class="pie">
+        <h1>Students Enrolled</h1>
 
-    <div class="content">
-        <div class="total">
-            <div style="background-color: #FFF8E8;">
-                <p>Total Students Enrolled</p>
-                <h1>{{ enrolled_student }}</h1>
-            </div>
-
-            <div style="background-color: #FFF8E8;">
-                <p>Pending Student Applicants</p>
-                <h1>{{ student_ojt_status_count.pending }}</h1>
-            </div>
-
-            <div style="background-color: #FFF8E8;">
-                <p>Students in Ongoing OJT</p>
-                <h1>{{ student_ojt_status_count.ongoing }}</h1>
-            </div>
-
-            <div style="background-color: #FFF8E8;">
-                <p>OJT-Completed Students</p>
-                <h1>{{ student_ojt_status_count.completed }}</h1>
-            </div>
+        <div class="chart-data-summary">
+          <div class="data-item" *ngFor="let item of enrolledCourseCount">
+            <span class="label">{{ item.course_code }}</span>
+            <span class="value">{{ item.count }}</span>
+          </div>
         </div>
 
-        <div class="graph">
-            <div class="pie">
-                <h1>Students Enrolled</h1>
+        <canvas id="pieChart"></canvas>
+      </div>
 
-                <div class="chart-data-summary">
-                    <div class="data-item">
-                        <span class="label">ITP414</span>
-                        <span class="value">31</span>
-                    </div>
-                    <div class="data-item">
-                        <span class="label">CSP415</span>
-                        <span class="value">31</span>
-                    </div>
-                    <div class="data-item">
-                        <span class="label">EMCP416</span>
-                        <span class="value">31</span>
-                    </div>
-                  </div>
-
-                <canvas id="pieChart"></canvas>
-            </div>
-
-            <div class="bar">
-                <h1>Students OJT Status</h1>
-                <canvas id="barChart"></canvas>
-            </div>
-        </div>
-
+      <div class="bar">
+        <h1>Students OJT Status</h1>
+        <canvas id="barChart"></canvas>
+      </div>
     </div>
+  </div>
 </div>
-
-
-

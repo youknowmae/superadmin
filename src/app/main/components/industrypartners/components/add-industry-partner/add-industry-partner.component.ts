@@ -204,7 +204,7 @@ export class AddIndustryPartnerComponent {
     this.file = event.target.files[0];
   }
 
-  closepopup() {
+  closePopup() {
     Swal.fire({
       title: "Cancel",
       text: "Are you sure you want to cancel adding industry partner??",
@@ -217,7 +217,7 @@ export class AddIndustryPartnerComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         this.ref.close(null);
-        this.gs.errorToastAlert('Changes not saved.')
+        this.gs.makeToast('Changes not saved.', 'error')
       }
     });
   }
@@ -235,7 +235,7 @@ export class AddIndustryPartnerComponent {
     }
 
     if(!this.file) {
-      this.gs.errorAlert('Invalid Input!', 'Image is required')
+      this.gs.makeAlert('Invalid Input!', 'Image is required', 'error')
       return
     }
 
@@ -310,17 +310,17 @@ export class AddIndustryPartnerComponent {
     this.ds.post('superadmin/industryPartners', '', formData).subscribe(
       result => {
         this.isSubmitting = false
-        this.gs.successAlert(result.title, result.message)
+        this.gs.makeAlert(result.title, result.message, 'success')
         this.ref.close(result.data);
       },
       error => {
         this.isSubmitting = false
         console.error(error)
         if (error.status == 422) {
-          this.gs.errorAlert('Error!', "Invalid input.")
+          this.gs.makeAlert('Error!', "Invalid input.", 'error')
         }
         else {
-          this.gs.errorAlert('Oops!', "Something went wrong, please try again later.")
+          this.gs.makeAlert('Oops!', "Something went wrong, please try again later.", 'error')
         }
       }
     )

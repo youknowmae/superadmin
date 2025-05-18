@@ -63,25 +63,12 @@ export class ViewComponent {
         console.error(error)
         if(error.status === 404) {
           this.router.navigate(['main/industrypartners/list'])
-          this.gs.errorAlert('Not Found!', 'Industry Partner not found.')
+          this.gs.makeAlert('Not Found!', 'Industry Partner not found.', 'error')
         }
         else {
-          this.gs.errorAlert('Oops!', 'Something went wrong. Please try again later.')
+          this.gs.makeAlert('Oops!', 'Something went wrong. Please try again later.', 'error')
         }
       }
     )
   }
-
-  navigateToApplication(id: number) {
-    if(!this.student.personality_test){
-      this.gs.infoAlert('Personality test is required!', 'Please do the personality test first to proceed.')
-      this.router.navigate(['/main/profile'])
-
-      return
-    }
-    this.router.navigate(['/main/industrypartners/apply/' + id])
-  }
-
-
-
 }

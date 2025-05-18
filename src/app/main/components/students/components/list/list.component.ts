@@ -13,6 +13,7 @@ import * as ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
 import { MatSelectChange } from '@angular/material/select';
 import { MatSort } from '@angular/material/sort';
+import { AcademicYear } from '../../../../../model/academicYear.model';
 
 @Component({
   selector: 'app-list',
@@ -20,7 +21,6 @@ import { MatSort } from '@angular/material/sort';
   styleUrl: './list.component.scss',
 })
 export class ListComponent {
-  // displayedColumns: string[] = ['name', 'student_number', 'course', 'program', 'year_level', 'progress', 'student_evaluation', 'exit_poll',  'status', 'actions'];
   displayedColumns: string[] = [
     'full_name',
     'company',
@@ -30,6 +30,9 @@ export class ListComponent {
     'status',
     'actions',
   ];
+
+  academicYearOptions: any = [];
+  academicYearFilter: any;
 
   unfilteredStudents: any;
   dataSource: any = new MatTableDataSource<any>();
@@ -64,7 +67,6 @@ export class ListComponent {
     };
 
     const emailFilterPredicate = (data: any, search: string): boolean => {
-      // return data.student_profile.student_number.toLowerCase().includes(search);
       return data.email.toLowerCase().includes(search);
     };
 
@@ -78,139 +80,166 @@ export class ListComponent {
   }
 
   ngOnInit() {
-    this.getStudents();
+    let academicYears = this.us.getAcademicYears();
+    this.academicYearOptions = academicYears;
+    const activeAcadYear = academicYears.find(
+      (item: any) => item.is_active === 1
+    );
+
+    this.academicYearFilter = activeAcadYear;
+
+    this.getStudents(activeAcadYear);
   }
 
   search(search: string) {
     this.dataSource.filter = search.trim().toLowerCase();
   }
 
-  getStudents() {
-    this.ds.get('superadmin/students').subscribe(
-      (students) => {
-        console.log(students);
-        let studentsList = students.map((student: any) => {
-          //get all classes - course code
-          if (
-            !this.classList.some((data: any) =>
-              data.label.includes(
-                student.active_ojt_class.class_code +
-                  ' - ' +
-                  student.active_ojt_class.course_code
+  getStudents(acadYear: AcademicYear) {
+    this.ds
+      .get(
+        `superadmin/students?acad_year=${acadYear.acad_year}&semester=${acadYear.semester}`
+      )
+      .subscribe(
+        (students) => {
+          console.log(students);
+          let studentsList = students.map((student: any) => {
+            const active_ojt_class = {
+              ...student.ojt_class,
+              ...student.ojt_class.adviser_class,
+              ...student.ojt_class.adviser_class.active_ojt_hours,
+            };
+
+            if (
+              !this.classList.some((data: any) =>
+                data.label.includes(
+                  active_ojt_class.class_code +
+                    ' - ' +
+                    active_ojt_class.course_code
+                )
               )
             )
-          )
-            this.classList.push({
-              label:
-                student.active_ojt_class.class_code +
-                ' - ' +
-                student.active_ojt_class.course_code,
-              value: student.active_ojt_class.class_code,
-            });
+              this.classList.push({
+                label:
+                  active_ojt_class.class_code +
+                  ' - ' +
+                  active_ojt_class.course_code,
+                value: active_ojt_class.class_code,
+              });
 
-          if (student.student_evaluation) {
-            student.student_evaluation = student.student_evaluation.average;
-          }
+            if (student.student_evaluation) {
+              student.student_evaluation = student.student_evaluation.average;
+            }
 
-          let required_hours: number = student.active_ojt_class.required_hours;
-          let progress: number = 0;
+            let required_hours: number = active_ojt_class.required_hours;
+            let progress: number = 0;
 
-          //if has accomplishment report
-          if (student.verified_attendance_total) {
-            progress += parseInt(
-              student.verified_attendance_total.current_total_hours
-            );
-            if (progress > required_hours) progress = required_hours;
-          }
+            //if has accomplishment report
+            if (student.verified_attendance_total) {
+              progress += parseInt(
+                student.verified_attendance_total.current_total_hours
+              );
+              if (progress > required_hours) progress = required_hours;
+            }
 
-          if (student.seminar_hours_total) {
-            student.seminar_hours_total =
-              student.seminar_hours_total.current_total_hours;
-          } else {
-            student.seminar_hours_total = 0;
-          }
+            if (student.seminar_hours_total) {
+              student.seminar_hours_total =
+                student.seminar_hours_total.current_total_hours;
+            } else {
+              student.seminar_hours_total = 0;
+            }
 
-          if (student.community_service_total) {
-            student.community_service_total =
-              student.community_service_total.current_total_hours;
-          } else {
-            student.community_service_total = 0;
-          }
+            if (student.community_service_total) {
+              student.community_service_total =
+                student.community_service_total.current_total_hours;
+            } else {
+              student.community_service_total = 0;
+            }
 
-          if (student.other_task_total_hours) {
-            student.other_task_total_hours =
-              student.other_task_total_hours.current_total_hours;
-          } else {
-            student.other_task_total_hours = 0;
-          }
+            if (student.other_task_total_hours) {
+              student.other_task_total_hours =
+                student.other_task_total_hours.current_total_hours;
+            } else {
+              student.other_task_total_hours = 0;
+            }
 
-          let courseCode = student?.active_ojt_class?.course_code;
-          
-          const level_2 = ['ITP422', 'CS422', 'DAP421'];
-          const level_1 = ['ITP131', 'CS131', 'EMC131'];
-          let practicum_level;
+            let courseCode = student?.active_ojt_class?.course_code;
 
-          if (level_2.includes(courseCode)) {
-            practicum_level = 2;
-          } else {
-            practicum_level = 1;
-          }
+            const level_2 = ['ITP422', 'CS422', 'DAP421'];
+            const level_1 = ['ITP131', 'CS131', 'EMC131'];
+            let practicum_level;
 
-          let status = null;
+            if (level_2.includes(courseCode)) {
+              practicum_level = 2;
+            } else {
+              practicum_level = 1;
+            }
 
-          if (
-            progress >= required_hours &&
-            student.ojt_exit_poll &&
-            student.student_evaluation
-          ) {
-            status = 'Completed';
-          } else if (student.accepted_application) {
-            status = 'Ongoing';
-          } else if (
-            student.pending_application &&
-            student.pending_application.status == 0
-          )
-            status = "Pending - Adviser's Approval";
-          else if (student.pending_application) {
-            status = 'Pending - Company Approval';
-          } else {
-            status = 'Pending - without application';
-          }
+            let status = null;
 
-          let student_evaluation = student.student_evaluation
-            ? student.student_evaluation
-            : 'N/A';
-          let exit_poll = student.ojt_exit_poll ? 'Answered' : 'Not Completed';
+            if (
+              progress >= required_hours &&
+              student.ojt_exit_poll &&
+              student.student_evaluation
+            ) {
+              status = 'Completed';
+            } else if (student.accepted_application) {
+              status = 'Ongoing';
+            } else if (
+              student.pending_application &&
+              student.pending_application.status == 0
+            )
+              status = "Pending - Adviser's Approval";
+            else if (student.pending_application) {
+              status = 'Pending - Company Approval';
+            } else {
+              status = 'Pending - without application';
+            }
 
-          let company = student.accepted_application
-            ? student.accepted_application.company_name
-            : 'N/A';
+            let student_evaluation = student.student_evaluation
+              ? student.student_evaluation
+              : 'N/A';
+            let exit_poll = student.ojt_exit_poll
+              ? 'Answered'
+              : 'Not Completed';
 
-          return {
-            full_name: student.first_name + ' ' + student.last_name,
-            progress,
-            status,
-            company,
-            exit_poll,
-            ...student,
-            student_evaluation,
-            practicum_level,
-          };
-        });
+            let company = student.accepted_application
+              ? student.accepted_application.company_name
+              : 'N/A';
 
-        studentsList = studentsList.sort((a: any, b: any) =>
-          a.last_name.localeCompare(b.last_name)
-        );
+            return {
+              full_name: student.first_name + ' ' + student.last_name,
+              progress,
+              status,
+              company,
+              exit_poll,
+              ...student,
+              student_evaluation,
+              practicum_level,
+              active_ojt_class,
+            };
+          });
 
-        console.log(studentsList);
-        this.unfilteredStudents = studentsList;
-        this.dataSource.data = studentsList;
-        this.dataSource.paginator = this.paginator;
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
+          studentsList = studentsList.sort((a: any, b: any) =>
+            a.last_name.localeCompare(b.last_name)
+          );
+
+          console.log(studentsList);
+          this.unfilteredStudents = studentsList;
+          this.dataSource.data = studentsList;
+          this.dataSource.paginator = this.paginator;
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+  }
+
+  onAcademicYearFilterChange(event: MatSelectChange) {
+    this.classList = [];
+    const acadYear = event.value;
+    this.academicYearFilter = acadYear;
+    this.getStudents(acadYear);
   }
 
   onClassFilterChange(event: MatSelectChange) {
@@ -256,7 +285,6 @@ export class ListComponent {
       (student: any) => student.id == id
     );
 
-    console.log(studentDetails);
     this.ds.get('superadmin/students/', id).subscribe(
       (student) => {
         console.log(studentDetails);
@@ -264,6 +292,7 @@ export class ListComponent {
           ...student,
           required_hours: studentDetails.active_ojt_class.required_hours,
         });
+        this.us.setSelectedAcademicYears(this.academicYearFilter); //store current acad year
         this.router.navigate(['main/students/view']);
         this.isLoading = false;
       },
@@ -319,7 +348,6 @@ export class ListComponent {
       console.error('Error generating Excel file data.');
     }
   }
-
 
   async generateExcelContent(data: any) {
     const header = [
@@ -480,7 +508,7 @@ export class ListComponent {
               student.practicum_level == 2
                 ? student.community_service_total
                 : '---',
-                student.active_ojt_class.required_hours,
+              student.active_ojt_class.required_hours,
               student.progress,
               student.student_evaluation
                 ? student.student_evaluation
@@ -506,19 +534,6 @@ export class ListComponent {
           currentPageLine = 0;
         });
 
-      // //format width
-      // worksheet.columns.forEach((column: any) => {
-      //   let maxLength = 0;
-      //   column.eachCell({ includeEmpty: true }, (cell: any) => {
-      //     items.forEach((item: any) => {
-      //       if (cell.row >= item.start && cell.row <= item.end) {
-      //         const cellValue = cell.value ? cell.value.toString() : '';
-      //         maxLength = Math.max(maxLength, cellValue.length);
-      //       }
-      //     });
-      //   });
-      //   column.width = maxLength < 6 ? 6 : maxLength + 1;
-      // });
       return excel; // Return the excel workbook
     } catch (error) {
       console.error('Error in convertExcel:', error);

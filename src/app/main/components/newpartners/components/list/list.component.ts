@@ -47,7 +47,9 @@ export class ListComponent {
         console.log(response);
         let partners = response.filter(
           (data: any) =>
-            data.request_status == 2 || data.request_status == 3 || data.request_status == 4
+            data.request_status == 2 ||
+            data.request_status == 3 ||
+            data.request_status == 4
         );
 
         this.unfilteredIndustryPartners = partners.map((item: any) => {
@@ -65,9 +67,10 @@ export class ListComponent {
         this.isLoading = false;
       },
       (error) => {
-        this.gs.errorAlert(
+        this.gs.makeAlert(
           'Oops!',
-          'Something went wrong. Please try again later.'
+          'Something went wrong. Please try again later.',
+          'error'
         );
         console.error(error);
         this.isLoading = false;
@@ -102,7 +105,6 @@ export class ListComponent {
         return item.request_status == this.statusFilter;
       });
     }
-
 
     if (this.searchFilter) {
       data = data.filter((element: any) => {

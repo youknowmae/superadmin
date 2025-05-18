@@ -4,24 +4,24 @@ import { UserService } from '../../../services/user.service';
 import Swal from 'sweetalert2';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GeneralService } from '../../../services/general.service';
+import { MatSelectChange } from '@angular/material/select';
+import { AcademicYear } from '../../../model/academicYear.model';
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
-  styleUrl: './settings.component.scss'
+  styleUrl: './settings.component.scss',
 })
 export class SettingsComponent {
+  academicYearOptions: any = [];
+  academicYearFilter: any;
+
   ojtDurationFormDetails: FormGroup;
   isSubmitting: boolean = false;
   isLoading: boolean = true;
 
-  currentAcadSemester: string = ''
-  AcadYearArr: any = [];
-  // Dropdown filter
-  selectedAYFilter: string = 'all';
-  selectedFilter: string = 'all';
   historyEntries: any[] = [];
-  course: any = []
+  course: any = [];
 
   constructor(
     private ds: DataService,
@@ -34,101 +34,133 @@ export class SettingsComponent {
     });
   }
 
+  onAcademicYearFilterChange(event: MatSelectChange) {
+    this.duration.clear();
+    this.isLoading = true;
+
+    const acadYear = event.value;
+    this.academicYearFilter = acadYear;
+    this.getModificationHistory(acadYear);
+    this.getOjtHours(acadYear);
+  }
+
   get duration() {
-    return this.ojtDurationFormDetails.controls["duration"] as FormArray;
+    return this.ojtDurationFormDetails.controls['duration'] as FormArray;
   }
 
   ngOnInit() {
-    this.getOjtHours();
-    this.getModificationHistory();
+    let academicYears = this.us.getAcademicYears();
+    this.academicYearOptions = academicYears;
+    const activeAcadYear = academicYears.find(
+      (item: any) => item.is_active === 1
+    );
+
+    this.academicYearFilter = activeAcadYear;
+
+    this.getOjtHours(activeAcadYear);
+    this.getModificationHistory(activeAcadYear);
   }
 
-  getOjtHours() {
-    this.ds.get('superadmin/settings/required-ojt-hours').subscribe(
-      response => {
-        const data = response.data
-        console.log(response);
+  getOjtHours(acadYear: AcademicYear) {
+    this.ds
+      .get(
+        `superadmin/settings/required-ojt-hours?acad_year=${acadYear.acad_year}&semester=${acadYear.semester}`
+      )
+      .subscribe(
+        (response) => {
+          const data = response.data;
+          console.log(response);
 
-        this.currentAcadSemester = data.acad_year_semester
-        data.practicum_hours.forEach((element: any) => {
-          this.course.push(element.course_code)
+          data.practicum_hours.forEach((element: any) => {
+            this.course.push(element.course_code);
 
-          const settingForm: FormGroup = this.fb.group({  
-            course_code: [element.course_code, [Validators.required]],
-            required_hours: [element.required_hours, [Validators.required, Validators.min(100), Validators.max(900), Validators.pattern("^[0-9]*$")]],
+            const settingForm: FormGroup = this.fb.group({
+              course_code: [element.course_code, [Validators.required]],
+              required_hours: [
+                element.required_hours,
+                [
+                  Validators.required,
+                  Validators.min(100),
+                  Validators.max(900),
+                  Validators.pattern('^[0-9]*$'),
+                ],
+              ],
+            });
+
+            this.duration.push(settingForm);
           });
-
-          this.duration.push(settingForm);
-        });
-        this.isLoading = false;
-      },
-      error => {
-        console.error(error);
-        this.isLoading = false;
-      }
-    );
-  }
-
-  getModificationHistory() {
-    this.ds.get('superadmin/settings/ojt-hours-history').subscribe(
-      response => {
-        this.historyEntries = response
-        
-        response.forEach((data: any) => {
-          if (!this.AcadYearArr.includes(data.acad_year))
-            this.AcadYearArr.push(data.acad_year)
-        });
-        console.log(response)
-      },
-      error => {
-        console.error(error);
-      }
-    );
-  }
-
-  filteredHistory() {
-    return this.selectedFilter === 'all' ? this.historyEntries : 
-        this.historyEntries.filter(item => {
-          return item.course_code.includes(this.selectedFilter)
-        });
-  }
-
-  savePracticumHours() {
-    Swal.fire({
-      title: "Save?",
-      text: "Your changes will be saved.",
-      icon: "info",
-      showCancelButton: true,
-      confirmButtonText: 'Yes',
-      cancelButtonText: 'Cancel',
-      confirmButtonColor: "#4f6f52",
-      cancelButtonColor: "#777777",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        if(this.isSubmitting){
-          return;
+          this.isLoading = false;
+        },
+        (error) => {
+          console.error(error);
+          this.isLoading = false;
         }
+      );
+  }
 
-        this.isSubmitting = true;
-        
-        console.log(this.ojtDurationFormDetails.value);
-        this.ds.post('superadmin/settings/required-ojt-hours', '', this.ojtDurationFormDetails.value).subscribe(
-          response => {
-            this.isSubmitting = false;
-            this.gs.successToastAlert(response.message);
-            this.getModificationHistory()
-          },
-          error => {
-            this.isSubmitting = false;
-            if(error.status === 422) {
-              this.gs.errorAlert('Invalid Input!', 'Please check the input.');
-            } else {
-              this.gs.errorAlert('Oops!', 'Something went wrong. Please try again later.');
-            }
-            console.error(error);
+  getModificationHistory(acadYear: AcademicYear) {
+    this.ds
+      .get(
+        `superadmin/settings/ojt-hours-history?acad_year=${acadYear.acad_year}&semester=${acadYear.semester}`
+      )
+      .subscribe(
+        (response) => {
+          this.historyEntries = response;
+          console.log(response);
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+  }
+
+  async savePracticumHours() {
+    const res = await this.gs.confirmationAlert(
+      'Save?',
+      'Your changes will be saved.',
+      'info',
+      'Save'
+    );
+
+    if (!res) return;
+
+    if (this.isSubmitting) return;
+    this.isSubmitting = true;
+
+    let acadYear: AcademicYear = this.academicYearFilter;
+    console.log(this.ojtDurationFormDetails.value);
+    this.ds
+      .post(
+        `superadmin/settings/required-ojt-hours?acad_year=${acadYear.acad_year}&semester=${acadYear.semester}`,
+        '',
+        this.ojtDurationFormDetails.value
+      )
+      .subscribe(
+        (response) => {
+          this.isSubmitting = false;
+          this.gs.makeToast(response.message, 'success');
+          this.getModificationHistory(this.academicYearFilter);
+        },
+        (error) => {
+          console.log(error);
+          this.isSubmitting = false;
+          if (error.status === 409) {
+            this.gs.makeAlert(error.error.title, error.error.message, 'error');
+          } else if (error.status === 422) {
+            this.gs.makeAlert(
+              error.error.title || 'Invalid Input!',
+              error.error.message || 'Please check your input.',
+              'error'
+            );
+          } else {
+            this.gs.makeAlert(
+              'Oops!',
+              'Something went wrong. Please try again later.',
+              'error'
+            );
           }
-        );
-      }
-    });
+          console.error(error);
+        }
+      );
   }
 }
