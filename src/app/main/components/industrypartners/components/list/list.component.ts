@@ -42,6 +42,9 @@ export class ListComponent {
   isSubmitting: boolean = false;
   isGridView: boolean = true;
 
+  // Track active filter state
+  activeFilter: 'active' | 'inactive' = 'active';
+
   searchValue: string = '';
 
   pagination: pagination = <pagination>{};
@@ -73,7 +76,11 @@ export class ListComponent {
   getIndustryPartners() {
     this.ds.get('superadmin/industryPartners').subscribe(
       (industryPartners) => {
-        this.industryPartners = industryPartners;
+        // Add status property to each partner
+        this.industryPartners = industryPartners.map((partner: any) => ({
+          ...partner,
+          status: partner.status || 'active'
+        }));
         console.log(industryPartners);
 
         this.filterIndustryPartners();
@@ -102,6 +109,8 @@ export class ListComponent {
         return;
       }
 
+      // Set status for new partners as active by default
+      result.status = 'active';
       this.industryPartners.unshift(result);
       this.filterIndustryPartners();
     });
@@ -129,7 +138,7 @@ export class ListComponent {
           }
 
           this.industryPartners = this.industryPartners.map((data: any) =>
-            data.id === result.id ? result : data
+            data.id === result.id ? { ...result, status: data.status } : data
           );
           this.filterIndustryPartners();
         });
@@ -164,13 +173,16 @@ export class ListComponent {
       (result) => {
         this.isSubmitting = false;
         console.log(result);
-        this.industryPartners = this.industryPartners.filter(
-          (item: any) => item.id !== id
+
+        // Instead of removing, update the status to inactive
+        this.industryPartners = this.industryPartners.map((item: any) =>
+          item.id === id ? { ...item, status: 'inactive' } : item
         );
-        this.filteredIndustryPartners = this.filteredIndustryPartners.filter(
-          (item: any) => item.id !== id
-        );
-        this.gs.makeToast('Successfully removed', 'success');
+
+        // Filter the list again to respect current active filter
+        this.filterIndustryPartners();
+
+        this.gs.makeToast('Successfully archived', 'success');
       },
       (error) => {
         this.isSubmitting = false;
@@ -178,6 +190,13 @@ export class ListComponent {
         this.gs.makeAlert('Error!', 'Something went wrong. Please try again later.', 'error')
       }
     );
+  }
+
+  // Set active filter
+  setFilter(filter: 'active' | 'inactive') {
+    this.activeFilter = filter;
+    this.pagination.current_page = 1;
+    this.filterIndustryPartners();
   }
 
   search(value: string) {
@@ -192,6 +211,10 @@ export class ListComponent {
     let search = this.searchValue.toLowerCase();
 
     var data = this.industryPartners;
+
+    // Filter by active status
+    data = data.filter((item: any) => item.status === this.activeFilter);
+
     if (search) {
       data = data.filter((item: IndustryPartner) => {
         return (

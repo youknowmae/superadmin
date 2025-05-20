@@ -33,10 +33,10 @@
     <div class="buttons">
       <div class="filter-container">
         <div class="filter">
-          <button>Active Partners</button>
+          <button [ngClass]="{'active': activeFilter === 'active'}" (click)="setFilter('active')">Active Partners</button>
         </div>
         <div class="filter">
-          <button>Inactive Partners</button>
+          <button [ngClass]="{'active': activeFilter === 'inactive'}" (click)="setFilter('inactive')">Inactive Partners</button>
         </div>
       </div>
 
@@ -231,3 +231,4 @@
     <p>Sorry, no data found</p>
   </div>
 </ng-template>
+
