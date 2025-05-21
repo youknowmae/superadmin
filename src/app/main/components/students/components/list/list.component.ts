@@ -28,6 +28,7 @@ export class ListComponent {
     'student_evaluation',
     'exit_poll',
     'status',
+    'grade',
     'actions',
   ];
 

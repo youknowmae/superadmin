@@ -135,6 +135,11 @@ h1 {
     }
 }
 
+input {
+    width: 80px;
+    border: 1px solid var(--primary-color);
+}
+
 mat-paginator {
     background: none;
 }
