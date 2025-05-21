@@ -192,6 +192,46 @@ export class ListComponent {
     );
   }
 
+  async unarchive(id: number) {
+    const res = await this.gs.confirmationAlert(
+      'Unarchive?',
+      'Are you sure you want to unarchive this industry partner?',
+      'warning',
+      'Unarchive'
+    );
+
+    if (!res) return;
+
+    if (this.isSubmitting) {
+      return;
+    }
+
+    this.isSubmitting = true;
+
+    // We can reuse the same endpoint or create a new one if needed
+    this.ds.get(`superadmin/industryPartners/${id}/restore`).subscribe(
+      (result) => {
+        this.isSubmitting = false;
+        console.log(result);
+
+        // Update the status to active
+        this.industryPartners = this.industryPartners.map((item: any) =>
+          item.id === id ? { ...item, status: 'active' } : item
+        );
+
+        // Filter the list again to respect current active filter
+        this.filterIndustryPartners();
+
+        this.gs.makeToast('Successfully unarchived', 'success');
+      },
+      (error) => {
+        this.isSubmitting = false;
+        console.error(error);
+        this.gs.makeAlert('Error!', 'Something went wrong. Please try again later.', 'error')
+      }
+    );
+  }
+
   // Set active filter
   setFilter(filter: 'active' | 'inactive') {
     this.activeFilter = filter;

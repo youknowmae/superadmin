@@ -91,6 +91,7 @@
 
             <div class="action-buttons">
               <button
+                *ngIf="activeFilter === 'active'"
                 class="delete"
                 mat-raised-button
                 matTooltip="Archive"
@@ -98,6 +99,17 @@
                 (click)="archive(industryPartner.id)"
               >
                 <i class="bx bxs-archive"></i>
+              </button>
+
+              <button
+                *ngIf="activeFilter === 'inactive'"
+                class="unarchive"
+                mat-raised-button
+                matTooltip="Unarchive"
+                [matTooltipShowDelay]="400"
+                (click)="unarchive(industryPartner.id)"
+              >
+                <i class="bx bxs-archive-out"></i>
               </button>
 
               <button
@@ -206,12 +218,22 @@
               <i class="bx bxs-edit"></i>
             </button>
             <button
+              *ngIf="activeFilter === 'active'"
               class="delete"
               mat-icon-button
               matTooltip="Archive"
               (click)="archive(industryPartner.id)"
             >
               <i class="bx bxs-archive"></i>
+            </button>
+            <button
+              *ngIf="activeFilter === 'inactive'"
+              class="unarchive"
+              mat-icon-button
+              matTooltip="Unarchive"
+              (click)="unarchive(industryPartner.id)"
+            >
+              <i class="bx bxs-archive-out"></i>
             </button>
           </td>
         </tr>
@@ -231,4 +253,3 @@
     <p>Sorry, no data found</p>
   </div>
 </ng-template>
-

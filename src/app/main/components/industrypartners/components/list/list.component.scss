@@ -188,6 +188,16 @@
     gap: 5px;
     height: 35px;
     flex-direction: row-reverse;
+
+    .unarchive {
+      background-color: #28a745; /* Green color for unarchive button */
+      color: #ffffff;
+
+      &:hover {
+        background-color: #fff;
+        color: #28a745 !important; /* Green color on hover, matching the pattern of other buttons */
+      }
+    }
   }
 
   .card button {
@@ -324,7 +334,8 @@
 
   .view,
   .edit,
-  .delete {
+  .delete,
+  .unarchive {
     background-color: transparent;
   }
 
@@ -337,6 +348,13 @@
   }
   .delete {
     color: var(--warning-color);
+  }
+  .unarchive {
+    color: #28a745; /* Green color for unarchive button in table view */
+
+    &:hover {
+      background-color: rgba(40, 167, 69, 0.1);
+    }
   }
 }
 
