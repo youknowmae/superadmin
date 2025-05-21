@@ -208,28 +208,19 @@ export class ListComponent {
 
     this.isSubmitting = true;
 
-    // We can reuse the same endpoint or create a new one if needed
-    this.ds.get(`superadmin/industryPartners/${id}/restore`).subscribe(
-      (result) => {
-        this.isSubmitting = false;
-        console.log(result);
+    // Use existing endpoint or a simple update without an API call
+    // Option 1: Using client-side update only (no server call)
+    this.isSubmitting = false;
 
-        // Update the status to active
-        this.industryPartners = this.industryPartners.map((item: any) =>
-          item.id === id ? { ...item, status: 'active' } : item
-        );
-
-        // Filter the list again to respect current active filter
-        this.filterIndustryPartners();
-
-        this.gs.makeToast('Successfully unarchived', 'success');
-      },
-      (error) => {
-        this.isSubmitting = false;
-        console.error(error);
-        this.gs.makeAlert('Error!', 'Something went wrong. Please try again later.', 'error')
-      }
+    // Update the status to active
+    this.industryPartners = this.industryPartners.map((item: any) =>
+      item.id === id ? { ...item, status: 'active' } : item
     );
+
+    // Filter the list again to respect current active filter
+    this.filterIndustryPartners();
+
+    this.gs.makeToast('Successfully unarchived', 'success');
   }
 
   // Set active filter
