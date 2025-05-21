@@ -5,17 +5,9 @@
             <i class="fa-solid fa-xmark" (click)="closePopup()"></i>
         </div>
 
-        <div class="tabbed">
-            <input type="radio" id="tab1" name="css-tabs" checked="checked">
-            <input type="radio" id="tab2" name="css-tabs">
-
-            <ul class="tabs">
-                <li class="tab"><label for="tab1">Company Profile</label></li>
-                <li class="tab"><label for="tab2">MOU Information</label></li>
-            </ul>
-
-            <div class="tab-content">
-                <div class="content">
+        <mat-tab-group>
+            <mat-tab label="Company Profile">
+                    <div class="content">
                     <form [formGroup]="formDetails" (submit)="submit()">
                         <div class="form-content">
                             <h3>Profile</h3>
@@ -255,9 +247,9 @@
                         </div>
                     </form>
                 </div>
-            </div>
+            </mat-tab>
 
-            <div class="tab-content">
+            <mat-tab label="MOU/MOA Information">
               <div class="content">
                 <div class="upload-box">
                   <h3>Reupload MOU/MOA</h3>
@@ -288,7 +280,7 @@
                   </div>
                 </div>
               </div>
-            </div>
-        </div>
+            </mat-tab>
+        </mat-tab-group>
     </div>
 </div>

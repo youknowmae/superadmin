@@ -14,6 +14,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table'; // For tables
 import { MatButtonModule } from '@angular/material/button'; // For paginator buttons
 import { MatIconModule } from '@angular/material/icon'; // For icons in your buttons
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -32,6 +36,11 @@ import { MatIconModule } from '@angular/material/icon'; // For icons in your but
     MatTableModule,
     MatButtonModule,
     MatIconModule,
+    MatStepperModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatSelectModule,
+
   ]
 })
 export class IndustrypartnersModule { }
