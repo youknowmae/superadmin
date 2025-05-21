@@ -1,5 +1,5 @@
 /* Tabs */
-.page-content {
+mat-tab {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -7,12 +7,7 @@
   // background: #ffffff;
 }
 
-a {
-  color: #21D4FD;
-  transition: all 0.3s;
-}
-
-.tabbed {
+mat-tab-group {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -20,64 +15,7 @@ a {
   overflow-x: hidden;
 }
 
-.tabbed [type="radio"] {
-  display: none;
-}
-
-.tabs {
-  display: flex;
-  align-items: stretch;
-  list-style: none;
-  width: 100%;
-  padding: 0;
-  margin: 0;
-  border-bottom: 3.5px solid var(--primary-color);
-  overflow-x: auto;
-
-  .tab {
-    flex: 1;
-    min-width: 220px;
-  }
-}
-
-
-.tab > label {
-  color: var(--main-orange);
-  display: block;
-  font-size: 16px;
-  font-weight: bold;
-  line-height: 15px;
-  padding: 15px 10px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.tab:hover label {
-  color: #ffffff;
-  background-color: #527853;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-}
-
-.tabbed [type="radio"]:nth-of-type(1):checked ~ .tabs .tab:nth-of-type(1) label,
-.tabbed [type="radio"]:nth-of-type(2):checked ~ .tabs .tab:nth-of-type(2) label {
-  border-bottom-color: var(--tertiary-color);
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  background: #527853;
-  color: var(--primary-font-color);
-}
-
-.tabbed [type="radio"]:nth-of-type(1):checked ~ .tab-content:nth-of-type(1),
-.tabbed [type="radio"]:nth-of-type(2):checked ~ .tab-content:nth-of-type(2) {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-}
-
-.tab-content {
+mat-tab {
   display: none;
   overflow-x: hidden;
   flex: 1;
@@ -133,7 +71,7 @@ a {
         }
     }
 
-    .content {
+    .page-content {
         display: flex;
         flex-direction: column;
         padding: 10px;
@@ -150,11 +88,11 @@ a {
         font-size: 14px;
     }
 
-    .form-content {
+    form {
         display: flex;
         flex-direction: column;
-        padding-inline: 30px;
-        padding-block: 60px;
+        padding-inline: 15px;
+        padding-block: 15px;
 
         h3 {
             color: var(--primary-color);
@@ -218,8 +156,9 @@ a {
             transition: background-color 200ms;
             left: 10px;
         }
+    }
 
-      .btn {
+    .btn {
         display: flex;
         justify-content: end;
         margin-top: 20px;
@@ -252,7 +191,6 @@ a {
             color: white;
           }
       }
-    }
 }
 
 

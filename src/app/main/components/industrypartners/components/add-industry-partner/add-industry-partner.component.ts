@@ -13,27 +13,27 @@ import { response } from 'express';
   styleUrl: './add-industry-partner.component.scss'
 })
 export class AddIndustryPartnerComponent {
-  file: any = null
+  file: any = null;
 
   titles: string[] = ['Sr', 'Jr', 'II', 'III', 'IV', 'V'];
 
-  showPassword: boolean = false
+  showPassword: boolean = false;
 
-  formDetails: FormGroup
+  formDetails: FormGroup;
 
-  isSubmitting: boolean = false
+  isSubmitting: boolean = false;
 
-  regions: any = []
-  provinces: any = []
-  municipalities: any = []
-  barangays: any = []
+  regions: any = [];
+  provinces: any = [];
+  municipalities: any = [];
+  barangays: any = [];
 
   selectedFile: File | null = null;
   isDragOver = false;
   filePreviewUrl: string | null = null;
   fileName: string | null = null;
 
-  onFileSelected(event: Event): void {
+   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files?.length) {
       this.handleFile(input.files[0]);
@@ -91,7 +91,6 @@ export class AddIndustryPartnerComponent {
     this.isDragOver = false;
   }
 
-
   constructor(
     private ref: MatDialogRef<AddIndustryPartnerComponent>,
     private fb: FormBuilder,
@@ -103,7 +102,6 @@ export class AddIndustryPartnerComponent {
       company_name: [null, [Validators.required, Validators.maxLength(64)]],
       description: [null, [Validators.required, Validators.maxLength(2048)]],
 
-      // company_head: [null, [Validators.required, Validators.maxLength(128)]],
       company_head: this.fb.group({
         first_name: [null, [Validators.required, Validators.maxLength(64)]],
         middle_name: [null, [Validators.maxLength(64)]],
@@ -113,7 +111,6 @@ export class AddIndustryPartnerComponent {
       }),
       head_position: [null, [Validators.required, Validators.maxLength(64)]],
 
-      // immediate_supervisor: [null, [Validators.required, Validators.maxLength(128)]],
       immediate_supervisor: this.fb.group({
         first_name: [null, [Validators.required, Validators.maxLength(64)]],
         middle_name: [null, [Validators.maxLength(64)]],
@@ -128,7 +125,6 @@ export class AddIndustryPartnerComponent {
       municipality: [null, [Validators.required]],
       barangay: [null, [Validators.required]],
       street: [null, [Validators.required, Validators.maxLength(128)]],
-      // zip_code: [null, [Validators.required, Validators.pattern('[0-9]{4}')]],
 
       telephone_number: ['', [Validators.pattern('^[0-9 ()-]+$')]],
       mobile_number: [null, [Validators.required, Validators.pattern('^[0-9 ()-]+$')]],
@@ -138,22 +134,50 @@ export class AddIndustryPartnerComponent {
 
       email_2: [null, [Validators.required, Validators.email]],
       password: [null, [Validators.required, Validators.minLength(8)]],
+      slots: [null, [Validators.required, Validators.min(1), Validators.max(50)]],
 
-      slots: [null,[Validators.required, Validators.min(1), Validators.max(50)]]
-    })
+      // Added startDate and endDate controls
+      startDate: [null, Validators.required],
+      endDate: [{ value: null, disabled: true }], // disabled because automatic
+    });
 
     this.formDetails.get('email')?.valueChanges.subscribe((newValue) => {
       this.formDetails.patchValue({
         email_2: newValue
-      })
+      });
+    });
+
+    this.formDetails.get('startDate')?.valueChanges.subscribe((startDateValue: string) => {
+      const endDateControl = this.formDetails.get('endDate');
+
+      if (startDateValue) {
+        const start = new Date(startDateValue);
+        const end = new Date(start);
+        end.setFullYear(end.getFullYear() + 1); // add 1 year
+
+        // Format date to yyyy-MM-dd string
+        const yyyy = end.getFullYear();
+        const mm = (end.getMonth() + 1).toString().padStart(2, '0');
+        const dd = end.getDate().toString().padStart(2, '0');
+        const endDateStr = `${yyyy}-${mm}-${dd}`;
+
+        // ✅ Enable endDate if disabled
+        if (endDateControl?.disabled) {
+          endDateControl.enable({ emitEvent: false });
+        }
+
+        // ✅ Set value without triggering event
+        endDateControl?.setValue(endDateStr, { emitEvent: false });
+      } else {
+        // ✅ Reset and disable if no startDate
+        endDateControl?.setValue(null, { emitEvent: false });
+        endDateControl?.disable({ emitEvent: false });
+      }
     });
   }
 
-
-
   async ngOnInit() {
-    // console.log(this.regions)
-    this.regions = await this.ls.getRegions()
+    this.regions = await this.ls.getRegions();
   }
 
   async onRegionChange(region: any) {
