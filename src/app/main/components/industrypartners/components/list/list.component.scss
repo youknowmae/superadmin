@@ -30,10 +30,6 @@
   display: flex;
   justify-content: space-between;
 
-  form {
-    width: 400px;
-  }
-
   mat-icon {
     cursor: pointer;
   }
@@ -54,13 +50,24 @@
       color: #ffffff;
     }
   }
+
+  .column {
+    display: flex;
+    gap: 40px;
+
+    form {
+      width: 450px;
+    }
+  }
 }
+
 
 .buttons {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin: 10px 20px;
+  align-items: center;
 
   button {
     padding: 2px 8px;
