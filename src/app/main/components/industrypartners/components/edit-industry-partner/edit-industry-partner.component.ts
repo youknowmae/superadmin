@@ -5,6 +5,7 @@ import { DataService } from '../../../../../services/data.service';
 import Swal from 'sweetalert2';
 import { GeneralService } from '../../../../../services/general.service';
 import { LocationService } from '../../../../../services/location.service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-edit-industry-partner',
@@ -27,7 +28,7 @@ export class EditIndustryPartnerComponent {
 
   selectedFile: File | null = null;
   isDragOver = false;
-  filePreviewUrl: string | null = null;
+  filePreviewUrl: SafeResourceUrl | null = null;
   fileName: string | null = null;
 
   onFileSelected(event: Event): void {
@@ -46,6 +47,7 @@ export class EditIndustryPartnerComponent {
     }
   }
 
+<<<<<<< Updated upstream
   handleFile(file: File): void {
     const validTypes = [
       'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -56,23 +58,24 @@ export class EditIndustryPartnerComponent {
       'text/plain',
       'application/zip',
     ];
+=======
+   handleFile(file: File): void {
+    const validType = 'application/pdf';
+>>>>>>> Stashed changes
     const maxSize = 10 * 1024 * 1024; // 10MB
 
-    if (validTypes.includes(file.type) && file.size <= maxSize) {
+    if (file.type === validType && file.size <= maxSize) {
       this.selectedFile = file;
       this.fileName = file.name;
 
-      if (file.type.startsWith('image/')) {
-        const reader = new FileReader();
-        reader.onload = () => {
-          this.filePreviewUrl = reader.result as string;
-        };
-        reader.readAsDataURL(file);
-      } else {
-        this.filePreviewUrl = null;
-      }
+      const reader = new FileReader();
+      reader.onload = () => {
+        // Sanitize the base64 URL to safely bind it to iframe src
+        this.filePreviewUrl = this.sanitizer.bypassSecurityTrustResourceUrl(reader.result as string);
+      };
+      reader.readAsDataURL(file); // Convert PDF to base64
     } else {
-      alert('Invalid file type or size exceeds 10MB.');
+      alert('Only PDF files under 10MB are allowed.');
       this.selectedFile = null;
       this.fileName = null;
       this.filePreviewUrl = null;
@@ -94,7 +97,8 @@ export class EditIndustryPartnerComponent {
     private fb: FormBuilder,
     private dataService: DataService,
     private gs: GeneralService,
-    private ls: LocationService
+    private ls: LocationService,
+    private sanitizer: DomSanitizer
   ) {
     this.formDetails = this.fb.group({
       company_name: [null, [Validators.required, Validators.maxLength(64)]],

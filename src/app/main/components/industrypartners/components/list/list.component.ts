@@ -11,6 +11,7 @@ import { pagination } from '../../../../../model/pagination.model';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort, Sort } from '@angular/material/sort';
+import { Pipe, PipeTransform } from '@angular/core';
 
 @Component({
   selector: 'app-list-industry-partners',
@@ -33,6 +34,11 @@ export class ListComponent {
     'completed',
     'actions',
   ];
+<<<<<<< Updated upstream
+=======
+
+  academicYearFilter: string | null = null;
+>>>>>>> Stashed changes
   filteredIndustryPartners: IndustryPartner[] = [];
   industryPartners: IndustryPartner[] = [];
   isLoading: boolean = true;
@@ -64,6 +70,23 @@ export class ListComponent {
       per_page: 12,
       last_page: 0,
     };
+  }
+
+  academicYearOptions = [
+    { acad_year: '2023-2024', semester: 1 },
+    { acad_year: '2023-2024', semester: 2 },
+    { acad_year: '2022-2023', semester: 1 },
+    { acad_year: '2022-2023', semester: 2 }
+  ];
+
+  onAcademicYearFilterChange(event: any): void {
+    console.log('Selected academic year:', event.value);
+    // You can add logic here to filter a table or fetch new data
+  }
+
+  export(): void {
+    console.log('Exporting data for:', this.academicYearFilter);
+    // Add export logic here (e.g., export to CSV/PDF)
   }
 
   ngOnInit() {
