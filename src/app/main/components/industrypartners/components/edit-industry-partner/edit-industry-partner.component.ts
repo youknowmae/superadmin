@@ -47,21 +47,8 @@ export class EditIndustryPartnerComponent {
     }
   }
 
-<<<<<<< Updated upstream
-  handleFile(file: File): void {
-    const validTypes = [
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-      'application/pdf',
-      'image/png',
-      'image/webp',
-      'text/csv',
-      'text/plain',
-      'application/zip',
-    ];
-=======
    handleFile(file: File): void {
     const validType = 'application/pdf';
->>>>>>> Stashed changes
     const maxSize = 10 * 1024 * 1024; // 10MB
 
     if (file.type === validType && file.size <= maxSize) {
