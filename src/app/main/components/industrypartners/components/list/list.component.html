@@ -6,42 +6,26 @@
   <ng-container *ngIf="!isLoading; else loading">
     <!-- Search & Add -->
     <div class="search">
-        <div class="options">
-          <mat-form-field class="academic_year">
-            <mat-label>Select Academic Year</mat-label>
-            <mat-select
-              disableRipple
-              (selectionChange)="onAcademicYearFilterChange($event)"
-              [(value)]="academicYearFilter"
-            >
-              <mat-option *ngFor="let item of academicYearOptions" [value]="item">
-                AY{{ item.acad_year }}, {{ item.semester }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-      <div class="column">
-        <form>
-          <mat-form-field>
-            <input
-              #searchValue
-              matInput
-              type="email"
-              (keyup)="search(searchValue.value)"
-              placeholder="Search..."
-            />
-            <mat-icon
-              *ngIf="searchValue.value"
-              matIconSuffix
-              (click)="searchValue.value = ''; search('')"
-              >close</mat-icon
-            >
-          </mat-form-field>
-        </form>
+      <form>
+        <mat-form-field>
+          <input
+            #searchValue
+            matInput
+            type="email"
+            (keyup)="search(searchValue.value)"
+            placeholder="Search..."
+          />
+          <mat-icon
+            *ngIf="searchValue.value"
+            matIconSuffix
+            (click)="searchValue.value = ''; search('')"
+            >close</mat-icon
+          >
+        </mat-form-field>
+      </form>
 
-        <div class="btn">
-          <button mat-ripple (click)="addIndustryPartner()">+ New</button>
-        </div>
+      <div class="btn">
+        <button mat-ripple (click)="addIndustryPartner()">+ New</button>
       </div>
     </div>
 

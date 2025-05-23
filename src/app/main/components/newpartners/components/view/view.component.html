@@ -73,7 +73,7 @@
                         </div>
                     </div>
                     <div>
-                        <button class="btn" mat-button mat-ripple *ngIf="industryPartner.request_status != 3" matStepperNext>Next</button>
+                        <button mat-button mat-ripple *ngIf="industryPartner.request_status != 3" matStepperNext>Next</button>
                         <button class="warning" mat-ripple *ngIf="industryPartner.request_status === 2" (click)="reject()">Decline</button>
                     </div>
                 </mat-step>
@@ -81,28 +81,6 @@
                     <ng-template matStepLabel>MOU</ng-template>
 
                     <div class="step-content">
-                        <form [formGroup]="formDetails">
-                            <div class="date-inputs" style="display: flex; gap: 1rem; margin-top: 15px;">
-                                <mat-form-field appearance="fill" style="flex: 1;">
-                                    <mat-label>Start Date</mat-label>
-                                    <input matInput type="date" formControlName="startDate" #startDateInput />
-                                    <button mat-icon-button matSuffix (click)="startDateInput.showPicker?.()" type="button" aria-label="Open calendar" class="calendar">
-                                    <mat-icon>calendar_today</mat-icon>
-                                    </button>
-                                </mat-form-field>
-
-                                <mat-form-field appearance="fill" style="flex: 1;">
-                                    <mat-label>End Date</mat-label>
-                                    <input matInput type="date" formControlName="endDate" readonly />
-                                    <button mat-icon-button matSuffix (click)="null" type="button" aria-label="Calendar disabled" class="calendar" disabled>
-                                    <mat-icon>calendar_today</mat-icon>
-                                    </button>
-                                </mat-form-field>
-                            </div>
-
-                            <p style="color: red; font-size: 12px; font-style: italic;"><b>Note: </b>Valid for 1 year only</p>
-                        </form>
-
                         <div class="preview-container" *ngIf="industryPartner.request_status === 4">
                             <object [data]="sanitizeUrl(industryPartner.mou.file_location)" width="100%" height="550px"></object>
                         </div>
@@ -130,9 +108,9 @@
                         </div>
                     </div>
 
-                    <div class="button-row">
-                        <button class="btn" mat-button matStepperNext (click)="showPassword = false"  *ngIf="industryPartner.request_status === 2" [disabled]="!file">Next</button>
-                        <button class="btn" mat-button matStepperPrevious>Back</button>
+                    <div>
+                        <button mat-button matStepperNext (click)="showPassword = false"  *ngIf="industryPartner.request_status === 2" [disabled]="!file">Next</button>
+                        <button mat-button matStepperPrevious>Back</button>
                     </div>
                 </mat-step>
                 <mat-step [stepControl]="accountDetails" *ngIf="industryPartner.request_status === 2">
@@ -164,8 +142,8 @@
                             </div>
 
                             <div>
-                                <button class="btn" mat-button matStepperNext (click)="showPassword = false">Next</button>
-                                <button class="btn" mat-button matStepperPrevious>Back</button>
+                                <button mat-button matStepperNext (click)="showPassword = false">Next</button>
+                                <button mat-button matStepperPrevious>Back</button>
                             </div>
                         </form>
                 </mat-step>
@@ -250,9 +228,9 @@
                             </mat-form-field>
                         </div>
                     </div>
-                    <div>
-                      <button class="success" mat-button (click)="approveConfirmation()">Approve</button>
-                      <button class="btn" mat-button matStepperPrevious>Back</button>
+                    <div class="btn">
+                      <button mat-button (click)="approveConfirmation()">Approve</button>
+                      <button mat-button matStepperPrevious>Back</button>
                     </div>
                   </div>
                 </mat-step>

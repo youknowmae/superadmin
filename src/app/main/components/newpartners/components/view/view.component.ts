@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { UserService } from '../../../../../services/user.service';
 import { DataService } from '../../../../../services/data.service';
 import { GeneralService } from '../../../../../services/general.service';
@@ -17,7 +17,6 @@ export class ViewComponent {
   industryPartner: any;
 
   accountDetails: FormGroup;
-  formDetails: FormGroup;
 
   showPassword: boolean = false;
   isSubmitting: boolean = false;
@@ -43,39 +42,6 @@ export class ViewComponent {
         null,
         [Validators.required, Validators.min(1), Validators.max(50)],
       ],
-    });
-
-    this.formDetails = this.fb.group({
-      startDate: [null, Validators.required],
-      endDate: [{ value: null, disabled: true }], // disabled because automatic
-    })
-
-    this.formDetails.get('startDate')?.valueChanges.subscribe((startDateValue: string) => {
-      const endDateControl = this.formDetails.get('endDate');
-
-      if (startDateValue) {
-        const start = new Date(startDateValue);
-        const end = new Date(start);
-        end.setFullYear(end.getFullYear() + 1); // add 1 year
-
-        // Format date to yyyy-MM-dd string
-        const yyyy = end.getFullYear();
-        const mm = (end.getMonth() + 1).toString().padStart(2, '0');
-        const dd = end.getDate().toString().padStart(2, '0');
-        const endDateStr = `${yyyy}-${mm}-${dd}`;
-
-        // ✅ Enable endDate if disabled
-        if (endDateControl?.disabled) {
-          endDateControl.enable({ emitEvent: false });
-        }
-
-        // ✅ Set value without triggering event
-        endDateControl?.setValue(endDateStr, { emitEvent: false });
-      } else {
-        // ✅ Reset and disable if no startDate
-        endDateControl?.setValue(null, { emitEvent: false });
-        endDateControl?.disable({ emitEvent: false });
-      }
     });
   }
 

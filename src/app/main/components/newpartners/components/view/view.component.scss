@@ -9,7 +9,7 @@
         margin-bottom: 20px;
     }
 
-    .back-btn {
+    button {
         background: none;
         width: fit-content;
         display: flex;
@@ -65,7 +65,7 @@
     }
 
 
-    .btn {
+    button {
         float: right;
         font-size: 14px;
         margin-left: 10px;
@@ -79,13 +79,13 @@
         cursor: pointer;
     }
 
-    .btn:hover {
+    button:hover {
         border: 2px solid var(--primary-color);
         background-color: white;
         color: var(--primary-color);
     }
 
-    .btn[disabled]{
+    button[disabled]{
         // border: 1px solid #999999;
         border-color: #eeeeee;
         background-color: #bbbbbb;
@@ -171,15 +171,6 @@
     min-height: 150px;
 }
 
-.row {
-    margin-top: 25px;
-}
-
-.button-row {
-    margin-top: 45px;
-}
-
-
 .file-input-container{
     width: 100%;
     padding-top: 15px;
@@ -235,41 +226,12 @@
 }
 
 .warning {
-
     background-color: var(--warning-color) !important;
     border: 2px solid var(--warning-color) !important;
-    float: right;
-    font-size: 14px;
-    margin-left: 10px;
-    padding: 8px 26px;
-    border: none;
-    border-radius: 2rem;
-    color: white;
-    font-weight: 500;
-    cursor: pointer;
 }
 
 .warning:hover {
     color: var(--warning-color) !important;
-    background-color: white !important;
-}
-
-.success {
-    background-color: var(--main-orange) !important;
-    border: 2px solid var(--main-orange) !important;
-    float: right;
-    font-size: 14px;
-    margin-left: 10px;
-    padding: 8px 26px;
-    border: none;
-    border-radius: 2rem;
-    color: white;
-    font-weight: 500;
-    cursor: pointer;
-}
-
-.success:hover {
-    color: var(--main-orange) !important;
     background-color: white !important;
 }
 
