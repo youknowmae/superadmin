@@ -25,6 +25,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialsModules } from './modules/materials.module';
 import { ResponseInterceptor } from './interceptors/response.interceptor';
 import { SemesterTextPipe } from './pipes/semester-text.pipe';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { SemesterTextPipe } from './pipes/semester-text.pipe';
   providers: [
     provideClientHydration(),
     provideHttpClient(withInterceptorsFromDi()),
+    provideNativeDateAdapter(),
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ResponseInterceptor, multi: true },
     { provide: LocationStrategy, useClass: HashLocationStrategy },

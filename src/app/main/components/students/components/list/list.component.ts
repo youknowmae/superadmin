@@ -132,8 +132,13 @@ export class ListComponent {
               student.student_evaluation = student.student_evaluation.average;
             }
 
-            let required_hours: number = active_ojt_class.required_hours;
             let progress: number = 0;
+            let status = '';
+            const currentApplication = student.active_application;
+            const exitPoll = student.ojt_exit_poll;
+            const studentEvaluation = student.student_evaluation;
+            const required_hours: number = active_ojt_class.required_hours;
+            const courseCode = active_ojt_class.course_code;
 
             //if has accomplishment report
             if (student.verified_attendance_total) {
@@ -164,8 +169,6 @@ export class ListComponent {
               student.other_task_total_hours = 0;
             }
 
-            let courseCode = student?.active_ojt_class?.course_code;
-
             const level_2 = ['ITP422', 'CS422', 'DAP421'];
             const level_1 = ['ITP131', 'CS131', 'EMC131'];
             let practicum_level;
@@ -176,36 +179,30 @@ export class ListComponent {
               practicum_level = 1;
             }
 
-            let status = null;
-
-            if (
-              progress >= required_hours &&
-              student.ojt_exit_poll &&
-              student.student_evaluation
-            ) {
+            if (progress >= required_hours && exitPoll && studentEvaluation) {
               status = 'Completed';
             } else if (student.accepted_application) {
               status = 'Ongoing';
-            } else if (
-              student.pending_application &&
-              student.pending_application.status == 0
-            )
+            } else if (currentApplication && currentApplication == 0)
               status = "Pending - Adviser's Approval";
-            else if (student.pending_application) {
+            else if (
+              currentApplication == 3 ||
+              currentApplication == 5 ||
+              currentApplication == 6 ||
+              currentApplication == 7
+            ) {
               status = 'Pending - Company Approval';
             } else {
               status = 'Pending - without application';
             }
 
-            let student_evaluation = student.student_evaluation
-              ? student.student_evaluation
+            const student_evaluation = studentEvaluation
+              ? studentEvaluation
               : 'N/A';
-            let exit_poll = student.ojt_exit_poll
-              ? 'Answered'
-              : 'Not Completed';
+            const exit_poll = exitPoll ? 'Answered' : 'Not Completed';
 
-            let company = student.accepted_application
-              ? student.accepted_application.company_name
+            const company = currentApplication
+              ? currentApplication.industry_partner.company_name
               : 'N/A';
 
             return {

@@ -55,6 +55,13 @@ export class AuthInterceptor implements HttpInterceptor {
             'error'
           );
           return throwError(() => new Error('Unauthenticated'));
+        } else if (error.status === 500) {
+          this.gs.makeAlert(
+            'Error!',
+            'Something went wrong. Please try again later.',
+            'error'
+          );
+          return throwError(() => new Error('Unauthenticated'));
         }
 
         return throwError(() => error);

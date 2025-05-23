@@ -8,7 +8,6 @@ import { EditIndustryPartnerComponent } from '../edit-industry-partner/edit-indu
 import { AddIndustryPartnerComponent } from '../add-industry-partner/add-industry-partner.component';
 import { MatDialog } from '@angular/material/dialog';
 import { pagination } from '../../../../../model/pagination.model';
-import Swal from 'sweetalert2';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort, Sort } from '@angular/material/sort';
@@ -42,8 +41,7 @@ export class ListComponent {
   isSubmitting: boolean = false;
   isGridView: boolean = true;
 
-  // Track active filter state
-  activeFilter: 'active' | 'inactive' = 'active';
+  isArchiveFilter: boolean = false;
 
   searchValue: string = '';
 
@@ -76,12 +74,26 @@ export class ListComponent {
   getIndustryPartners() {
     this.ds.get('superadmin/industryPartners').subscribe(
       (industryPartners) => {
-        // Add status property to each partner
-        this.industryPartners = industryPartners.map((partner: any) => ({
-          ...partner,
-          status: partner.status || 'active'
-        }));
-        console.log(industryPartners);
+        this.industryPartners = industryPartners.map((item: any) => {
+          const application_count = item.internship_applications.length;
+          let accepted_application_count = 0;
+          let completed_count = 0;
+
+          item.internship_applications.forEach((applicant: any) => {
+            if (applicant.status == 8) accepted_application_count += 1;
+            else return;
+
+            if (applicant.user.student_evaluation) completed_count += 1;
+          });
+
+          return {
+            ...item,
+            application_count,
+            accepted_application_count,
+            completed_count,
+          };
+        });
+        console.log(this.industryPartners);
 
         this.filterIndustryPartners();
         this.isLoading = false;
@@ -109,8 +121,7 @@ export class ListComponent {
         return;
       }
 
-      // Set status for new partners as active by default
-      result.status = 'active';
+      result.is_archived = 0;
       this.industryPartners.unshift(result);
       this.filterIndustryPartners();
     });
@@ -169,17 +180,15 @@ export class ListComponent {
 
     this.isSubmitting = true;
 
-    this.ds.get(`superadmin/industryPartners/${id}/delete`).subscribe(
+    this.ds.get(`superadmin/industryPartners/${id}/archive`).subscribe(
       (result) => {
         this.isSubmitting = false;
         console.log(result);
 
-        // Instead of removing, update the status to inactive
         this.industryPartners = this.industryPartners.map((item: any) =>
-          item.id === id ? { ...item, status: 'inactive' } : item
+          item.id === id ? { ...item, is_archived: 1 } : item
         );
 
-        // Filter the list again to respect current active filter
         this.filterIndustryPartners();
 
         this.gs.makeToast('Successfully archived', 'success');
@@ -187,7 +196,6 @@ export class ListComponent {
       (error) => {
         this.isSubmitting = false;
         console.error(error);
-        this.gs.makeAlert('Error!', 'Something went wrong. Please try again later.', 'error')
       }
     );
   }
@@ -208,24 +216,27 @@ export class ListComponent {
 
     this.isSubmitting = true;
 
-    // Use existing endpoint or a simple update without an API call
-    // Option 1: Using client-side update only (no server call)
-    this.isSubmitting = false;
+    this.ds.get(`superadmin/industryPartners/${id}/unarchive`).subscribe(
+      (result) => {
+        this.isSubmitting = false;
 
-    // Update the status to active
-    this.industryPartners = this.industryPartners.map((item: any) =>
-      item.id === id ? { ...item, status: 'active' } : item
+        this.industryPartners = this.industryPartners.map((item: any) =>
+          item.id === id ? { ...item, is_archived: 0 } : item
+        );
+
+        this.filterIndustryPartners();
+
+        this.gs.makeToast('Successfully unarchived', 'success');
+      },
+      (error) => {
+        this.isSubmitting = false;
+      }
     );
-
-    // Filter the list again to respect current active filter
-    this.filterIndustryPartners();
-
-    this.gs.makeToast('Successfully unarchived', 'success');
   }
 
   // Set active filter
-  setFilter(filter: 'active' | 'inactive') {
-    this.activeFilter = filter;
+  setFilter(filter: boolean) {
+    this.isArchiveFilter = filter;
     this.pagination.current_page = 1;
     this.filterIndustryPartners();
   }
@@ -244,7 +255,7 @@ export class ListComponent {
     var data = this.industryPartners;
 
     // Filter by active status
-    data = data.filter((item: any) => item.status === this.activeFilter);
+    data = data.filter((item: any) => item.is_archived == this.isArchiveFilter);
 
     if (search) {
       data = data.filter((item: IndustryPartner) => {

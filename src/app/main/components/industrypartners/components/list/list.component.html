@@ -33,10 +33,20 @@
     <div class="buttons">
       <div class="filter-container">
         <div class="filter">
-          <button [ngClass]="{'active': activeFilter === 'active'}" (click)="setFilter('active')">Active Partners</button>
+          <button
+            [ngClass]="{ active: isArchiveFilter === false }"
+            (click)="setFilter(false)"
+          >
+            Active Partners
+          </button>
         </div>
         <div class="filter">
-          <button [ngClass]="{'active': activeFilter === 'inactive'}" (click)="setFilter('inactive')">Inactive Partners</button>
+          <button
+            [ngClass]="{ active: isArchiveFilter === true }"
+            (click)="setFilter(true)"
+          >
+            Inactive Partners
+          </button>
         </div>
       </div>
 
@@ -91,23 +101,17 @@
 
             <div class="action-buttons">
               <button
-                *ngIf="activeFilter === 'active'"
-                class="delete"
+                [class]="industryPartner.is_archived ? 'unarchive' : 'delete'"
                 mat-raised-button
-                matTooltip="Archive"
+                [matTooltip]="
+                  industryPartner.is_archived ? 'Unarchive' : 'Archive'
+                "
                 [matTooltipShowDelay]="400"
-                (click)="archive(industryPartner.id)"
-              >
-                <i class="bx bxs-archive"></i>
-              </button>
-
-              <button
-                *ngIf="activeFilter === 'inactive'"
-                class="unarchive"
-                mat-raised-button
-                matTooltip="Unarchive"
-                [matTooltipShowDelay]="400"
-                (click)="unarchive(industryPartner.id)"
+                (click)="
+                  industryPartner.is_archived
+                    ? unarchive(industryPartner.id)
+                    : archive(industryPartner.id)
+                "
               >
                 <i class="bx bxs-archive-out"></i>
               </button>
@@ -196,9 +200,9 @@
           <td>
             {{ industryPartner.municipality }}, {{ industryPartner.province }}
           </td>
-          <td>0</td>
-          <td>25</td>
-          <td>10</td>
+          <td>{{ industryPartner.application_count }}</td>
+          <td>{{ industryPartner.accepted_application_count }}</td>
+          <td>{{ industryPartner.completed_count }}</td>
           <td>For Renewal</td>
           <td>
             <button
@@ -218,20 +222,17 @@
               <i class="bx bxs-edit"></i>
             </button>
             <button
-              *ngIf="activeFilter === 'active'"
-              class="delete"
+              [class]="industryPartner.is_archived ? 'unarchive' : 'delete'"
               mat-icon-button
-              matTooltip="Archive"
-              (click)="archive(industryPartner.id)"
-            >
-              <i class="bx bxs-archive"></i>
-            </button>
-            <button
-              *ngIf="activeFilter === 'inactive'"
-              class="unarchive"
-              mat-icon-button
-              matTooltip="Unarchive"
-              (click)="unarchive(industryPartner.id)"
+              [matTooltip]="
+                industryPartner.is_archived ? 'Unarchive' : 'Archive'
+              "
+              [matTooltipShowDelay]="400"
+              (click)="
+                industryPartner.is_archived
+                  ? unarchive(industryPartner.id)
+                  : archive(industryPartner.id)
+              "
             >
               <i class="bx bxs-archive-out"></i>
             </button>

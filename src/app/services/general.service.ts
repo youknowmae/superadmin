@@ -2,6 +2,7 @@ import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { Injectable } from '@angular/core';
 import { pagination } from '../model/pagination.model';
 import * as CryptoJS from 'crypto-js';
+import * as moment from 'moment-timezone';
 
 @Injectable({
   providedIn: 'root',
@@ -32,8 +33,14 @@ export class GeneralService {
       showConfirmButton: false,
     });
   }
-  
-  async confirmationAlert(title: string, text: string, icon: SweetAlertIcon, confirmButtonText: string = 'Yes') {
+
+  async confirmationAlert(
+    title: string,
+    text: string,
+    icon: SweetAlertIcon,
+    confirmButtonText: string = 'Yes',
+    type: 'destructive' | 'confirmation' = 'destructive'
+  ) {
     let alert: Promise<boolean> = Swal.fire({
       title,
       text,
@@ -41,17 +48,21 @@ export class GeneralService {
       showCancelButton: true,
       confirmButtonText,
       cancelButtonText: 'No',
-      confirmButtonColor: '#AB0E0E',
+      confirmButtonColor: type === 'destructive' ? '#AB0E0E' : '#527853',
       cancelButtonColor: '#777777',
-      heightAuto: false
-    }).then((res: any)=>{
-      if(res.value) {
-        return true
+      heightAuto: false,
+    }).then((res: any) => {
+      if (res.value) {
+        return true;
       }
       return false;
     });
 
     return alert;
+  }
+
+  formatDate(date: any) {
+    return moment.tz(date, 'Asia/Manila').format('YYYY-MM-DD');
   }
 
   getPaginationDetails(
