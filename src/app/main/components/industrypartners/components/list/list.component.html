@@ -70,7 +70,7 @@
             "
             [ngStyle]="{ 'animation-delay': i * 0.1 + 's' }"
           >
-            <div class="status">
+            <div class="status" *ngIf="isExpired(industryPartner.latest_mou?.expiration_date)">
               <p>For Renewal</p>
             </div>
 
@@ -190,7 +190,7 @@
           <th>No. of Applicants</th>
           <th>Accepted Students</th>
           <th>Completed</th>
-          <th>Status</th>
+          <th>MOU Expiration Date</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -203,7 +203,18 @@
           <td>{{ industryPartner.application_count }}</td>
           <td>{{ industryPartner.accepted_application_count }}</td>
           <td>{{ industryPartner.completed_count }}</td>
-          <td>For Renewal</td>
+          <td>
+            <ng-container *ngIf="industryPartner.latest_mou; else noMou">
+              <p>{{ industryPartner.latest_mou.expiration_date }}</p>
+              <p
+                class="sub-text"
+                *ngIf="isExpired(industryPartner.latest_mou.expiration_date)"
+              >
+                For Renewal
+              </p>
+            </ng-container>
+            <ng-template #noMou>No MOU</ng-template>
+          </td>
           <td>
             <button
               class="view"

@@ -181,7 +181,10 @@ export class ListComponent {
 
             if (progress >= required_hours && exitPoll && studentEvaluation) {
               status = 'Completed';
-            } else if (student.accepted_application) {
+            } else if (
+              student.active_application &&
+              student.active_application.status == 8
+            ) {
               status = 'Ongoing';
             } else if (currentApplication && currentApplication == 0)
               status = "Pending - Adviser's Approval";

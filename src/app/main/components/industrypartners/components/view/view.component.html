@@ -2,8 +2,8 @@
   <div class="page-content">
     <!-- Tabbed Navigation -->
     <div class="tabbed">
-      <input type="radio" id="tab1" name="css-tabs" checked="checked">
-      <input type="radio" id="tab2" name="css-tabs">
+      <input type="radio" id="tab1" name="css-tabs" checked="checked" />
+      <input type="radio" id="tab2" name="css-tabs" />
 
       <ul class="tabs">
         <li class="tab"><label for="tab1">Company Profile</label></li>
@@ -25,7 +25,10 @@
             <!-- Company Information Card -->
             <div class="card card-accent">
               <div class="image">
-                <img [src]="industryPartner.image || 'assets/images/logo.png'" alt="Company logo">
+                <img
+                  [src]="industryPartner.image || 'assets/images/logo.png'"
+                  alt="Company logo"
+                />
               </div>
 
               <div class="container-info">
@@ -38,11 +41,19 @@
 
                   <!-- Company Personnel -->
                   <div class="details-section">
-                    <p><b>Company Head:</b> {{ industryPartner.company_head.full_name }}, {{ industryPartner.head_position }}</p>
+                    <p>
+                      <b>Company Head:</b>
+                      {{ industryPartner.company_head.full_name }},
+                      {{ industryPartner.head_position }}
+                    </p>
                   </div>
 
                   <div class="details-section">
-                    <p><b>Immediate Supervisor:</b> {{ industryPartner.immediate_supervisor.full_name }}, {{ industryPartner.supervisor_position }}</p>
+                    <p>
+                      <b>Immediate Supervisor:</b>
+                      {{ industryPartner.immediate_supervisor.full_name }},
+                      {{ industryPartner.supervisor_position }}
+                    </p>
                   </div>
 
                   <!-- Contact Information -->
@@ -50,23 +61,37 @@
                     <ul>
                       <li>
                         <mat-icon>location_on</mat-icon>
-                        <p><b>Company Address:</b> {{ industryPartner.full_address }}</p>
+                        <p>
+                          <b>Company Address:</b>
+                          {{ industryPartner.full_address }}
+                        </p>
                       </li>
                       <li>
                         <mat-icon>mail</mat-icon>
-                        <p><b>Official Email Address:</b> {{ industryPartner.email }}</p>
+                        <p>
+                          <b>Official Email Address:</b>
+                          {{ industryPartner.email }}
+                        </p>
                       </li>
                       <li *ngIf="industryPartner.telephone_number">
                         <mat-icon>call</mat-icon>
-                        <p><b>Telephone Number:</b> {{ industryPartner.telephone_number }}</p>
+                        <p>
+                          <b>Telephone Number:</b>
+                          {{ industryPartner.telephone_number }}
+                        </p>
                       </li>
                       <li *ngIf="industryPartner.fax_number">
                         <mat-icon>fax</mat-icon>
-                        <p><b>Fax Number:</b> {{ industryPartner.fax_number }}</p>
+                        <p>
+                          <b>Fax Number:</b> {{ industryPartner.fax_number }}
+                        </p>
                       </li>
                       <li>
                         <mat-icon>call</mat-icon>
-                        <p><b>Contact Number:</b> {{ industryPartner.mobile_number }}</p>
+                        <p>
+                          <b>Contact Number:</b>
+                          {{ industryPartner.mobile_number }}
+                        </p>
                       </li>
                       <li *ngIf="industryPartner.website">
                         <mat-icon>public</mat-icon>
@@ -76,11 +101,18 @@
                   </div>
 
                   <!-- Job Requirements -->
-                  <div class="details-section" *ngIf="industryPartner.job_requirements?.length">
+                  <div
+                    class="details-section"
+                    *ngIf="industryPartner.job_requirements?.length"
+                  >
                     <div class="job-requirements">
                       <p><b>Job/Skills Requirements:</b></p>
                       <div class="items">
-                        <p *ngFor="let item of industryPartner.job_requirements">{{ item }}</p>
+                        <p
+                          *ngFor="let item of industryPartner.job_requirements"
+                        >
+                          {{ item }}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -157,7 +189,10 @@
 
                   <!-- Table Rows -->
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                  <tr
+                    mat-row
+                    *matRowDef="let row; columns: displayedColumns"
+                  ></tr>
                 </table>
               </div>
             </div>
@@ -171,220 +206,90 @@
       </div>
 
       <div class="tab-content">
-        <ng-container *ngIf="!isLoading; else loading">
-          <div class="container">
-            <!-- Back Button -->
-            <!-- <button class="back-btn" [routerLink]="['../list']" routerLinkActive="router-link-active">
+        <div class="container">
+          <!-- Back Button -->
+          <!-- <button class="back-btn" [routerLink]="['../list']" routerLinkActive="router-link-active">
               <span class="icon">
                 <i class="fa-solid fa-arrow-left"></i>
               </span>
               <p>Back</p>
             </button> -->
 
-            <!-- Company Information Card -->
-            <div class="card card-accent">
-              <div class="image">
-                <img [src]="industryPartner.image || 'assets/images/logo.png'" alt="Company logo">
-              </div>
+          <!-- Company Information Card -->
+          <div class="card card-accent">
+            <div class="image">
+              <img
+                [src]="industryPartner.image || 'assets/images/logo.png'"
+                alt="Company logo"
+              />
+            </div>
 
-              <div class="container-info">
-                <div class="info">
-                  <!-- Company Details -->
-                  <div class="details-section">
-                    <h2>{{ industryPartner.company_name }}</h2>
-                    <p>{{ industryPartner.description }}</p>
-                  </div>
+            <div class="container-info">
+              <div class="info">
+                <!-- Company Details -->
+                <div class="details-section">
+                  <h2>{{ industryPartner.company_name }}</h2>
+                  <p>{{ industryPartner.description }}</p>
+                </div>
 
-                  <!-- Company Personnel -->
-                  <div class="details-section">
-                    <p><b>Company Head:</b> {{ industryPartner.company_head.full_name }}, {{ industryPartner.head_position }}</p>
-                  </div>
+                <!-- Company Personnel -->
+                <div class="details-section">
+                  <p>
+                    <b>Company Head:</b>
+                    {{ industryPartner.company_head.full_name }},
+                    {{ industryPartner.head_position }}
+                  </p>
+                </div>
 
-                  <!-- MOU Information -->
-                  <div class="mou">
-                    <p><b>MOU Duration:</b> One Year</p>
-                    <div class="date">
-                      <div class="start">
-                        <p><b>Start Date:</b></p>
-                      </div>
-                      <div class="end">
-                        <p><b>End Date:</b></p>
-                      </div>
+                <!-- MOU Information -->
+                <div class="mou">
+                  <!-- <p><b>MOU Duration:</b> One Year</p> -->
+                  <div class="date">
+                    <div class="start">
+                      <p>
+                        <b>Start Date:</b>
+                        {{
+                          industryPartner?.latest_mou.start_date
+                            | date : "MMMM d, y"
+                        }}
+                      </p>
+                    </div>
+
+                    <div class="end">
+                      <p>
+                        <b>End Date:</b>
+                        {{
+                          industryPartner?.latest_mou.expiration_date
+                            | date : "MMMM d, y"
+                        }}
+                      </p>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
 
-            <!-- MOU DOCUMENT -->
-            <div class="mou-card">
-              <div class="mou-content">
-                <h2>MOU/MOA DOCUMENT</h2>
+          <!-- MOU DOCUMENT -->
+          <div class="mou-card">
+            <div class="mou-content">
+              <h2>MOU/MOA DOCUMENT</h2>
 
-                <iframe
-                  src="https://docs.google.com/document/d/119kwPzRGCA5zMYF376m-T-TX6xrrZmZT/edit?usp=sharing&ouid=102931969359939800961&rtpof=true&sd=true"
-                  width="100%"
-                  height="100%"
-                  style="border: none;"
-                  ></iframe>
-              </div>
+              <object
+                *ngIf="industryPartner.latest_mou"
+                [data]="sanitizeUrl(industryPartner.latest_mou.file_location)"
+                width="100%"
+                height="100%"
+              ></object>
             </div>
           </div>
-        </ng-container>
-
-        <!-- Loading Template -->
-        <ng-template #loading>
-          <app-loading-spinner></app-loading-spinner>
-        </ng-template>
+        </div>
       </div>
     </div>
   </div>
 </main>
-<!-- <ng-container *ngIf="!isLoading; else loading">
-    <div class="container">
-        <button class="back-btn" [routerLink]="['../list']" routerLinkActive="router-link-active">
-            <span class="icon">
-                <i class="fa-solid fa-arrow-left"></i>
-            </span>
-            <p>
-                Back
-            </p>
-        </button>
 
-        <div class="card card-accent">
-            <div class="image">
-                <img [src]="(industryPartner.image) ? industryPartner.image : 'assets/images/logo.png'" alt="logo image">
-            </div>
-            <div class="container-info">
-                <div class="info">
-                    <div class="details-section">
-                        <h2>{{ industryPartner.company_name }}</h2>
-                        <p>{{ industryPartner.description }}</p>
-                    </div>
-
-                    <div class="details-section">
-                        <p> <b>Company Head:</b> {{ industryPartner.company_head.full_name }}, {{ industryPartner.head_position }}</p>
-                    </div>
-
-                    <div class="details-section">
-                        <p> <b>Immediate Supervisor :</b> {{ industryPartner.immediate_supervisor.full_name }}, {{ industryPartner.supervisor_position }}</p>
-                    </div>
-
-
-                    <div class="details-section">
-                        <ul>
-                            <li>
-                                <mat-icon>location_on</mat-icon>
-                                <p><b>Company Address: </b> {{  industryPartner.full_address }}</p>
-                            </li>
-                            <li>
-                                <mat-icon>mail</mat-icon>
-                                <p><b>Official Email Address:</b> {{ industryPartner.email }}</p>
-                            </li>
-                            <li *ngIf="industryPartner.telephone_number">
-                                <mat-icon>call</mat-icon>
-                                <p><b>Telephone Number:</b> {{ industryPartner.telephone_number }}</p>
-                            </li>
-                            <li *ngIf="industryPartner.fax_number">
-                                <mat-icon>fax</mat-icon>
-                                <p><b>Fax Number:</b> {{ industryPartner.fax_number }}</p>
-                            </li>
-                            <li>
-                                <mat-icon>call</mat-icon>
-                                <p><b>Contact Number:</b> {{ industryPartner.mobile_number }}</p>
-                            </li>
-                            <li *ngIf="industryPartner.website">
-                                <mat-icon>public</mat-icon>
-                                <p><b>Website:</b> {{ industryPartner.website }}</p>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="details-section" *ngIf="industryPartner.job_requirements">
-                        <div class="job-requirements">
-                            <p><b>Job/Skills Requirements:</b></p>
-
-                            <div class="items">
-                                <p *ngFor="let item of industryPartner.job_requirements"> {{ item }}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="details-section">
-                        <p><b>Total Slots:</b> {{ industryPartner.slots }} </p>
-                    </div>
-
-                    <div class="mou">
-                        <p><b>MOU Duration:</b> One Year</p>
-
-                        <div class="date">
-                            <div class="start">
-                                <p><b>Start Date: </b></p>
-                            </div>
-
-                            <div class="end">
-                                <p><b>End Date: </b></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="students-card">
-            <div class="students-content">
-                <h2>Number of Students: </h2>
-
-                <table mat-table>
-                    <ng-container matColumnDef="name" >
-                        <th mat-header-cell *matHeaderCellDef> Name </th>
-                        <td mat-cell *matCellDef="let element" class="col-md-3">
-                            <div class="name">
-                                <p style="margin: 0;"> {{ element.full_name }} </p>
-                                <P style="margin: 0;"> {{ element.user.student_profile.program }}</P>
-                            </div>
-                        </td>
-                    </ng-container>
-
-
-                    <ng-container matColumnDef="course" >
-                        <th mat-header-cell *matHeaderCellDef> Course </th>
-                        <td mat-cell *matCellDef="let element">
-                            {{ element.user.active_ojt_class.course_code }}
-                        </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="student_number" >
-                        <th mat-header-cell *matHeaderCellDef> Student Number </th>
-                        <td mat-cell *matCellDef="let element">
-                            {{ element.user.student_profile.student_number }}
-                        </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="year_level" >
-                        <th mat-header-cell *matHeaderCellDef> Year </th>
-                        <td mat-cell *matCellDef="let element">
-                            {{ element.user.student_profile.year_level }}
-                        </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="status" >
-                        <th mat-header-cell *matHeaderCellDef> Status </th>
-                        <td mat-cell *matCellDef="let element"> -->
-                            <!-- <p> {{ (element.ojt_exit_poll) ? 'Completed' : 'Pending' }} </p> -->
-                        <!-- </td>
-                    </ng-container>
-
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                </table>
-            </div>
-        </div>
-    </div>
-</ng-container>
-
+<!-- Loading Template -->
 <ng-template #loading>
-    <app-loading-spinner></app-loading-spinner>
-</ng-template> -->
-
-
+  <app-loading-spinner></app-loading-spinner>
+</ng-template>

@@ -9,21 +9,21 @@ import { LocationService } from '../../../../../services/location.service';
 @Component({
   selector: 'app-edit-industry-partner',
   templateUrl: './edit-industry-partner.component.html',
-  styleUrl: './edit-industry-partner.component.scss'
+  styleUrl: './edit-industry-partner.component.scss',
 })
 export class EditIndustryPartnerComponent {
-  file: any = null
+  file: any = null;
 
   titles: string[] = ['Sr', 'Jr', 'II', 'III', 'IV', 'V'];
 
-  isSubmitting: boolean = false
+  isSubmitting: boolean = false;
 
-  formDetails: FormGroup
+  formDetails: FormGroup;
 
-  regions: any = []
-  provinces: any = []
-  municipalities: any = []
-  barangays: any = []
+  regions: any = [];
+  provinces: any = [];
+  municipalities: any = [];
+  barangays: any = [];
 
   selectedFile: File | null = null;
   isDragOver = false;
@@ -54,7 +54,7 @@ export class EditIndustryPartnerComponent {
       'image/webp',
       'text/csv',
       'text/plain',
-      'application/zip'
+      'application/zip',
     ];
     const maxSize = 10 * 1024 * 1024; // 10MB
 
@@ -96,12 +96,10 @@ export class EditIndustryPartnerComponent {
     private gs: GeneralService,
     private ls: LocationService
   ) {
-
     this.formDetails = this.fb.group({
       company_name: [null, [Validators.required, Validators.maxLength(64)]],
       description: [null, [Validators.required, Validators.maxLength(2048)]],
 
-      // company_head: [null, [Validators.required, Validators.maxLength(128)]],
       company_head: this.fb.group({
         first_name: [null, [Validators.required, Validators.maxLength(64)]],
         middle_name: [null, [Validators.maxLength(64)]],
@@ -112,7 +110,6 @@ export class EditIndustryPartnerComponent {
 
       head_position: [null, [Validators.required, Validators.maxLength(64)]],
 
-      // immediate_supervisor: [null, [Validators.required, Validators.maxLength(128)]],
       immediate_supervisor: this.fb.group({
         first_name: [null, [Validators.required, Validators.maxLength(64)]],
         middle_name: [null, [Validators.maxLength(64)]],
@@ -120,123 +117,145 @@ export class EditIndustryPartnerComponent {
         ext_name: [null],
         sex: [null, Validators.required],
       }),
-      supervisor_position: [null, [Validators.required, Validators.maxLength(64)]],
+
+      supervisor_position: [
+        null,
+        [Validators.required, Validators.maxLength(64)],
+      ],
 
       region: [null, [Validators.required]],
       province: [null, [Validators.required]],
       municipality: [null, [Validators.required]],
       barangay: [null, [Validators.required]],
       street: [null, [Validators.required, Validators.maxLength(128)]],
-      // zip_code: [null, [Validators.required, Validators.pattern('[0-9]{4}')]],
 
       telephone_number: [null, [Validators.pattern('^[0-9 ()-]+$')]],
-      mobile_number: [null, [Validators.required, Validators.pattern('^[0-9 ()-]+$')]],
+      mobile_number: [
+        null,
+        [Validators.required, Validators.pattern('^[0-9 ()-]+$')],
+      ],
       fax_number: [null, [Validators.pattern('^[0-9 ()-]+$')]],
       email: [null, [Validators.required, Validators.email]],
       website: [null, [Validators.maxLength(128)]],
 
-      slots: [null,[Validators.required, Validators.min(1), Validators.max(50)]],
-
-      // Added startDate and endDate controls
-      startDate: [null, Validators.required],
-      endDate: [{ value: null, disabled: true }], // disabled because automatic
-    })
-
-    this.formDetails.get('startDate')?.valueChanges.subscribe((startDateValue: string) => {
-      const endDateControl = this.formDetails.get('endDate');
-
-      if (startDateValue) {
-        const start = new Date(startDateValue);
-        const end = new Date(start);
-        end.setFullYear(end.getFullYear() + 1); // add 1 year
-
-        // Format date to yyyy-MM-dd string
-        const yyyy = end.getFullYear();
-        const mm = (end.getMonth() + 1).toString().padStart(2, '0');
-        const dd = end.getDate().toString().padStart(2, '0');
-        const endDateStr = `${yyyy}-${mm}-${dd}`;
-
-        // ✅ Enable endDate if disabled
-        if (endDateControl?.disabled) {
-          endDateControl.enable({ emitEvent: false });
-        }
-
-        // ✅ Set value without triggering event
-        endDateControl?.setValue(endDateStr, { emitEvent: false });
-      } else {
-        // ✅ Reset and disable if no startDate
-        endDateControl?.setValue(null, { emitEvent: false });
-        endDateControl?.disable({ emitEvent: false });
-      }
+      slots: [
+        null,
+        [Validators.required, Validators.min(1), Validators.max(50)],
+      ],
     });
+
+    // startDate: [null, Validators.required],
+    // endDate: [{ value: null, disabled: true }],
+
+    this.formDetails
+      .get('startDate')
+      ?.valueChanges.subscribe((startDateValue: string) => {
+        const endDateControl = this.formDetails.get('endDate');
+
+        if (startDateValue) {
+          const start = new Date(startDateValue);
+          const end = new Date(start);
+          end.setFullYear(end.getFullYear() + 1); // add 1 year
+
+          // Format date to yyyy-MM-dd string
+          const yyyy = end.getFullYear();
+          const mm = (end.getMonth() + 1).toString().padStart(2, '0');
+          const dd = end.getDate().toString().padStart(2, '0');
+          const endDateStr = `${yyyy}-${mm}-${dd}`;
+
+          // ✅ Enable endDate if disabled
+          if (endDateControl?.disabled) {
+            endDateControl.enable({ emitEvent: false });
+          }
+
+          // ✅ Set value without triggering event
+          endDateControl?.setValue(endDateStr, { emitEvent: false });
+        } else {
+          // ✅ Reset and disable if no startDate
+          endDateControl?.setValue(null, { emitEvent: false });
+          endDateControl?.disable({ emitEvent: false });
+        }
+      });
   }
 
   async ngOnInit() {
     this.formDetails.patchValue({
-      ...this.data
-    })
+      ...this.data,
+    });
 
-    this.regions = await this.ls.getRegions()
-    let regionFormValue =  this.regions.find((data: any) => data.regDesc === this.data.region)
+    this.regions = await this.ls.getRegions();
+    let regionFormValue = this.regions.find(
+      (data: any) => data.regDesc === this.data.region
+    );
 
-    this.provinces = await this.ls.getProvinces(regionFormValue.regCode)
-    let provinceFormValue = this.provinces.find((data: any) => data.provDesc === this.data.province)
+    this.provinces = await this.ls.getProvinces(regionFormValue.regCode);
+    let provinceFormValue = this.provinces.find(
+      (data: any) => data.provDesc === this.data.province
+    );
 
-    this.municipalities = await this.ls.getMunicipalities(provinceFormValue.provCode)
-    let municipalityFormValue = this.municipalities.find((data: any) => data.citymunDesc === this.data.municipality)
+    this.municipalities = await this.ls.getMunicipalities(
+      provinceFormValue.provCode
+    );
+    let municipalityFormValue = this.municipalities.find(
+      (data: any) => data.citymunDesc === this.data.municipality
+    );
 
-    console.log(this.municipalities)
-    this.barangays = await this.ls.getBarangays(municipalityFormValue.citymunCode)
-    let barangayFormValue = this.barangays.find((data: any) => data.brgyDesc === this.data.barangay)
+    console.log(this.municipalities);
+    this.barangays = await this.ls.getBarangays(
+      municipalityFormValue.citymunCode
+    );
+    let barangayFormValue = this.barangays.find(
+      (data: any) => data.brgyDesc === this.data.barangay
+    );
 
     this.formDetails.patchValue({
       region: regionFormValue,
       province: provinceFormValue,
       municipality: municipalityFormValue,
-      barangay: barangayFormValue
-    })
+      barangay: barangayFormValue,
+    });
   }
 
   async onRegionChange(region: any) {
-    let regCode = region.regCode
+    let regCode = region.regCode;
     // console.log(region)
-    this.provinces = []
-    this.municipalities = []
-    this.barangays = []
+    this.provinces = [];
+    this.municipalities = [];
+    this.barangays = [];
 
     this.formDetails.patchValue({
       municipality: null,
       province: null,
       barangay: null,
-    })
+    });
 
-    console.log(this.formDetails.value)
-    this.provinces = await this.ls.getProvinces(regCode)
+    console.log(this.formDetails.value);
+    this.provinces = await this.ls.getProvinces(regCode);
   }
 
   async onProvinceChange(province: any) {
     // console.log(province)
 
-    this.municipalities = []
-    this.barangays = []
+    this.municipalities = [];
+    this.barangays = [];
 
     this.formDetails.patchValue({
       municipality: null,
       barangay: null,
-    })
+    });
 
-    this.municipalities = await this.ls.getMunicipalities(province.provCode)
+    this.municipalities = await this.ls.getMunicipalities(province.provCode);
   }
   async onMunicipalityChange(municipality: any) {
     // console.log(municipality)
 
-    this.barangays = []
+    this.barangays = [];
 
     this.formDetails.patchValue({
       barangay: null,
-    })
+    });
 
-    this.barangays = await this.ls.getBarangays(municipality.citymunCode)
+    this.barangays = await this.ls.getBarangays(municipality.citymunCode);
   }
 
   uploadFile(event: any) {
@@ -245,119 +264,145 @@ export class EditIndustryPartnerComponent {
 
   closePopup() {
     Swal.fire({
-      title: "Cancel",
-      text: "Are you sure you want to cancel editing industry partner??",
-      icon: "question",
+      title: 'Cancel',
+      text: 'Are you sure you want to cancel editing industry partner??',
+      icon: 'question',
       showCancelButton: true,
       confirmButtonText: 'Yes',
       cancelButtonText: 'No',
-      confirmButtonColor: "#AB0E0E",
-      cancelButtonColor: "#777777",
+      confirmButtonColor: '#AB0E0E',
+      cancelButtonColor: '#777777',
     }).then((result) => {
       if (result.isConfirmed) {
         this.ref.close(null);
-        this.gs.makeToast('Changes not saved.', 'error')
+        this.gs.makeToast('Changes not saved.', 'error');
       }
     });
   }
 
-  submit() {
-    if(this.formDetails.invalid) {
-      const firstInvalidControl: HTMLElement = document.querySelector('form .ng-invalid')!;
+  async updateProfile() {
+    if (this.formDetails.invalid) {
+      const firstInvalidControl: HTMLElement =
+        document.querySelector('form .ng-invalid')!;
 
       if (firstInvalidControl) {
-        firstInvalidControl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        firstInvalidControl.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        });
       }
 
       this.formDetails.markAllAsTouched();
       return;
     }
 
-    Swal.fire({
-      title: "Update?",
-      text: "Are you sure you want to update this industry partner?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: 'Yes',
-      cancelButtonText: 'Cancel',
-      confirmButtonColor: "#4f6f52",
-      cancelButtonColor: "#777777",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.update()
-      }
-    });
-  }
+    const res = await this.gs.confirmationAlert(
+      'Update?',
+      'Are you sure you want to update this industry partner?',
+      'info',
+      'Yes',
+      'confirmation'
+    );
 
-  update() {
-    if(this.isSubmitting) {
-      return
+    if (!res) return;
+
+    if (this.isSubmitting) {
+      return;
     }
 
-    this.isSubmitting = true
+    this.isSubmitting = true;
 
     var formData = new FormData();
 
-    formData.append('company_name', this.formDetails.get('company_name')?.value);
+    formData.append(
+      'company_name',
+      this.formDetails.get('company_name')?.value
+    );
     formData.append('description', this.formDetails.get('description')?.value);
     formData.append('region', this.formDetails.get('region')?.value.regDesc);
-    formData.append('province', this.formDetails.get('province')?.value.provDesc);
-    formData.append('municipality', this.formDetails.get('municipality')?.value.citymunDesc);
-    formData.append('barangay', this.formDetails.get('barangay')?.value.brgyDesc);
+    formData.append(
+      'province',
+      this.formDetails.get('province')?.value.provDesc
+    );
+    formData.append(
+      'municipality',
+      this.formDetails.get('municipality')?.value.citymunDesc
+    );
+    formData.append(
+      'barangay',
+      this.formDetails.get('barangay')?.value.brgyDesc
+    );
     formData.append('street', this.formDetails.get('street')?.value);
-    if(this.formDetails.get('telephone_number')?.value)
-      formData.append('telephone_number', this.formDetails.get('telephone_number')?.value);
-    formData.append('mobile_number', this.formDetails.get('mobile_number')?.value);
-    if(this.formDetails.get('fax_number')?.value)
+    if (this.formDetails.get('telephone_number')?.value)
+      formData.append(
+        'telephone_number',
+        this.formDetails.get('telephone_number')?.value
+      );
+    formData.append(
+      'mobile_number',
+      this.formDetails.get('mobile_number')?.value
+    );
+    if (this.formDetails.get('fax_number')?.value)
       formData.append('fax_number', this.formDetails.get('fax_number')?.value);
     formData.append('email', this.formDetails.get('email')?.value);
-    if(this.formDetails.get('website')?.value)
+    if (this.formDetails.get('website')?.value)
       formData.append('website', this.formDetails.get('website')?.value);
     formData.append('slots', this.formDetails.get('slots')?.value);
 
     const companyHead = this.formDetails.get('company_head')?.value;
     formData.append('company_head[first_name]', companyHead.first_name);
-    if(companyHead.middle_name)
+    if (companyHead.middle_name)
       formData.append('company_head[middle_name]', companyHead.middle_name);
     formData.append('company_head[last_name]', companyHead.last_name);
     formData.append('company_head[sex]', companyHead.sex);
-    if(companyHead.ext_name)
+    if (companyHead.ext_name)
       formData.append('company_head[ext_name]', companyHead.ext_name);
 
-    formData.append('head_position', this.formDetails.get('head_position')?.value);
+    formData.append(
+      'head_position',
+      this.formDetails.get('head_position')?.value
+    );
 
     const supervisor = this.formDetails.get('immediate_supervisor')?.value;
     formData.append('immediate_supervisor[first_name]', supervisor.first_name);
-    if(supervisor.middle_name)
-      formData.append('immediate_supervisor[middle_name]', supervisor.middle_name);
+    if (supervisor.middle_name)
+      formData.append(
+        'immediate_supervisor[middle_name]',
+        supervisor.middle_name
+      );
     formData.append('immediate_supervisor[last_name]', supervisor.last_name);
     formData.append('immediate_supervisor[sex]', supervisor.sex);
-    if(supervisor.ext_name)
+    if (supervisor.ext_name)
       formData.append('immediate_supervisor[ext_name]', supervisor.ext_name);
 
-    formData.append('supervisor_position', this.formDetails.get('supervisor_position')?.value);
+    formData.append(
+      'supervisor_position',
+      this.formDetails.get('supervisor_position')?.value
+    );
 
-    if(this.file)
-      formData.append('image', this.file);
+    if (this.file) formData.append('image', this.file);
 
-    this.dataService.post('superadmin/industryPartners/', this.data.id, formData).subscribe(
-      result => {
-        this.isSubmitting = false
-        this.gs.makeAlert(result.title, result.message, 'success')
-        this.ref.close(result.data);
-
-      },
-      error => {
-        this.isSubmitting = false
-        console.error(error)
-        if (error.status == 422) {
-          this.gs.makeAlert('Error!', "Invalid input.", 'error')
+    this.dataService
+      .post('superadmin/industryPartners/', this.data.id, formData)
+      .subscribe(
+        (result) => {
+          this.isSubmitting = false;
+          this.gs.makeAlert(result.title, result.message, 'success');
+          this.ref.close(result.data);
+        },
+        (error) => {
+          this.isSubmitting = false;
+          console.error(error);
+          if (error.status == 422) {
+            this.gs.makeAlert('Error!', 'Invalid input.', 'error');
+          } else {
+            this.gs.makeAlert(
+              'Oops!',
+              'Something went wrong, please try again later.',
+              'error'
+            );
+          }
         }
-        else {
-          this.gs.makeAlert('Oops!', "Something went wrong, please try again later.", 'error')
-        }
-      }
-    )
+      );
   }
-
 }

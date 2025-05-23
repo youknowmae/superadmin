@@ -33,7 +33,6 @@ export class ListComponent {
     'completed',
     'actions',
   ];
-
   filteredIndustryPartners: IndustryPartner[] = [];
   industryPartners: IndustryPartner[] = [];
   isLoading: boolean = true;
@@ -295,5 +294,16 @@ export class ListComponent {
 
   toggleView(): void {
     this.isGridView = !this.isGridView;
+  }
+
+  isExpired(date: Date | undefined): boolean {
+    if (!date) return true;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const compareDate = new Date(date);
+    compareDate.setHours(0, 0, 0, 0);
+
+    return compareDate < today;
   }
 }

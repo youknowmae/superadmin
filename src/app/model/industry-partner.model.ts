@@ -25,5 +25,12 @@ export interface IndustryPartner {
   is_archived: boolean;
   application_count?: number;
   accepted_application_count?: number;
-  completed_count?: number
+  completed_count?: number;
+  latest_mou?: MOU;
+}
+
+interface MOU {
+  start_date: Date;
+  expiration_date: Date;
+  file_location: string;
 }

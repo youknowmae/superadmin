@@ -4,6 +4,7 @@ import { GeneralService } from '../../../../../services/general.service';
 import { UserService } from '../../../../../services/user.service';
 import { Router } from '@angular/router';
 import { DataService } from '../../../../../services/data.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-view',
@@ -11,64 +12,86 @@ import { DataService } from '../../../../../services/data.service';
   styleUrl: './view.component.scss',
 })
 export class ViewComponent {
-  industryPartner: any
-  student: any
+  industryPartner: any;
+  student: any;
 
-  isLoading: boolean = true
+  isLoading: boolean = true;
 
-  displayedColumns: string[] = ['name', 'student_number', 'course', 'year_level', 'status'];
+  displayedColumns: string[] = [
+    'name',
+    'student_number',
+    'course',
+    'year_level',
+    'status',
+  ];
 
   constructor(
     private gs: GeneralService,
     private us: UserService,
     private router: Router,
-    private ds: DataService
-  ) {
-  }
+    private ds: DataService,
+    private sanitizer: DomSanitizer
+  ) {}
 
   ngOnInit() {
-    this.getIndustryPartner()
-    this.student = this.us.getUser()
+    this.getIndustryPartner();
+    this.student = this.us.getUser();
   }
 
   getIndustryPartner() {
-    let id = this.us.getIndustryPartner()
+    let id = this.us.getIndustryPartner();
 
-    if(!id) {
-      this.router.navigate(['main/industrypartners/list'])
+    if (!id) {
+      this.router.navigate(['main/industrypartners/list']);
     }
 
-
     this.ds.get('superadmin/industryPartners/', id).subscribe(
-      industryPartner => {
+      (industryPartner) => {
         let companyHead = industryPartner.company_head;
-        let fullName = `${companyHead?.first_name || ''} ${companyHead?.last_name || ''} ${companyHead?.ext_name || ''}`.trim();
+        let fullName = `${companyHead?.first_name || ''} ${
+          companyHead?.last_name || ''
+        } ${companyHead?.ext_name || ''}`.trim();
         industryPartner.company_head.full_name = fullName;
 
         let supervisor = industryPartner.immediate_supervisor;
-        let supervisorFullName = `${supervisor?.first_name || ''} ${supervisor?.last_name || ''} ${supervisor?.ext_name || ''}`.trim();
+        let supervisorFullName = `${supervisor?.first_name || ''} ${
+          supervisor?.last_name || ''
+        } ${supervisor?.ext_name || ''}`.trim();
         industryPartner.immediate_supervisor.full_name = supervisorFullName;
 
-        let full_address = `${industryPartner?.street || ''} ${industryPartner?.barangay || ''}, ${industryPartner?.municipality || ''}`
-        industryPartner.full_address = full_address
+        let full_address = `${industryPartner?.street || ''} ${
+          industryPartner?.barangay || ''
+        }, ${industryPartner?.municipality || ''}`;
+        industryPartner.full_address = full_address;
 
-        console.log(industryPartner)
+        console.log(industryPartner);
 
-        this.industryPartner = industryPartner
+        this.industryPartner = industryPartner;
 
-        this.isLoading = false
+        this.isLoading = false;
       },
-      error => {
-        this.isLoading = false
-        console.error(error)
-        if(error.status === 404) {
-          this.router.navigate(['main/industrypartners/list'])
-          this.gs.makeAlert('Not Found!', 'Industry Partner not found.', 'error')
-        }
-        else {
-          this.gs.makeAlert('Oops!', 'Something went wrong. Please try again later.', 'error')
+      (error) => {
+        this.isLoading = false;
+        console.error(error);
+        if (error.status === 404) {
+          this.router.navigate(['main/industrypartners/list']);
+          this.gs.makeAlert(
+            'Not Found!',
+            'Industry Partner not found.',
+            'error'
+          );
+        } else {
+          this.gs.makeAlert(
+            'Oops!',
+            'Something went wrong. Please try again later.',
+            'error'
+          );
         }
       }
-    )
+    );
+  }
+
+  sanitizeUrl(url: string) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 }
