@@ -32,21 +32,11 @@
     <!-- Filters + Toggle -->
     <div class="buttons">
       <div class="filter-container">
-        <div class="filter">
-          <button
-            [ngClass]="{ active: isArchiveFilter === false }"
-            (click)="setFilter(false)"
-          >
-            Active Partners
-          </button>
+        <div class="filter" [ngClass]="{ active: isArchiveFilter === false }">
+          <button (click)="setFilter(false)">Active Partners</button>
         </div>
-        <div class="filter">
-          <button
-            [ngClass]="{ active: isArchiveFilter === true }"
-            (click)="setFilter(true)"
-          >
-            Inactive Partners
-          </button>
+        <div class="filter" [ngClass]="{ active: isArchiveFilter === true }">
+          <button (click)="setFilter(true)">Inactive Partners</button>
         </div>
       </div>
 

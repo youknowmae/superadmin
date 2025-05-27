@@ -72,38 +72,49 @@
     margin-bottom: 10px;
   }
 
-  .filter-container {
-    display: flex;
-    flex-direction: row;
-
-    .filter {
-      display: flex;
-      justify-content: center;
-      margin-right: 40px;
-      position: relative;
-    }
-
-    .filter::before {
-      content: "";
-      position: absolute;
-      transform: translateY(50px);
-      width: 0px;
-      height: 2px;
-      background: var(--primary-color);
-      transition: all 0.3s ease-in-out;
-    }
-
-    .filter.active::before {
-      width: 120px;
-    }
-  }
-
   .filter-view {
     button {
       display: flex;
       align-items: center;
       gap: 5px;
     }
+  }
+
+  .filter-container {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .filter {
+    display: flex;
+    justify-content: center;
+    margin-right: 30px;
+    position: relative;
+  }
+
+  .filter button {
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: var(--primary-color);
+    cursor: pointer;
+    position: relative;
+    // z-index: 1;
+  }
+
+  .filter::before {
+    content: '';
+    position: absolute;
+    bottom: 0; /* Place the underline right below the button text */
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary-color);
+    transition: width 0.3s ease-in-out;
+  }
+
+  .filter.active::before {
+    width: 100%;
   }
 }
 
