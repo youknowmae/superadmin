@@ -34,11 +34,8 @@ export class ListComponent {
     'completed',
     'actions',
   ];
-<<<<<<< Updated upstream
-=======
 
   academicYearFilter: string | null = null;
->>>>>>> Stashed changes
   filteredIndustryPartners: IndustryPartner[] = [];
   industryPartners: IndustryPartner[] = [];
   isLoading: boolean = true;
@@ -72,12 +69,7 @@ export class ListComponent {
     };
   }
 
-  academicYearOptions = [
-    { acad_year: '2023-2024', semester: 1 },
-    { acad_year: '2023-2024', semester: 2 },
-    { acad_year: '2022-2023', semester: 1 },
-    { acad_year: '2022-2023', semester: 2 }
-  ];
+  academicYearOptions = [];
 
   onAcademicYearFilterChange(event: any): void {
     console.log('Selected academic year:', event.value);
@@ -90,6 +82,14 @@ export class ListComponent {
   }
 
   ngOnInit() {
+    const academicYears = this.us.getAcademicYears();
+    this.academicYearOptions = academicYears;
+    const activeAcadYear = academicYears.find(
+      (item: any) => item.is_active === 1
+    );
+
+    this.academicYearFilter = activeAcadYear;
+
     this.getIndustryPartners();
   }
 
