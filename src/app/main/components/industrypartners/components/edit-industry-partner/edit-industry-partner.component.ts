@@ -133,41 +133,38 @@ export class EditIndustryPartnerComponent {
         null,
         [Validators.required, Validators.min(1), Validators.max(50)],
       ],
+
+      startDate: [null],
+      endDate: [{ value: null, disabled: true }]
     });
 
     // startDate: [null, Validators.required],
     // endDate: [{ value: null, disabled: true }],
 
-    this.formDetails
-      .get('startDate')
-      ?.valueChanges.subscribe((startDateValue: string) => {
+     this.formDetails.get('startDate')?.valueChanges.subscribe((startDateValue: string) => {
         const endDateControl = this.formDetails.get('endDate');
 
         if (startDateValue) {
           const start = new Date(startDateValue);
           const end = new Date(start);
-          end.setFullYear(end.getFullYear() + 1); // add 1 year
+          end.setFullYear(end.getFullYear() + 1);
 
-          // Format date to yyyy-MM-dd string
           const yyyy = end.getFullYear();
           const mm = (end.getMonth() + 1).toString().padStart(2, '0');
           const dd = end.getDate().toString().padStart(2, '0');
           const endDateStr = `${yyyy}-${mm}-${dd}`;
 
-          // ✅ Enable endDate if disabled
+          // Enable and set value
           if (endDateControl?.disabled) {
             endDateControl.enable({ emitEvent: false });
           }
-
-          // ✅ Set value without triggering event
           endDateControl?.setValue(endDateStr, { emitEvent: false });
         } else {
-          // ✅ Reset and disable if no startDate
           endDateControl?.setValue(null, { emitEvent: false });
           endDateControl?.disable({ emitEvent: false });
         }
       });
-  }
+    }
 
   async ngOnInit() {
     this.formDetails.patchValue({

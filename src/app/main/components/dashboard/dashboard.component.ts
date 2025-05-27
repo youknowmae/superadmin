@@ -15,6 +15,8 @@ import { DataService } from '../../../services/data.service';
 import { UserService } from '../../../services/user.service';
 import { AcademicYear } from '../../../model/academicYear.model';
 import { MatSelectChange } from '@angular/material/select';
+import { Workbook } from 'exceljs';
+import * as FileSaver from 'file-saver';
 
 // Register all necessary components
 Chart.register(...registerables);
@@ -152,6 +154,220 @@ export class DashboardComponent implements AfterViewInit {
     this.academicYearFilter = acadYear;
     this.getData(acadYear);
   }
+
+  
+blobToBase64(blob: Blob): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      if (typeof reader.result === 'string') {
+        resolve(reader.result);
+      } else {
+        reject('Failed to convert blob to base64');
+      }
+    };
+    reader.onerror = () => reject('Failed to read blob');
+    reader.readAsDataURL(blob);
+  });
+}
+
+
+exportToExcel = async (): Promise<void> => {
+  const workbook = new Workbook();
+  const worksheet = workbook.addWorksheet('Dashboard Report');
+
+  // Load and add images as base64
+  const gcImageResponse = await fetch('assets/images/GC.png');
+  const gcImageBlob = await gcImageResponse.blob();
+  const gcImageBase64 = await this.blobToBase64(gcImageBlob);
+  const gcLogo = workbook.addImage({
+    base64: gcImageBase64,
+    extension: 'png',
+  });
+
+  const ccsImageResponse = await fetch('assets/images/ccs.png');
+  const ccsImageBlob = await ccsImageResponse.blob();
+  const ccsImageBase64 = await this.blobToBase64(ccsImageBlob);
+  const ccsLogo = workbook.addImage({
+    base64: ccsImageBase64,
+    extension: 'png',
+  });
+
+  let currentRow = 1;
+
+  // Add logos
+  worksheet.addImage(gcLogo, {
+    tl: { col: 0, row: currentRow - 1 },
+    ext: { width: 120, height: 120 },
+    editAs: 'absolute',
+  });
+
+  worksheet.addImage(ccsLogo, {
+    tl: { col: 5, row: currentRow - 1 },
+    ext: { width: 120, height: 120 },
+    editAs: 'absolute',
+  });
+
+  currentRow += 1;
+
+  const addHeaderLine = (text: string, fontSize: number, bold = false) => {
+    worksheet.mergeCells(`A${currentRow}:N${currentRow}`);
+    const cell = worksheet.getCell(`A${currentRow}`);
+    cell.value = text;
+    cell.alignment = { vertical: 'middle', horizontal: 'center' };
+    cell.font = { size: fontSize, bold };
+    currentRow++;
+  };
+
+  addHeaderLine('Gordon College', 16, true);
+  addHeaderLine('College of Computer Studies', 12);
+  addHeaderLine(`A.Y.`, 12);
+  addHeaderLine('Dashboard Report', 12);
+
+  worksheet.addRow([]);
+  currentRow++;
+
+  const addSectionTitle = (title: string) => {
+    const row = worksheet.getRow(currentRow++);
+    row.height = 24;
+    row.getCell(1).value = title;
+    row.font = { bold: true, color: { argb: 'FFFFFFFF' }, size: 14 };
+    row.alignment = { vertical: 'middle', horizontal: 'center' };
+    row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
+      if (colNumber <= 6) {
+        cell.fill = {
+          type: 'gradient',
+          gradient: 'angle',
+          degree: 0,
+          stops: [
+            { position: 0, color: { argb: 'FFEE7214' } },
+            { position: 1, color: { argb: 'FFB85400' } },
+          ],
+        };
+        cell.font = { bold: true, color: { argb: 'FFFFFFFF' }, size: 14 };
+        cell.alignment = { vertical: 'middle', horizontal: 'center' };
+      }
+    });
+    worksheet.mergeCells(`A${row.number}:F${row.number}`);
+  };
+
+  const addHeaders = (headers: string[]) => {
+    const row = worksheet.getRow(currentRow++);
+    row.height = 20;
+    headers.forEach((header, i) => {
+      const cell = row.getCell(i + 1);
+      cell.value = header;
+      if (i < 6) {
+        cell.fill = {
+          type: 'pattern',
+          pattern: 'solid',
+          fgColor: { argb: 'FFEE7214' },
+        };
+      }
+      cell.font = { bold: true, color: { argb: 'FFFFFFFF' } };
+      cell.alignment = { horizontal: 'center', vertical: 'middle' };
+      cell.border = {
+        top: { style: 'thin', color: { argb: 'FFDD7700' } },
+        left: { style: 'thin', color: { argb: 'FFDD7700' } },
+        bottom: { style: 'thin', color: { argb: 'FFDD7700' } },
+        right: { style: 'thin', color: { argb: 'FFDD7700' } },
+      };
+    });
+  };
+
+  const addDataRows = (rows: any[][]) => {
+    rows.forEach((data, idx) => {
+      const row = worksheet.getRow(currentRow++);
+      row.height = 18;
+      data.forEach((val, i) => {
+        const cell = row.getCell(i + 1);
+        cell.value = val;
+        if (i < 6 && idx % 2 === 0) {
+          cell.fill = {
+            type: 'pattern',
+            pattern: 'solid',
+            fgColor: { argb: 'FFFFF3E6' },
+          };
+        }
+        cell.alignment = { horizontal: 'center', vertical: 'middle' };
+        cell.border = {
+          top: { style: 'thin', color: { argb: 'FFF5C27A' } },
+          left: { style: 'thin', color: { argb: 'FFF5C27A' } },
+          bottom: { style: 'thin', color: { argb: 'FFF5C27A' } },
+          right: { style: 'thin', color: { argb: 'FFF5C27A' } },
+        };
+      });
+    });
+  };
+
+  // ✅ SECTION: Dashboard Summary
+  addSectionTitle('Dashboard Summary');
+  addHeaders([
+    'Total Students Enrolled',
+    'Pending Student Applicants',
+    'Students in Ongoing OJT',
+    'OJT-Completed Students',
+  ]);
+
+  addDataRows([[
+    this.enrolled_student,
+    this.ojtStatusCount?.pending || 0,
+    this.ojtStatusCount?.ongoing || 0,
+    this.ojtStatusCount?.completed || 0,
+  ]]);
+
+
+  currentRow++;
+
+  // SECTION: Enrolled Students
+  addSectionTitle('Enrolled Students per Course');
+  addHeaders(['Course Code', 'Count']);
+  const enrolledRows = this.enrolledCourseCount.map((item: any) => [
+    item.course_code,
+    item.count,
+  ]);
+  addDataRows(enrolledRows);
+
+  currentRow++;
+
+  // SECTION: OJT Status
+  addSectionTitle('OJT Status per Course');
+  addHeaders(['Course Code', 'Pending', 'Ongoing', 'Completed']);
+  const ojtStatusRows = this.barChart?.data?.labels?.map((label: string, i: number) => [
+    label,
+    this.barChart.data.datasets[0].data[i],
+    this.barChart.data.datasets[1].data[i],
+    this.barChart.data.datasets[2].data[i],
+  ]) || [];
+  addDataRows(ojtStatusRows);
+
+  currentRow++;
+
+  // Autofit columns only A-F
+  worksheet.columns.forEach((col, idx) => {
+    if (idx < 6) {
+      let maxLength = 12;
+      if (col.eachCell) {
+        col.eachCell({ includeEmpty: true }, (cell) => {
+          const val = cell.value ? cell.value.toString() : '';
+          maxLength = Math.max(maxLength, val.length);
+        });
+      }
+      col.width = maxLength + 4;
+    } else {
+      col.width = 0;
+    }
+  });
+
+  // Save Excel file
+  workbook.xlsx.writeBuffer().then((buffer: any) => {
+    const blob = new Blob([buffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+    FileSaver.saveAs(blob, 'Dashboard_Report.xlsx');
+  });
+};
+
 
   getData(acadYear: AcademicYear) {
     this.ds
