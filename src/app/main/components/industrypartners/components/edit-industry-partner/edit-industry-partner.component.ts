@@ -20,6 +20,7 @@ export class EditIndustryPartnerComponent {
   isSubmitting: boolean = false;
 
   formDetails: FormGroup;
+  mouFormDetails: FormGroup;
 
   regions: any = [];
   provinces: any = [];
@@ -47,7 +48,7 @@ export class EditIndustryPartnerComponent {
     }
   }
 
-   handleFile(file: File): void {
+  handleFile(file: File): void {
     const validType = 'application/pdf';
     const maxSize = 10 * 1024 * 1024; // 10MB
 
@@ -58,7 +59,9 @@ export class EditIndustryPartnerComponent {
       const reader = new FileReader();
       reader.onload = () => {
         // Sanitize the base64 URL to safely bind it to iframe src
-        this.filePreviewUrl = this.sanitizer.bypassSecurityTrustResourceUrl(reader.result as string);
+        this.filePreviewUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+          reader.result as string
+        );
       };
       reader.readAsDataURL(file); // Convert PDF to base64
     } else {
@@ -87,6 +90,11 @@ export class EditIndustryPartnerComponent {
     private ls: LocationService,
     private sanitizer: DomSanitizer
   ) {
+    this.mouFormDetails = this.fb.group({
+      start_date: [null, Validators.required],
+      expiration_date: [{ value: null, disabled: true }, Validators.required],
+    });
+
     this.formDetails = this.fb.group({
       company_name: [null, [Validators.required, Validators.maxLength(64)]],
       description: [null, [Validators.required, Validators.maxLength(2048)]],
@@ -133,38 +141,33 @@ export class EditIndustryPartnerComponent {
         null,
         [Validators.required, Validators.min(1), Validators.max(50)],
       ],
-
-      startDate: [null],
-      endDate: [{ value: null, disabled: true }]
     });
 
-    // startDate: [null, Validators.required],
-    // endDate: [{ value: null, disabled: true }],
-
-     this.formDetails.get('startDate')?.valueChanges.subscribe((startDateValue: string) => {
-        const endDateControl = this.formDetails.get('endDate');
+    this.mouFormDetails
+      .get('start_date')
+      ?.valueChanges.subscribe((startDateValue: string) => {
+        const endDateControl = this.mouFormDetails.get('expiration_date');
 
         if (startDateValue) {
           const start = new Date(startDateValue);
           const end = new Date(start);
           end.setFullYear(end.getFullYear() + 1);
 
-          const yyyy = end.getFullYear();
-          const mm = (end.getMonth() + 1).toString().padStart(2, '0');
-          const dd = end.getDate().toString().padStart(2, '0');
-          const endDateStr = `${yyyy}-${mm}-${dd}`;
-
-          // Enable and set value
           if (endDateControl?.disabled) {
             endDateControl.enable({ emitEvent: false });
           }
-          endDateControl?.setValue(endDateStr, { emitEvent: false });
+
+          // ✅ Set value without triggering event
+          endDateControl?.setValue(this.gs.formatDate(end), {
+            emitEvent: false,
+          });
         } else {
+          // ✅ Reset and disable if no startDate
           endDateControl?.setValue(null, { emitEvent: false });
           endDateControl?.disable({ emitEvent: false });
         }
       });
-    }
+  }
 
   async ngOnInit() {
     this.formDetails.patchValue({
@@ -302,40 +305,28 @@ export class EditIndustryPartnerComponent {
 
     var formData = new FormData();
 
-    formData.append(
-      'company_name',
-      this.formDetails.get('company_name')?.value
-    );
-    formData.append('description', this.formDetails.get('description')?.value);
-    formData.append('region', this.formDetails.get('region')?.value.regDesc);
-    formData.append(
-      'province',
-      this.formDetails.get('province')?.value.provDesc
-    );
-    formData.append(
-      'municipality',
-      this.formDetails.get('municipality')?.value.citymunDesc
-    );
-    formData.append(
-      'barangay',
-      this.formDetails.get('barangay')?.value.brgyDesc
-    );
-    formData.append('street', this.formDetails.get('street')?.value);
-    if (this.formDetails.get('telephone_number')?.value)
-      formData.append(
-        'telephone_number',
-        this.formDetails.get('telephone_number')?.value
-      );
-    formData.append(
-      'mobile_number',
-      this.formDetails.get('mobile_number')?.value
-    );
-    if (this.formDetails.get('fax_number')?.value)
-      formData.append('fax_number', this.formDetails.get('fax_number')?.value);
-    formData.append('email', this.formDetails.get('email')?.value);
-    if (this.formDetails.get('website')?.value)
-      formData.append('website', this.formDetails.get('website')?.value);
-    formData.append('slots', this.formDetails.get('slots')?.value);
+    const partnerInfo = this.formDetails.value
+    formData.append('company_name', partnerInfo.company_name);
+    formData.append('description', partnerInfo.description);
+    formData.append('region', partnerInfo.region?.regDesc);
+    formData.append('province', partnerInfo.province?.provDesc);
+    formData.append('municipality', partnerInfo.municipality?.citymunDesc);
+    formData.append('barangay', partnerInfo.barangay?.brgyDesc);
+    formData.append('street', partnerInfo.street);
+
+    if (partnerInfo.telephone_number)
+      formData.append('telephone_number', partnerInfo.telephone_number);
+
+    formData.append('mobile_number', partnerInfo.mobile_number);
+
+    if (partnerInfo.fax_number)
+      formData.append('fax_number', partnerInfo.fax_number);
+
+    formData.append('email', partnerInfo.email);
+
+    if (partnerInfo.website) formData.append('website', partnerInfo.website);
+
+    formData.append('slots', partnerInfo.slots);
 
     const companyHead = this.formDetails.get('company_head')?.value;
     formData.append('company_head[first_name]', companyHead.first_name);

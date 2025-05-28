@@ -5,6 +5,7 @@ import { UserService } from '../../../../../services/user.service';
 import { Router } from '@angular/router';
 import { DataService } from '../../../../../services/data.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-view',
@@ -16,6 +17,8 @@ export class ViewComponent {
   student: any;
 
   isLoading: boolean = true;
+
+  dataSource: any = new MatTableDataSource<any>();
 
   displayedColumns: string[] = [
     'name',
@@ -68,6 +71,34 @@ export class ViewComponent {
 
         this.industryPartner = industryPartner;
 
+        if (industryPartner.internship_applications) {
+          industryPartner.internship_applications =
+            industryPartner.internship_applications.map((student: any) => {
+              const requiredHours =
+                student.user.ojt_class.adviser_class.active_ojt_hours
+                  .required_hours;
+              const currentProgress =
+                student.user?.verified_attendance_total?.current_total_hours ||
+                0;
+
+              let status;
+
+              if (currentProgress >= requiredHours) {
+                status = 'Completed';
+              } else {
+                status = 'Ongoing';
+              }
+
+              return {
+                full_name:
+                  student.user.first_name + ' ' + student.user.last_name,
+                ...student,
+                status,
+              };
+            });
+        }
+
+        this.dataSource.data = this.industryPartner.internship_applications;
         this.isLoading = false;
       },
       (error) => {

@@ -17,6 +17,7 @@ export class ViewComponent {
   industryPartner: any;
 
   accountDetails: FormGroup;
+  mouFormDetails: FormGroup;
 
   showPassword: boolean = false;
   isSubmitting: boolean = false;
@@ -26,6 +27,7 @@ export class ViewComponent {
   isImage: boolean = false;
 
   isLoading: boolean = true;
+  mouSubscription: any;
 
   constructor(
     private us: UserService,
@@ -35,6 +37,11 @@ export class ViewComponent {
     private router: Router,
     private sanitizer: DomSanitizer
   ) {
+    this.mouFormDetails = this.fb.group({
+      start_date: [null, Validators.required],
+      expiration_date: [{ value: null, disabled: true }, Validators.required],
+    });
+
     this.accountDetails = this.fb.group({
       email: [null, [Validators.required, Validators.email]],
       password: [null, [Validators.required, Validators.minLength(8)]],
@@ -43,6 +50,35 @@ export class ViewComponent {
         [Validators.required, Validators.min(1), Validators.max(50)],
       ],
     });
+
+    this.mouSubscription = this.mouFormDetails
+      .get('start_date')
+      ?.valueChanges.subscribe((startDateValue: string) => {
+        const endDateControl = this.mouFormDetails.get('expiration_date');
+
+        if (startDateValue) {
+          const start = new Date(startDateValue);
+          const end = new Date(start);
+          end.setFullYear(end.getFullYear() + 1);
+
+          if (endDateControl?.disabled) {
+            endDateControl.enable({ emitEvent: false });
+          }
+
+          // ✅ Set value without triggering event
+          endDateControl?.setValue(this.gs.formatDate(end), {
+            emitEvent: false,
+          });
+        } else {
+          // ✅ Reset and disable if no startDate
+          endDateControl?.setValue(null, { emitEvent: false });
+          endDateControl?.disable({ emitEvent: false });
+        }
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.mouSubscription?.unsubscribe();
   }
 
   ngOnInit() {
@@ -136,10 +172,18 @@ export class ViewComponent {
 
     const formdata = new FormData();
 
+    const accountDetails = this.accountDetails.value;
+    const mouDetails = this.mouFormDetails.value;
+
+    formdata.append('start_date', this.gs.formatDate(mouDetails.start_date));
+    formdata.append(
+      'expiration_date',
+      this.gs.formatDate(mouDetails.expiration_date)
+    );
     formdata.append('mou', this.file);
-    formdata.append('email', this.accountDetails.value.email);
-    formdata.append('password', this.accountDetails.value.password);
-    formdata.append('slots', this.accountDetails.value.slots);
+    formdata.append('email', accountDetails.email);
+    formdata.append('password', accountDetails.password);
+    formdata.append('slots', accountDetails.slots);
 
     this.ds
       .post(

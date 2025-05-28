@@ -100,21 +100,36 @@
                     </ul>
                   </div>
 
-                  <!-- Job Requirements -->
                   <div
                     class="details-section"
-                    *ngIf="industryPartner.job_requirements?.length"
+                    *ngIf="industryPartner.job_requirements"
                   >
-                    <div class="job-requirements">
-                      <p><b>Job/Skills Requirements:</b></p>
-                      <div class="items">
-                        <p
-                          *ngFor="let item of industryPartner.job_requirements"
-                        >
-                          {{ item }}
-                        </p>
-                      </div>
-                    </div>
+                    <p><b>Job/Skills Requirements:</b></p>
+
+                    <mat-chip-set>
+                      <mat-chip
+                        disableRipple
+                        *ngFor="let item of industryPartner.job_requirements"
+                      >
+                        {{ item }}
+                      </mat-chip>
+                    </mat-chip-set>
+                  </div>
+
+                  <div
+                    class="details-section"
+                    *ngIf="industryPartner.technical_skills"
+                  >
+                    <p><b>Technical Skills:</b></p>
+
+                    <mat-chip-set>
+                      <mat-chip
+                        disableRipple
+                        *ngFor="let item of industryPartner.technical_skills"
+                      >
+                        {{ item }}
+                      </mat-chip>
+                    </mat-chip-set>
                   </div>
 
                   <!-- Slots Information -->
@@ -143,7 +158,7 @@
               <div class="students-content">
                 <h2>Number of Students:</h2>
 
-                <table mat-table>
+                <table mat-table [dataSource]="dataSource">
                   <!-- Name Column -->
                   <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef>Name</th>
@@ -159,7 +174,7 @@
                   <ng-container matColumnDef="course">
                     <th mat-header-cell *matHeaderCellDef>Course</th>
                     <td mat-cell *matCellDef="let element">
-                      {{ element.user.active_ojt_class.course_code }}
+                      {{ element.user.ojt_class.adviser_class.course_code }}
                     </td>
                   </ng-container>
 
@@ -183,7 +198,7 @@
                   <ng-container matColumnDef="status">
                     <th mat-header-cell *matHeaderCellDef>Status</th>
                     <td mat-cell *matCellDef="let element">
-                      <!-- <p>{{ (element.ojt_exit_poll) ? 'Completed' : 'Pending' }}</p> -->
+                      <p>{{ element.status }}</p>
                     </td>
                   </ng-container>
 
@@ -207,19 +222,10 @@
 
       <div class="tab-content">
         <div class="container">
-          <!-- Back Button -->
-          <!-- <button class="back-btn" [routerLink]="['../list']" routerLinkActive="router-link-active">
-              <span class="icon">
-                <i class="fa-solid fa-arrow-left"></i>
-              </span>
-              <p>Back</p>
-            </button> -->
-
-          <!-- Company Information Card -->
           <div class="card card-accent">
             <div class="image">
               <img
-                [src]="industryPartner.image || 'assets/images/logo.png'"
+                [src]="industryPartner?.image || 'assets/images/logo.png'"
                 alt="Company logo"
               />
             </div>
@@ -228,16 +234,16 @@
               <div class="info">
                 <!-- Company Details -->
                 <div class="details-section">
-                  <h2>{{ industryPartner.company_name }}</h2>
-                  <p>{{ industryPartner.description }}</p>
+                  <h2>{{ industryPartner?.company_name }}</h2>
+                  <p>{{ industryPartner?.description }}</p>
                 </div>
 
                 <!-- Company Personnel -->
                 <div class="details-section">
                   <p>
                     <b>Company Head:</b>
-                    {{ industryPartner.company_head.full_name }},
-                    {{ industryPartner.head_position }}
+                    {{ industryPartner?.company_head.full_name }},
+                    {{ industryPartner?.head_position }}
                   </p>
                 </div>
 
@@ -276,7 +282,7 @@
               <h2>MOU/MOA DOCUMENT</h2>
 
               <object
-                *ngIf="industryPartner.latest_mou"
+                *ngIf="industryPartner?.latest_mou"
                 [data]="sanitizeUrl(industryPartner.latest_mou.file_location)"
                 width="100%"
                 height="100%"

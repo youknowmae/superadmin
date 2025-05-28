@@ -60,8 +60,11 @@
             "
             [ngStyle]="{ 'animation-delay': i * 0.1 + 's' }"
           >
-            <div class="status" *ngIf="isExpired(industryPartner.latest_mou?.expiration_date)">
-              <p>For Renewal</p>
+            <div
+              class="status"
+              *ngIf="isExpired(industryPartner.latest_mou?.expiration_date)"
+            >
+              <p style="color: red">For Renewal</p>
             </div>
 
             <img

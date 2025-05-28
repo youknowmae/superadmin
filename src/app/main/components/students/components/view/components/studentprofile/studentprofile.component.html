@@ -1,340 +1,339 @@
 <div class="resumecontent" #captureArea>
-          <div class="header">
-            <div class="img-area">
-              <img
-                [src]="
-                  profilePictureUrl
-                    ? profilePictureUrl
-                    : 'assets/images/profile.png'
-                "
-                alt="Image"
-              />
-            </div>
-            <h1>
-              {{ student.first_name }} {{ student.middle_name }}
-              {{ student.last_name }} {{ student.ext_name }}
-            </h1>
-            <h3>Bachelor of Science in Information Technology</h3>
-            <h3>{{ student.student_profile.student_number }}</h3>
-          </div>
+  <div class="header">
+    <div class="img-area">
+      <img
+        [src]="student.image ? student.image : 'assets/images/profile.png'"
+        alt="Image"
+      />
+    </div>
+    <h1>
+      {{ student.first_name }} {{ student.middle_name }}
+      {{ student.last_name }} {{ student.ext_name }}
+    </h1>
+    <h3>{{ student.student_profile.program | courseShortToFull }}</h3>
+    <h3>{{ student.student_profile.student_number }}</h3>
+  </div>
 
-          <div class="main">
-            <div>
-              <h2>Personal Information</h2>
-              <div class="details">
-                <p>
-                  <strong>Name:</strong> {{ student.first_name }}
-                  {{ student.middle_name }} {{ student.last_name }}
-                  {{ student.ext_name }}
-                </p>
-                <p><strong>Gender:</strong> {{ student.gender }}</p>
-                <p>
-                  <strong>Address:</strong> {{ student.address }},
-                  {{ student.barangay }}, {{ student.municipality }},
-                  {{ student.province }} {{ student.zip_code }}
-                </p>
-                <p><strong>Date of Birth:</strong> {{ student.birth_date }}</p>
-                <p>
-                  <strong>Civil Status:</strong>
-                  {{ student.student_profile.civil_status }}
-                </p>
-                <p><strong>Citizenship:</strong> {{ student.citizenship }}</p>
-                <p><strong>Religion:</strong> {{ student.religion }}</p>
-                <p>
-                  <strong>Email:</strong>
-                  {{
-                    student.student_profile.student_number
-                  }}&#64;gordoncollege.edu.ph
-                </p>
-                <p>
-                  <strong>Phone:</strong>
-                  {{ student.student_profile.contact_number }}
-                </p>
-              </div>
+  <div class="main">
+    <div>
+      <h2>Personal Information</h2>
+      <div class="details">
+        <p>
+          <strong>Name:</strong> {{ student.first_name }}
+          {{ student.middle_name }} {{ student.last_name }}
+          {{ student.ext_name }}
+        </p>
+        <p><strong>Gender:</strong> {{ student.gender }}</p>
+        <p>
+          <strong>Address:</strong> {{ student.address }},
+          {{ student.barangay }}, {{ student.municipality }},
+          {{ student.province }} {{ student.zip_code }}
+        </p>
+        <p><strong>Date of Birth:</strong> {{ student.birth_date }}</p>
+        <p>
+          <strong>Civil Status:</strong>
+          {{ student.student_profile.civil_status }}
+        </p>
+        <p><strong>Citizenship:</strong> {{ student.citizenship }}</p>
+        <p><strong>Religion:</strong> {{ student.religion }}</p>
+        <p>
+          <strong>Email:</strong>
+          {{ student.student_profile.student_number }}&#64;gordoncollege.edu.ph
+        </p>
+        <p>
+          <strong>Phone:</strong>
+          {{ student.student_profile.contact_number }}
+        </p>
+      </div>
 
-              <h2>Skills</h2>
+      <h2>Skills</h2>
 
-              <div class="details text-semi-bold">
-                <p class="skill-item" *ngFor="let item of displayedSkills">
-                  {{ item }}
-                </p>
-              </div>
-            </div>
+      <div class="details text-semi-bold">
+        <p
+          class="skill-item"
+          *ngFor="let item of student.student_skills?.technical_skills"
+        >
+          {{ item }}
+        </p>
+      </div>
+    </div>
 
-            <div>
-              <h2>Education</h2>
-              <div class="details">
-                <div>
-                  <h3>
-                    {{ student.student_profile.program | courseShortToFull }}
-                  </h3>
-                  <div class="education-details">
-                    <h4>Gordon College</h4>
-                    <p class="sub-text">
-                      {{
-                        student.student_profile.student_number | slice : 0 : 4
-                      }}
-                      - Current
-                    </p>
-                  </div>
-                </div>
-
-                <div *ngIf="student.senior_high_school">
-                  <h3>{{ student.senior_high_school.program }}</h3>
-                  <div class="education-details">
-                    <h4>{{ student.senior_high_school.institution_name }}</h4>
-                    <p class="sub-text">
-                      Year Graduated:
-                      {{ student.senior_high_school.year_graduated }}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <h2 *ngIf="student.highest_attainment?.length > 0">
-                Highest Educational Attainment
-              </h2>
-              <div
-                class="details"
-                *ngIf="student.highest_attainment?.length > 0"
-              >
-                <div *ngFor="let item of student.highest_attainment">
-                  <ng-container
-                    *ngIf="
-                      item.type === 'National Certificate';
-                      else regularEducation
-                    "
-                  >
-                    <h3>
-                      National Certificate {{ item.nc_level | romanNumeral }}
-                    </h3>
-                    <div class="education-details">
-                      <h4>{{ item.program || "N/A" }}</h4>
-                    </div>
-                  </ng-container>
-
-                  <ng-template #regularEducation>
-                    <h3>{{ item.program | courseShortToFull }}</h3>
-                    <div class="education-details">
-                      <h4>{{ item.institution_name || "N/A" }}</h4>
-                      <p class="sub-text">
-                        Year Graduated: {{ item.year_graduated || "N/A" }}
-                      </p>
-                    </div>
-                  </ng-template>
-                </div>
-              </div>
-            </div>
+    <div>
+      <h2>Education</h2>
+      <div class="details">
+        <div>
+          <h3>
+            {{ student.student_profile.program | courseShortToFull }}
+          </h3>
+          <div class="education-details">
+            <h4>Gordon College</h4>
+            <p class="sub-text">
+              {{ student.student_profile.student_number | slice : 0 : 4 }}
+              - Current
+            </p>
           </div>
         </div>
-        
+
+        <div *ngIf="student.senior_high_school">
+          <h3>{{ student.senior_high_school.program }}</h3>
+          <div class="education-details">
+            <h4>{{ student.senior_high_school.institution_name }}</h4>
+            <p class="sub-text">
+              Year Graduated:
+              {{ student.senior_high_school.year_graduated }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <h2 *ngIf="student.highest_attainment?.length > 0">
+        Highest Educational Attainment
+      </h2>
+      <div class="details" *ngIf="student.highest_attainment?.length > 0">
+        <div *ngFor="let item of student.highest_attainment">
+          <ng-container
+            *ngIf="item.type === 'National Certificate'; else regularEducation"
+          >
+            <h3>National Certificate {{ item.nc_level | romanNumeral }}</h3>
+            <div class="education-details">
+              <h4>{{ item.program || "N/A" }}</h4>
+            </div>
+          </ng-container>
+
+          <ng-template #regularEducation>
+            <h3>{{ item.program | courseShortToFull }}</h3>
+            <div class="education-details">
+              <h4>{{ item.institution_name || "N/A" }}</h4>
+              <p class="sub-text">
+                Year Graduated: {{ item.year_graduated || "N/A" }}
+              </p>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="container">
   <div class="info-container">
-      <!-- seminars and training -->
-      <div class="content" *ngIf="student.practicum_level === 1">
-        <h3>Seminars and Training Attended related to IT</h3>
-        <div class="table-container">
-          <div class="table">
-            <div class="table-row">
-              <div class="col-md-3">
-                <h4>Title of Seminar</h4>
-              </div>
-              <div class="col-md-3">
-                <h4>Venue</h4>
-              </div>
-              <div class="col-md-2">
-                <h4>Date</h4>
-              </div>
-              <div class="col-md-2">
-                <h4>Number of Hours</h4>
-              </div>
-              <div class="col-md-2">
-                <h4>Certificate</h4>
-              </div>
+    <!-- seminars and training -->
+    <div class="content" *ngIf="student.practicum_level === 1">
+      <h3>Seminars and Training Attended related to IT</h3>
+      <div class="table-container">
+        <div class="table">
+          <div class="table-row">
+            <div class="col-md-3">
+              <h4>Title of Seminar</h4>
             </div>
-            <div class="table-row" *ngFor="let seminar of seminars">
-              <div class="col-md-3">
-                <p>{{ seminar.seminar_title }}</p>
-              </div>
-              <div class="col-md-3">
-                <p>{{ seminar.venue }}</p>
-              </div>
-              <div class="col-md-2">
-                <p>{{ seminar.date }}</p>
-              </div>
-              <div class="col-md-2">
-                <p>{{ seminar.total_hours }}</p>
-              </div>
-              <div class="col-md-2">
-                <div class="actions">
-                  <button
-                    class="view"
-                    mat-raised-button
-                    matTooltip="View"
-                    [matTooltipShowDelay]="400"
-                    (click)="viewSeminarImage(seminar)"
-                  >
-                    <i class="bx bx-detail"></i>
-                  </button>
-                </div>
-              </div>
+            <div class="col-md-3">
+              <h4>Venue</h4>
             </div>
-            <div class="table-row">
-              <p>Total Hours: {{ seminar_total_hours }}</p>
+            <div class="col-md-2">
+              <h4>Date</h4>
+            </div>
+            <div class="col-md-2">
+              <h4>Number of Hours</h4>
+            </div>
+            <div class="col-md-2">
+              <h4>Certificate</h4>
             </div>
           </div>
-        </div>
-      </div>
-      <!-- seminars and training end -->
-  
-      <div class="content" *ngIf="student.practicum_level === 1">
-        <h3>Other task/Activities</h3>
-        <div class="table-container">
-          <div class="table">
-            <div class="table-row">
-              <div class="col-md-3">
-                <h4>Task Name</h4>
-              </div>
-              <div class="col-md-3">
-                <h4>Venue</h4>
-              </div>
-              <div class="col-md-2">
-                <h4>Date</h4>
-              </div>
-              <div class="col-md-2">
-                <h4>Number of Hours</h4>
-              </div>
-              <div class="col-md-2">
-                <h4>Evidence</h4>
-              </div>
+          <div class="table-row" *ngFor="let seminar of seminars">
+            <div class="col-md-3">
+              <p>{{ seminar.seminar_title }}</p>
             </div>
-            <div class="table-row" *ngFor="let item of other_tasks">
-              <div class="col-md-3">
-                <p>{{ item.task_name }}</p>
-              </div>
-              <div class="col-md-3">
-                <p>{{ item.venue }}</p>
-              </div>
-              <div class="col-md-2">
-                <p>{{ item.date }}</p>
-              </div>
-              <div class="col-md-2">
-                <p>{{ item.total_hours }}</p>
-              </div>
-              <div class="col-md-2">
-                <div class="actions">
-                  <button
-                    class="view"
-                    mat-raised-button
-                    matTooltip="View"
-                    [matTooltipShowDelay]="400"
-                    (click)="viewSeminarImage(item)"
-                  >
-                    <i class="bx bx-detail"></i>
-                  </button>
-                </div>
-              </div>
+            <div class="col-md-3">
+              <p>{{ seminar.venue }}</p>
             </div>
-            <div class="table-row">
-              <p>Total Hours: {{ other_task_total_hours }}</p>
+            <div class="col-md-2">
+              <p>{{ seminar.date }}</p>
             </div>
-          </div>
-        </div>
-      </div>
-  
-      <!-- community service -->
-      <div class="content" *ngIf="student.practicum_level === 2">
-        <h3>Community Service</h3>
-        <div class="table-container">
-          <div class="table">
-            <div class="table-row">
-              <div class="col-md-2">
-                <h4>Date</h4>
-              </div>
-              <div class="col-md-2">
-                <h4>Time in</h4>
-              </div>
-              <div class="col-md-2">
-                <h4>Time out</h4>
-              </div>
-              <div class="col-md-3">
-                <h4>Accomplishment</h4>
-              </div>
-              <div class="col-md-2">
-                <h4>Total Hours</h4>
-              </div>
-              <div class="col-md-1">
-                <h4>Status</h4>
-              </div>
+            <div class="col-md-2">
+              <p>{{ seminar.total_hours }}</p>
             </div>
-            <div class="table-row" *ngFor="let item of community_service">
-              <div class="col-md-2">
-                <p>{{ item.date }}</p>
-              </div>
-              <div class="col-md-2">
-                <p>{{ item.time_in }}</p>
-              </div>
-              <div class="col-md-2">
-                <p>{{ item.time_out }}</p>
-              </div>
-              <div class="col-md-3">
-                <p>{{ item.accomplishment }}</p>
-              </div>
-              <div class="col-md-2">
-                <p>{{ item.total_hours }}</p>
-              </div>
-              <div class="col-md-1">
-                <p>{{ (item.is_verified) ? 'Verified' : 'Not verified' }}</p>
-              </div>
-            </div>
-            <div class="table-row">
-              <p>Total Hours: {{ community_service_total_hours }} / 150 Hours </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- skills -->
-      <div class="content">
-        <h3>Skills</h3>
-        <p class="text">I have done a self-evaluation of my abilities  based on my past experiences. Listed below is what I consider my strong and weak skill areas. If i work in your company, I would like an opportunity to increase my proficiency in weak areas.</p>
-        <div class="table-container">
-          <div class="table">
-            <div class="table-row">
-              <div class="col-md-6">
-                <h4>Strong Skills Area</h4>
-              </div>
-              <div class="col-md-6">
-                <h4>Weak Skills Area</h4>
-              </div>
-            </div>
-            <div class="table-row" *ngFor="let skill of skills">
-              <div class="col-md-6">
-                <p> {{ skill.strong_skill }} </p>
-              </div>
-              <div class="col-md-6">
-                <p> {{ skill.weak_skill }} </p>
+            <div class="col-md-2">
+              <div class="actions">
+                <button
+                  class="view"
+                  mat-raised-button
+                  matTooltip="View"
+                  [matTooltipShowDelay]="400"
+                  (click)="viewSeminarImage(seminar)"
+                >
+                  <i class="bx bx-detail"></i>
+                </button>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      <!-- skills end -->
-  
-      <!-- personality test -->
-      <div class="content">
-        <h3>Personality Test</h3>
-        <div class="row">
-          <div class="col-md-4">
-            <div class="file-input-container">
-              <button *ngIf="personality_test" (click)="viewPersonalityTestImage(personality_test)">View</button>
-              <div class="label"> Personality Test Result </div>
-              <div class="text">{{ (personality_test) ? personality_test.file_name : 'None' }}</div>
-            </div>
+          <div class="table-row">
+            <p>Total Hours: {{ seminar_total_hours }}</p>
           </div>
         </div>
       </div>
-      <!-- personality test end -->
     </div>
+    <!-- seminars and training end -->
+
+    <div class="content" *ngIf="student.practicum_level === 1">
+      <h3>Other task/Activities</h3>
+      <div class="table-container">
+        <div class="table">
+          <div class="table-row">
+            <div class="col-md-3">
+              <h4>Task Name</h4>
+            </div>
+            <div class="col-md-3">
+              <h4>Venue</h4>
+            </div>
+            <div class="col-md-2">
+              <h4>Date</h4>
+            </div>
+            <div class="col-md-2">
+              <h4>Number of Hours</h4>
+            </div>
+            <div class="col-md-2">
+              <h4>Evidence</h4>
+            </div>
+          </div>
+          <div class="table-row" *ngFor="let item of other_tasks">
+            <div class="col-md-3">
+              <p>{{ item.task_name }}</p>
+            </div>
+            <div class="col-md-3">
+              <p>{{ item.venue }}</p>
+            </div>
+            <div class="col-md-2">
+              <p>{{ item.date }}</p>
+            </div>
+            <div class="col-md-2">
+              <p>{{ item.total_hours }}</p>
+            </div>
+            <div class="col-md-2">
+              <div class="actions">
+                <button
+                  class="view"
+                  mat-raised-button
+                  matTooltip="View"
+                  [matTooltipShowDelay]="400"
+                  (click)="viewSeminarImage(item)"
+                >
+                  <i class="bx bx-detail"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="table-row">
+            <p>Total Hours: {{ other_task_total_hours }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- community service -->
+    <div class="content" *ngIf="student.practicum_level === 2">
+      <h3>Community Service</h3>
+      <div class="table-container">
+        <div class="table">
+          <div class="table-row">
+            <div class="col-md-2">
+              <h4>Date</h4>
+            </div>
+            <div class="col-md-2">
+              <h4>Time in</h4>
+            </div>
+            <div class="col-md-2">
+              <h4>Time out</h4>
+            </div>
+            <div class="col-md-3">
+              <h4>Accomplishment</h4>
+            </div>
+            <div class="col-md-2">
+              <h4>Total Hours</h4>
+            </div>
+            <div class="col-md-1">
+              <h4>Status</h4>
+            </div>
+          </div>
+          <div class="table-row" *ngFor="let item of community_service">
+            <div class="col-md-2">
+              <p>{{ item.date }}</p>
+            </div>
+            <div class="col-md-2">
+              <p>{{ item.time_in }}</p>
+            </div>
+            <div class="col-md-2">
+              <p>{{ item.time_out }}</p>
+            </div>
+            <div class="col-md-3">
+              <p>{{ item.accomplishment }}</p>
+            </div>
+            <div class="col-md-2">
+              <p>{{ item.total_hours }}</p>
+            </div>
+            <div class="col-md-1">
+              <p>{{ item.is_verified ? "Verified" : "Not verified" }}</p>
+            </div>
+          </div>
+          <div class="table-row">
+            <p>Total Hours: {{ community_service_total_hours }} / 150 Hours</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- skills -->
+    <div class="content">
+      <h3>Skills</h3>
+      <p class="text">
+        I have done a self-evaluation of my abilities based on my past
+        experiences. Listed below is what I consider my strong and weak skill
+        areas. If i work in your company, I would like an opportunity to
+        increase my proficiency in weak areas.
+      </p>
+      <div class="table-container">
+        <div class="table">
+          <div class="table-row">
+            <div class="col-md-6">
+              <h4>Strong Skills Area</h4>
+            </div>
+            <div class="col-md-6">
+              <h4>Weak Skills Area</h4>
+            </div>
+          </div>
+          <div class="table-row" *ngFor="let skill of skills">
+            <div class="col-md-6">
+              <p>{{ skill.strong_skill }}</p>
+            </div>
+            <div class="col-md-6">
+              <p>{{ skill.weak_skill }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- skills end -->
+
+    <!-- personality test -->
+    <div class="content">
+      <h3>Personality Test</h3>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="file-input-container">
+            <button
+              *ngIf="personality_test"
+              (click)="viewPersonalityTestImage(personality_test)"
+            >
+              View
+            </button>
+            <div class="label">Personality Test Result</div>
+            <div class="text">
+              {{ personality_test ? personality_test.file_name : "None" }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- personality test end -->
+  </div>
 </div>
 
 <!-- OJT Information Content -->
@@ -346,13 +345,13 @@
         <div class="col-md-5">
           <mat-form-field appearance="outline" floatLabel="always">
             <mat-label>Company Name</mat-label>
-            <input matInput [(ngModel)]="ojtInfo.company_name" readonly>
+            <input matInput [(ngModel)]="ojtInfo.company_name" readonly />
           </mat-form-field>
         </div>
         <div class="col-md-7">
           <mat-form-field appearance="outline" floatLabel="always">
             <mat-label>Company Address</mat-label>
-            <input matInput [(ngModel)]="ojtInfo.full_address" readonly>
+            <input matInput [(ngModel)]="ojtInfo.full_address" readonly />
           </mat-form-field>
         </div>
       </div>
@@ -360,13 +359,21 @@
         <div class="col-md-5">
           <mat-form-field appearance="outline" floatLabel="always">
             <mat-label>Supervisor Name</mat-label>
-            <input matInput [(ngModel)]="ojtInfo.supervisor_full_name" readonly>
+            <input
+              matInput
+              [(ngModel)]="ojtInfo.supervisor_full_name"
+              readonly
+            />
           </mat-form-field>
         </div>
         <div class="col-md-3">
           <mat-form-field appearance="outline" floatLabel="always">
             <mat-label>Position</mat-label>
-            <input matInput [(ngModel)]="ojtInfo.supervisor_position" readonly>
+            <input
+              matInput
+              [(ngModel)]="ojtInfo.supervisor_position"
+              readonly
+            />
           </mat-form-field>
         </div>
         <!-- <div class="col-md-3">
@@ -381,7 +388,7 @@
         <div class="col-md-3">
           <mat-form-field appearance="outline" floatLabel="always">
             <mat-label>Start Date</mat-label>
-            <input matInput [(ngModel)]="ojtInfo.start_date" readonly>
+            <input matInput [(ngModel)]="ojtInfo.start_date" readonly />
           </mat-form-field>
         </div>
         <!-- <div class="col-md-3">
@@ -393,22 +400,27 @@
         <div class="col-md-3">
           <mat-form-field appearance="outline" floatLabel="always">
             <mat-label>Number of Hours</mat-label>
-            <input matInput [(ngModel)]="student.required_hours" readonly>
+            <input matInput [(ngModel)]="student.required_hours" readonly />
           </mat-form-field>
         </div>
       </div>
-        
+
       <div class="row">
         <div class="col-md-4">
           <mat-form-field appearance="outline" floatLabel="always">
             <mat-label>Department/Unit</mat-label>
-            <input matInput [(ngModel)]="ojtInfo.department" readonly>
+            <input matInput [(ngModel)]="ojtInfo.department" readonly />
           </mat-form-field>
         </div>
         <div class="col-md-6">
           <mat-form-field appearance="outline" floatLabel="always">
             <mat-label>OJT Task</mat-label>
-            <textarea matInput  [(ngModel)]="ojtInfo.task"  rows="4" readonly></textarea>
+            <textarea
+              matInput
+              [(ngModel)]="ojtInfo.task"
+              rows="4"
+              readonly
+            ></textarea>
           </mat-form-field>
         </div>
       </div>

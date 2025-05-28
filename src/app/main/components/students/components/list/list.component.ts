@@ -28,7 +28,7 @@ export class ListComponent {
     'student_evaluation',
     'exit_poll',
     'status',
-    'grade',
+    'grades',
     'actions',
   ];
 
@@ -218,6 +218,7 @@ export class ListComponent {
               student_evaluation,
               practicum_level,
               active_ojt_class,
+              grades: active_ojt_class.grades || 'N/A',
             };
           });
 
@@ -400,14 +401,6 @@ export class ListComponent {
         fitToWidth: 1, // Fit to one page width
         fitToHeight: 0, // Fit to unlimited page height
       };
-
-      // if (this.classFilter == 'all') {
-      //   worksheet = excel.addWorksheet('All Classes', {
-      //     pageSetup,
-      //   });
-      // }
-
-      // var items: any = [];
 
       Object.entries(data)
         .sort(([keyA], [keyB]) => {

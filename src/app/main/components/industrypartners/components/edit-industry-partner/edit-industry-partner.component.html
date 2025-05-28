@@ -310,49 +310,42 @@
                   class="date-inputs"
                   style="display: flex; gap: 1rem; margin-top: 15px"
                 >
-                  <!-- Start Date -->
                   <mat-form-field appearance="fill" style="flex: 1">
                     <mat-label>Start Date</mat-label>
                     <input
                       matInput
-                      type="date"
-                      formControlName="startDate"
-                      #startDateInput
+                      [matDatepicker]="mouStartDatePicker"
+                      formControlName="start_date"
+                      readonly
                     />
-                    <button
-                      mat-icon-button
-                      matSuffix
-                      (click)="startDateInput.showPicker()"
-                      type="button"
-                      aria-label="Open calendar"
-                    >
-                      <mat-icon>calendar_today</mat-icon>
-                    </button>
+
+                    <mat-datepicker-toggle
+                      matIconSuffix
+                      [for]="mouStartDatePicker"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #mouStartDatePicker></mat-datepicker>
                   </mat-form-field>
 
-                  <!-- End Date (auto-filled, readonly) -->
                   <mat-form-field appearance="fill" style="flex: 1">
                     <mat-label>End Date</mat-label>
                     <input
                       matInput
-                      type="date"
-                      formControlName="endDate"
-                      [readonly]="true"
+                      [matDatepicker]="mouExpiryDatePicker"
+                      formControlName="expiration_date"
+                      readonly
                     />
-                    <button
-                      mat-icon-button
-                      matSuffix
-                      disabled
-                      type="button"
-                      aria-label="Calendar disabled"
-                    >
-                      <mat-icon>calendar_today</mat-icon>
-                    </button>
+
+                    <mat-datepicker-toggle
+                      matIconSuffix
+                      [for]="mouExpiryDatePicker"
+                      [disabled]="mouFormDetails.get('endDate')?.disabled"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #mouExpiryDatePicker></mat-datepicker>
                   </mat-form-field>
                 </div>
 
                 <p style="color: red; font-size: 12px; font-style: italic">
-                  <b>Note: </b>Valid for 1 year only
+                  <b>Note: </b>The Validity of MOU is 1 year by default
                 </p>
               </form>
               <h3>Reupload MOU/MOA</h3>

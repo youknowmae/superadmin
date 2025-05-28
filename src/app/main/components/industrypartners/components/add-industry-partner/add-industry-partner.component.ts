@@ -31,6 +31,7 @@ export class AddIndustryPartnerComponent {
   isDragOver = false;
   filePreviewUrl: string | null = null;
   fileName: string | null = null;
+  mouSubscription: any;
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -149,7 +150,7 @@ export class AddIndustryPartnerComponent {
       ],
     });
 
-    this.mouFormDetails
+    this.mouSubscription = this.mouFormDetails
       .get('start_date')
       ?.valueChanges.subscribe((startDateValue: string) => {
         const endDateControl = this.mouFormDetails.get('expiration_date');
@@ -173,6 +174,9 @@ export class AddIndustryPartnerComponent {
           endDateControl?.disable({ emitEvent: false });
         }
       });
+  }
+  ngOnDestroy(): void {
+    this.mouSubscription?.unsubscribe();
   }
 
   async ngOnInit() {

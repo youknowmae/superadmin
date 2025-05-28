@@ -105,7 +105,14 @@ export class ListComponent {
             if (applicant.status == 8) accepted_application_count += 1;
             else return;
 
-            if (applicant.user.student_evaluation) completed_count += 1;
+            const requiredHours =
+              applicant.user.ojt_class.adviser_class.active_ojt_hours
+                .required_hours;
+            const currentProgress =
+              applicant.user?.verified_attendance_total?.current_total_hours ||
+              0;
+
+            if (currentProgress >= requiredHours) completed_count += 1;
           });
 
           return {

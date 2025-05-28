@@ -1,6 +1,6 @@
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 
 @include mat.core();
 
@@ -11,192 +11,200 @@ $myintern-primary: mat.define-palette(mat.$green-palette, 800);
 $myintern-accent: mat.define-palette(mat.$orange-palette, A400);
 
 $myintern-typography: mat.define-typography-config(
-  $font-family: 'Poppins, sans-serif'
+  $font-family: "Poppins, sans-serif",
 );
 
-$myintern-theme: mat.define-light-theme((
-  color: (
-    primary: $myintern-primary,
-    accent: $myintern-accent,
-  ),
-  typography: $myintern-typography,
-  density: -1
-));
+$myintern-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $myintern-primary,
+      accent: $myintern-accent,
+    ),
+    typography: $myintern-typography,
+    density: -1,
+  )
+);
 
 @include mat.all-component-themes($myintern-theme);
 @include mat.typography-hierarchy($myintern-typography);
 
 // Define the palettes for your theme using the Material Design palettes av
 * {
-    font-family: 'Poppins'; 
-    margin: 0;
-    border: none;
-    box-sizing: border-box; 
+  font-family: "Poppins";
+  margin: 0;
+  border: none;
+  box-sizing: border-box;
 }
 
 :root {
-    font-size: 100%;
-    --primary-color: #EE7214;
-    --main-orange: #527853;
-    --semi-transparent-main-orange: #F9B57240;
-    --warning-color: #ff4141;
+  font-size: 100%;
+  --primary-color: #ee7214;
+  --main-orange: #527853;
+  --semi-transparent-main-orange: #f9b57240;
+  --warning-color: #ff4141;
 
-    --main-bg-color: #F9E8D9;
-    --active-color: #99B080;
+  --main-bg-color: #f9e8d9;
+  --active-color: #99b080;
 
-    --primary-font-color: #F9E8D9;
-    --font-color: white;
+  --primary-font-color: #f9e8d9;
+  --font-color: white;
 
-    --secondary-color: #527853;
-    --secondary-color-semi-transparent: 137, 129, 33, .1;
+  --secondary-color: #527853;
+  --secondary-color-semi-transparent: 137, 129, 33, 0.1;
 
-
-    --main-green: #31A463;
-    --border-color: rgba(0, 0, 0, 0.12);
-    --table-border-color: #e0e0e0;
-    --shadow: 0 4px 8px rgba(0,0,0,0.1);
-    --sidebar-width: 210px;
+  --main-green: #31a463;
+  --border-color: rgba(0, 0, 0, 0.12);
+  --table-border-color: #e0e0e0;
+  --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --sidebar-width: 210px;
 }
 
+html,
+body {
+  height: 100%;
+}
 
-html, body { height: 100%; }
-
-body { 
-    margin: 0; 
-    background-color: #faf8ed;
-    overflow: hidden;
+body {
+  margin: 0;
+  background-color: #faf8ed;
+  overflow: hidden;
 }
 
 *::-webkit-scrollbar {
-    width: .4rem;
-    height: .4rem;
+  width: 0.4rem;
+  height: 0.4rem;
 }
 
 *::-webkit-scrollbar-thumb {
-    background-color: rgba(232, 117, 26, .3);
-    border-radius: 10px;
+  background-color: rgba(232, 117, 26, 0.3);
+  border-radius: 10px;
 }
 
 .sub-text {
-    color: grey;
-    font-size: 12px;
+  color: grey;
+  font-size: 12px;
 }
 
 .mat-typography {
-    p, h3, h4 {
-        margin: 0;
-    }
+  p,
+  h3,
+  h4 {
+    margin: 0;
+  }
 }
 
-
 .col-md-12 {
-    flex: 0 0 auto;
-    width: 100%;
-    padding: 0px 5px;
+  flex: 0 0 auto;
+  width: 100%;
+  padding: 0px 5px;
 }
 
 .col-md-11 {
-    flex: 0 0 auto;
-    width: 91.6666667%;
-    padding: 0px 5px;
+  flex: 0 0 auto;
+  width: 91.6666667%;
+  padding: 0px 5px;
 }
 
 .col-md-10 {
-    flex: 0 0 auto;
-    width: 83.3333333%;
-    padding: 0px 5px;
+  flex: 0 0 auto;
+  width: 83.3333333%;
+  padding: 0px 5px;
 }
 
 .col-md-8 {
-    flex: 0 0 auto;
-    width: 66.6666666%;
-    padding: 0px 5px;
+  flex: 0 0 auto;
+  width: 66.6666666%;
+  padding: 0px 5px;
 }
 
 .col-md-7 {
-    flex: 0 0 auto;
-    width: 58.3333333%;
-    padding: 0px 5px;
+  flex: 0 0 auto;
+  width: 58.3333333%;
+  padding: 0px 5px;
 }
 
 .col-md-6 {
-    flex: 0 0 auto;
-    width: 50%;
-    padding: 0px 5px;
+  flex: 0 0 auto;
+  width: 50%;
+  padding: 0px 5px;
 }
 
 .col-md-5 {
-    flex: 0 0 auto;
-    width: 41.66666667%;
-    padding: 0px 5px;
+  flex: 0 0 auto;
+  width: 41.66666667%;
+  padding: 0px 5px;
 }
 
 .col-md-4 {
-    flex: 0 0 auto;
-    width: 33.33333333%;
-    padding: 0px 5px;
+  flex: 0 0 auto;
+  width: 33.33333333%;
+  padding: 0px 5px;
 }
 
 .col-md-3 {
-    flex: 0 0 auto;
-    width: 25%;
-    padding: 0px 5px;
+  flex: 0 0 auto;
+  width: 25%;
+  padding: 0px 5px;
 }
 
 .col-md-2 {
-    flex: 0 0 auto;
-    width: 16.66666667%;
-    padding: 0px 5px;
+  flex: 0 0 auto;
+  width: 16.66666667%;
+  padding: 0px 5px;
 }
 
 .col-md-1 {
-    flex: 0 0 auto;
-    width: 8.33333333%;
-    padding: 0px 5px;
+  flex: 0 0 auto;
+  width: 8.33333333%;
+  padding: 0px 5px;
 }
 
 @keyframes fade-in {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
+  from {
+    opacity: 0;
   }
-  
-.no-items-container {
-    padding: 20px;
-    animation: forwards fade-in .2s;
-  
-    p {
-      font-size: 18px;
-      color: #666;
-    }
+  to {
+    opacity: 1;
+  }
 }
 
+.no-items-container {
+  padding: 20px;
+  animation: forwards fade-in 0.2s;
+
+  p {
+    font-size: 18px;
+    color: #666;
+  }
+}
+
+mat-chip {
+  background-color: white !important;
+  border: 1px solid mat.get-color-from-palette(mat.$green-palette, 800);
+}
 
 mat-form-field {
-    width: 100%;
+  width: 100%;
 }
 
 mat-paginator {
-    background: none
+  background: none;
 }
 
 @media only screen and (max-width: 680px) {
-    .col-md-1,
-    .col-md-2,
-    .col-md-3,
-    .col-md-4,
-    .col-md-5,
-    .col-md-6,
-    .col-md-7,
-    .col-md-8,
-    .col-md-9,
-    .col-md-10,
-    .col-md-11,
-    .col-md-12 {
-        flex: 1;
-        width: 100%;
-    }
+  .col-md-1,
+  .col-md-2,
+  .col-md-3,
+  .col-md-4,
+  .col-md-5,
+  .col-md-6,
+  .col-md-7,
+  .col-md-8,
+  .col-md-9,
+  .col-md-10,
+  .col-md-11,
+  .col-md-12 {
+    flex: 1;
+    width: 100%;
+  }
 }
