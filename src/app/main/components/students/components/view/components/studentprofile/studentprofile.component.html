@@ -244,7 +244,7 @@
             <div class="col-md-2">
               <h4>Time out</h4>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
               <h4>Accomplishment</h4>
             </div>
             <div class="col-md-2">
@@ -253,25 +253,49 @@
             <div class="col-md-1">
               <h4>Status</h4>
             </div>
+            <div class="col-md-1">
+              <h4>Actions</h4>
+            </div>
           </div>
-          <div class="table-row" *ngFor="let item of community_service">
+          <div class="table-row" *ngIf="community_service">
             <div class="col-md-2">
-              <p>{{ item.date }}</p>
+              <p>{{ community_service.project_name }}</p>
             </div>
             <div class="col-md-2">
-              <p>{{ item.time_in }}</p>
+              <p>{{ community_service.beneficiary }}</p>
             </div>
             <div class="col-md-2">
-              <p>{{ item.time_out }}</p>
-            </div>
-            <div class="col-md-3">
-              <p>{{ item.accomplishment }}</p>
+              <p>{{ community_service.start_date | date : "MMM d, y" }}</p>
             </div>
             <div class="col-md-2">
-              <p>{{ item.total_hours }}</p>
+              <p>{{ community_service.end_date | date : "MMM d, y" }}</p>
+            </div>
+            <div class="col-md-2">
+              <p>
+                {{
+                  community_service.is_verified ? "Verified" : "Not verified"
+                }}
+              </p>
             </div>
             <div class="col-md-1">
-              <p>{{ item.is_verified ? "Verified" : "Not verified" }}</p>
+              <p>
+                {{
+                  community_service.is_verified ? "Verified" : "Not verified"
+                }}
+              </p>
+            </div>
+            <div class="col-md-1">
+              <div class="actions">
+                <button
+                  class="view"
+                  mat-raised-button
+                  matTooltip="View"
+                  [matTooltipShowDelay]="400"
+                  (click)="viewCommunityService(community_service)"
+                >
+                  <i class="bx bx-detail"></i>
+                </button>
+              </div>
             </div>
           </div>
           <div class="table-row">

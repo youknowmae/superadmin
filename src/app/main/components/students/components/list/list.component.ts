@@ -289,10 +289,15 @@ export class ListComponent {
 
     this.ds.get('superadmin/students/', id).subscribe(
       (student) => {
+        student.ojt_class = {
+          ...student.ojt_class.adviser_class,
+          ...student.ojt_class.adviser_class.active_ojt_hours,
+        };
+
         console.log(studentDetails);
         this.us.setStudentProfile({
           ...student,
-          required_hours: studentDetails.active_ojt_class.required_hours,
+          required_hours: student.ojt_class?.required_hours || 0,
         });
         this.us.setSelectedAcademicYears(this.academicYearFilter); //store current acad year
         this.router.navigate(['main/students/view']);

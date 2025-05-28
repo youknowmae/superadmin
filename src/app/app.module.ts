@@ -26,6 +26,7 @@ import { MaterialsModules } from './modules/materials.module';
 import { ResponseInterceptor } from './interceptors/response.interceptor';
 import { SemesterTextPipe } from './pipes/semester-text.pipe';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { PdfPreviewComponent } from './components/pdf-preview/pdf-preview.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
     LoginComponent,
     MainComponent,
     ViewImageComponent,
+    PdfPreviewComponent
   ],
   imports: [
     CommonModule,

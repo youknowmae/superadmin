@@ -4,6 +4,7 @@ import { DataService } from '../../../../../../../services/data.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ViewImageComponent } from '../../../../../../../components/login/view-image/view-image.component';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { PdfPreviewComponent } from '../../../../../../../components/pdf-preview/pdf-preview.component';
 
 @Component({
   selector: 'app-studentprofile',
@@ -60,7 +61,7 @@ export class StudentprofileComponent {
 
   seminars: any = [];
   other_tasks: any = [];
-  community_service: any = [];
+  community_service: any;
 
   community_service_total_hours: any = 0;
   seminar_total_hours: number = 0;
@@ -81,7 +82,7 @@ export class StudentprofileComponent {
     this.getOjtInfo();
     this.student.gender = this.student.gender == 0 ? 'Female' : 'Male';
 
-    let courseCode = this.student?.active_ojt_class?.course_code;
+    let courseCode = this.student?.ojt_class.course_code;
 
     const level_2 = ['ITP422', 'CS422', 'DAP421'];
     const level_1 = ['ITP131', 'CS131', 'EMC131'];
@@ -147,9 +148,7 @@ export class StudentprofileComponent {
       .subscribe(
         (response) => {
           this.community_service = response;
-          this.community_service.forEach((data: any) => {
-            this.community_service_total_hours += data.total_hours;
-          });
+          if (response.is_verified) this.community_service_total_hours = 150;
         },
         (error) => {
           // console.error(error)
@@ -194,6 +193,15 @@ export class StudentprofileComponent {
   viewPersonalityTestImage(test: any) {
     this.dialog.open(ViewImageComponent, {
       data: { title: test.file_name, image: test.file_path },
+    });
+  }
+
+  viewCommunityService(communityService: any) {
+    this.dialog.open(PdfPreviewComponent, {
+      data: {
+        name: communityService.project_name,
+        pdf: communityService.file_path,
+      },
     });
   }
 
