@@ -96,7 +96,7 @@ export class StudentprofileComponent {
     this.student.practicum_level = practicum_level;
 
     if (this.student.student_skills) {
-      this.skills = this.student.student_skills.skills;
+      this.skills = this.student.student_skills?.skill_areas;
     } else {
       this.skills.push({ strong_skill: '', weak_skill: '' });
       this.skills.push({ strong_skill: '', weak_skill: '' });
