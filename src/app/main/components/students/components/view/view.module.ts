@@ -10,6 +10,7 @@ import { LoadingSpinnerComponent } from '../../../../../components/login/loading
 import { EvaluationComponent } from './components/evaluation/evaluation.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ExitPollComponent } from './components/exit-poll/exit-poll.component';
+import { SharedModule } from '../../../../../modules/shared.module';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { ExitPollComponent } from './components/exit-poll/exit-poll.component';
     MaterialsModules,
     ViewRoutingModule,
     LoadingSpinnerComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ]
 })
 export class ViewModule { }

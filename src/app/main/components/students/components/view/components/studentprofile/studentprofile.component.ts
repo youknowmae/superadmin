@@ -3,6 +3,7 @@ import { UserService } from '../../../../../../../services/user.service';
 import { DataService } from '../../../../../../../services/data.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ViewImageComponent } from '../../../../../../../components/login/view-image/view-image.component';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-studentprofile',
@@ -40,6 +41,15 @@ export class StudentprofileComponent {
     }
   }
 
+  displayedSkills: string[] = [];
+  educationFormDetails: FormGroup = this.fb.group({
+    type: [null, Validators.required],
+    institution_name: [null, Validators.maxLength(64)],
+    program: [null, Validators.maxLength(64)],
+    year_graduated: [null, Validators.pattern(/^\d{4}$/)],
+    nc_level: [null],
+  });
+
   
   ojtInfo = {
     company_name: '',
@@ -64,7 +74,10 @@ export class StudentprofileComponent {
   constructor(
     private us: UserService,
     private ds: DataService,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    private fb: FormBuilder,
+    private userService: UserService,
+) {
   }
 
   ngOnInit() {
@@ -104,6 +117,43 @@ export class StudentprofileComponent {
 
     this.getPersonalityTest();
   }
+
+  profilePictureUrl: string | null = null;
+
+  getProfilePicture() {
+    this.ds.download('student/profile/picture').subscribe(
+      (response: Blob) => {
+        this.profilePictureUrl = URL.createObjectURL(response);
+        console.log(this.profilePictureUrl);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+
+    getProfile() {
+    let profile = this.userService.getUser();
+
+    if (profile.personality_test) {
+      this.personality_test = profile.personality_test;
+    }
+
+    switch (profile.gender) {
+      case 0:
+        profile.gender = 'Female';
+        break;
+      case 1:
+        profile.gender = 'Male';
+        break;
+    }
+
+    this.student = { ...profile };
+
+    this.skills = profile.student_skills?.skill_areas || [0, 0, 0];
+    this.displayedSkills = profile.student_skills?.technical_skills || [];
+  }
+
 
   getPersonalityTest() {
     this.ds.get('superadmin/students/personality-test/', this.student.id).subscribe(

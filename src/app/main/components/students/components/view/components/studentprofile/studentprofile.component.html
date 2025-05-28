@@ -1,145 +1,135 @@
+<div class="resumecontent" #captureArea>
+          <div class="header">
+            <div class="img-area">
+              <img
+                [src]="
+                  profilePictureUrl
+                    ? profilePictureUrl
+                    : 'assets/images/profile.png'
+                "
+                alt="Image"
+              />
+            </div>
+            <h1>
+              {{ student.first_name }} {{ student.middle_name }}
+              {{ student.last_name }} {{ student.ext_name }}
+            </h1>
+            <h3>Bachelor of Science in Information Technology</h3>
+            <h3>{{ student.student_profile.student_number }}</h3>
+          </div>
+
+          <div class="main">
+            <div>
+              <h2>Personal Information</h2>
+              <div class="details">
+                <p>
+                  <strong>Name:</strong> {{ student.first_name }}
+                  {{ student.middle_name }} {{ student.last_name }}
+                  {{ student.ext_name }}
+                </p>
+                <p><strong>Gender:</strong> {{ student.gender }}</p>
+                <p>
+                  <strong>Address:</strong> {{ student.address }},
+                  {{ student.barangay }}, {{ student.municipality }},
+                  {{ student.province }} {{ student.zip_code }}
+                </p>
+                <p><strong>Date of Birth:</strong> {{ student.birth_date }}</p>
+                <p>
+                  <strong>Civil Status:</strong>
+                  {{ student.student_profile.civil_status }}
+                </p>
+                <p><strong>Citizenship:</strong> {{ student.citizenship }}</p>
+                <p><strong>Religion:</strong> {{ student.religion }}</p>
+                <p>
+                  <strong>Email:</strong>
+                  {{
+                    student.student_profile.student_number
+                  }}&#64;gordoncollege.edu.ph
+                </p>
+                <p>
+                  <strong>Phone:</strong>
+                  {{ student.student_profile.contact_number }}
+                </p>
+              </div>
+
+              <h2>Skills</h2>
+
+              <div class="details text-semi-bold">
+                <p class="skill-item" *ngFor="let item of displayedSkills">
+                  {{ item }}
+                </p>
+              </div>
+            </div>
+
+            <div>
+              <h2>Education</h2>
+              <div class="details">
+                <div>
+                  <h3>
+                    {{ student.student_profile.program | courseShortToFull }}
+                  </h3>
+                  <div class="education-details">
+                    <h4>Gordon College</h4>
+                    <p class="sub-text">
+                      {{
+                        student.student_profile.student_number | slice : 0 : 4
+                      }}
+                      - Current
+                    </p>
+                  </div>
+                </div>
+
+                <div *ngIf="student.senior_high_school">
+                  <h3>{{ student.senior_high_school.program }}</h3>
+                  <div class="education-details">
+                    <h4>{{ student.senior_high_school.institution_name }}</h4>
+                    <p class="sub-text">
+                      Year Graduated:
+                      {{ student.senior_high_school.year_graduated }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <h2 *ngIf="student.highest_attainment?.length > 0">
+                Highest Educational Attainment
+              </h2>
+              <div
+                class="details"
+                *ngIf="student.highest_attainment?.length > 0"
+              >
+                <div *ngFor="let item of student.highest_attainment">
+                  <ng-container
+                    *ngIf="
+                      item.type === 'National Certificate';
+                      else regularEducation
+                    "
+                  >
+                    <h3>
+                      National Certificate {{ item.nc_level | romanNumeral }}
+                    </h3>
+                    <div class="education-details">
+                      <h4>{{ item.program || "N/A" }}</h4>
+                    </div>
+                  </ng-container>
+
+                  <ng-template #regularEducation>
+                    <h3>{{ item.program | courseShortToFull }}</h3>
+                    <div class="education-details">
+                      <h4>{{ item.institution_name || "N/A" }}</h4>
+                      <p class="sub-text">
+                        Year Graduated: {{ item.year_graduated || "N/A" }}
+                      </p>
+                    </div>
+                  </ng-template>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
 <div class="container">
-  <div class="info-header">
-      <div class="info-image">
-         
-        <img [src]="(student.image) ? student.image :'assets/images/profile-dark.png'" alt="Image">
-      </div>
-  
-      <div class="info-content">
-        <table>
-          <tbody>
-            <tr>
-              <td><p>Student Number</p></td>
-              <td><p>{{ student.student_profile.student_number }}</p></td>
-            </tr>
-            <tr>
-              <td><p>Full Name</p></td>
-              <td><p>{{ student.first_name }} {{ student.middle_name }} {{ student.last_name }} {{ student.ext_name }}</p></td>
-            </tr>
-            <tr>
-              <td><p>College/Program</p></td>
-              <td><p>CCS/{{ student.student_profile.program }}</p></td>
-            </tr>
-            <tr>
-              <td><p>Domain Email</p></td>
-              <td><p>{{ student.student_profile.student_number }}&#64;gordoncollege.edu.ph</p></td>
-            </tr>
-            <tr>
-              <td><p>Mobile Number</p></td>
-              <td><p>{{ student.student_profile.contact_number }}</p></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-  </div>
-  
   <div class="info-container">
-      <div class="content">
-          <h3>Personal Information</h3>
-          <div class="row">
-              <div class="col-md-3">
-                  <mat-form-field appearance="outline" floatLabel='always'>
-                    <mat-label>Date of Birth</mat-label>
-                    <input matInput [(ngModel)]="student.birth_date" readonly>
-                  </mat-form-field>
-              </div>
-              <div class="col-md-2">
-                  <mat-form-field appearance="outline" floatLabel='always'>
-                    <mat-label>Civil Status</mat-label>
-                    <input matInput [(ngModel)]="student.student_profile.civil_status" readonly>
-                  </mat-form-field>
-              </div>
-              <div class="col-md-2">
-                  <mat-form-field appearance="outline" floatLabel='always'>
-                    <mat-label>Gender</mat-label>
-                    <input matInput [(ngModel)]="student.gender" readonly>
-                  </mat-form-field>
-              </div>
-              <div class="col-md-2">
-                  <mat-form-field appearance="outline" floatLabel='always'>
-                    <mat-label>Citizenship</mat-label>
-                    <input matInput [(ngModel)]="student.citizenship" readonly>
-                  </mat-form-field>
-              </div>
-              <div class="col-md-3">
-                  <mat-form-field appearance="outline" floatLabel='always'>
-                    <mat-label>Religion</mat-label>
-                    <input matInput  [(ngModel)]="student.religion" readonly>
-                  </mat-form-field>
-              </div>
-          </div>
-  
-          <div class="row">
-              <div class="col-md-4">
-                  <mat-form-field appearance="outline" floatLabel='always'>
-                    <mat-label>Father's name</mat-label>
-                    <input matInput [(ngModel)]="student.student_profile.father_name" readonly>
-                  </mat-form-field>
-              </div>
-              <div class="col-md-2">
-                  <mat-form-field appearance="outline" floatLabel='always'>
-                    <mat-label>Employment</mat-label>
-                    <input matInput [(ngModel)]="student.student_profile.father_employment" readonly>
-                  </mat-form-field>
-              </div>
-              <div class="col-md-4">
-                <mat-form-field appearance="outline" floatLabel='always'>
-                  <mat-label>Mother's name</mat-label>
-                  <input matInput  [(ngModel)]="student.student_profile.mother_name" readonly>
-                </mat-form-field>
-            </div>
-            <div class="col-md-2">
-                <mat-form-field appearance="outline" floatLabel='always'>
-                  <mat-label>Employment</mat-label>
-                  <input matInput [(ngModel)]="student.student_profile.mother_employment" readonly>
-                </mat-form-field>
-            </div>
-          </div>
-      </div>
-  
-      <div class="content">
-          <h3>Address</h3>
-          <div class="row">
-              <div class="col-md-3">
-                  <mat-form-field appearance="outline" floatLabel='always'>
-                    <mat-label>Region</mat-label>
-                    <input matInput [(ngModel)]="student.region" readonly>
-                  </mat-form-field>
-              </div>
-              <div class="col-md-3">
-                  <mat-form-field appearance="outline" floatLabel='always'>
-                    <mat-label>Province</mat-label>
-                    <input matInput [(ngModel)]="student.province" readonly>
-                  </mat-form-field>
-              </div>
-              <div class="col-md-3">
-                  <mat-form-field appearance="outline" floatLabel='always'>
-                    <mat-label>Municipality</mat-label>
-                    <input matInput [(ngModel)]="student.municipality" readonly>
-                  </mat-form-field>
-              </div>
-              <div class="col-md-3">
-                  <mat-form-field appearance="outline" floatLabel='always'>
-                    <mat-label>Barangay</mat-label>
-                    <input matInput [(ngModel)]="student.barangay" readonly>
-                  </mat-form-field>
-              </div>
-          </div>
-          <div class="row">
-              <div class="col-md-6">
-                  <mat-form-field appearance="outline" floatLabel='always'>
-                    <mat-label>Address</mat-label>
-                    <input matInput [(ngModel)]="student.address" readonly>
-                  </mat-form-field>
-              </div>
-              <div class="col-md-2">
-                  <mat-form-field appearance="outline" floatLabel='always'>
-                    <mat-label>Zip Code</mat-label>
-                    <input matInput [(ngModel)]="student.zip_code" readonly>
-                  </mat-form-field>
-              </div>
-          </div>
-      </div>
       <!-- seminars and training -->
       <div class="content" *ngIf="student.practicum_level === 1">
         <h3>Seminars and Training Attended related to IT</h3>
@@ -305,6 +295,7 @@
       </div>
       <!-- skills -->
       <div class="content">
+        <h3>Skills</h3>
         <p class="text">I have done a self-evaluation of my abilities  based on my past experiences. Listed below is what I consider my strong and weak skill areas. If i work in your company, I would like an opportunity to increase my proficiency in weak areas.</p>
         <div class="table-container">
           <div class="table">
