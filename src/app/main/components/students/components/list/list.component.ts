@@ -14,11 +14,13 @@ import { saveAs } from 'file-saver';
 import { MatSelectChange } from '@angular/material/select';
 import { MatSort } from '@angular/material/sort';
 import { AcademicYear } from '../../../../../model/academicYear.model';
+import { SemesterTextPipe } from '../../../../../pipes/semester-text.pipe';
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
+  providers: [SemesterTextPipe],
 })
 export class ListComponent {
   displayedColumns: string[] = [
@@ -56,7 +58,8 @@ export class ListComponent {
     private changeDetectorRef: ChangeDetectorRef,
     private router: Router,
     private ds: DataService,
-    private us: UserService
+    private us: UserService,
+    private semesterTextPipe: SemesterTextPipe
   ) {
     this.paginator = new MatPaginator(
       this.paginatorIntl,
@@ -378,7 +381,7 @@ export class ListComponent {
       'Rendered OJT Hours',
       'Student Evaluation',
       'Exit Poll',
-      'Remarks',
+      'Grades',
     ];
 
     const excel = new ExcelJS.Workbook();
@@ -468,9 +471,11 @@ export class ListComponent {
           worksheet.mergeCells(
             `A${currentPageLine + 1}:N${currentPageLine + 1}`
           );
-          worksheet.getCell(
-            `A${currentPageLine + 1}`
-          ).value = `A.Y. ${this.academicYearFilter.acad_year} `;
+          worksheet.getCell(`A${currentPageLine + 1}`).value = `A.Y. ${
+            this.academicYearFilter.acad_year
+          }, ${this.semesterTextPipe.transform(
+            this.academicYearFilter.semester
+          )}`;
           worksheet.getCell(`A${currentPageLine + 1}`).alignment = {
             vertical: 'middle',
             horizontal: 'center',
@@ -522,7 +527,7 @@ export class ListComponent {
                 ? student.student_evaluation
                 : 'Not Evaluated',
               student.ojt_exit_poll ? 'Answered' : 'Not Completed',
-              student.status === 'Completed' ? 'Completed' : 'Incomplete',
+              student.grades ? student.grades : 'INC',
             ]);
             counter++;
             currentPageLine++;
