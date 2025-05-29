@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ViewImageComponent } from '../../../../../../../components/login/view-image/view-image.component';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PdfPreviewComponent } from '../../../../../../../components/pdf-preview/pdf-preview.component';
+import { AcademicYear } from '../../../../../../../model/academicYear.model';
 
 @Component({
   selector: 'app-studentprofile',
@@ -143,8 +144,13 @@ export class StudentprofileComponent {
   }
 
   getCommunityService() {
+    const acadYear: AcademicYear = this.us.getSelectedAcademicYears();
+
     this.ds
-      .get('superadmin/students/community-service/', this.student.id)
+      .get(
+        `superadmin/students/community-service/this.student.id`,
+        `?acad_year=${acadYear.acad_year}&semester=${acadYear.semester}`
+      )
       .subscribe(
         (response) => {
           this.community_service = response;
@@ -157,31 +163,44 @@ export class StudentprofileComponent {
   }
 
   getOtherTask() {
-    this.ds.get('superadmin/students/other-task/', this.student.id).subscribe(
-      (response) => {
-        this.other_tasks = response;
-        this.other_tasks.forEach((data: any) => {
-          this.other_task_total_hours += data.total_hours;
-        });
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
+    const acadYear: AcademicYear = this.us.getSelectedAcademicYears();
+
+    this.ds
+      .get(
+        `superadmin/students/other-task/${this.student.id}`,
+        `?acad_year=${acadYear.acad_year}&semester=${acadYear.semester}`
+      )
+      .subscribe(
+        (response) => {
+          this.other_tasks = response;
+          this.other_tasks.forEach((data: any) => {
+            this.other_task_total_hours += data.total_hours;
+          });
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
   }
 
   getSeminars() {
-    this.ds.get('superadmin/students/seminar/', this.student.id).subscribe(
-      (response) => {
-        this.seminars = response;
-        this.seminars.forEach((seminar: any) => {
-          this.seminar_total_hours += seminar.total_hours;
-        });
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
+    const acadYear: AcademicYear = this.us.getSelectedAcademicYears();
+    this.ds
+      .get(
+        `superadmin/students/seminar/${this.student.id}`,
+        `?acad_year=${acadYear.acad_year}&semester=${acadYear.semester}`
+      )
+      .subscribe(
+        (response) => {
+          this.seminars = response;
+          this.seminars.forEach((seminar: any) => {
+            this.seminar_total_hours += seminar.total_hours;
+          });
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
   }
 
   viewSeminarImage(seminar: any) {
@@ -206,8 +225,13 @@ export class StudentprofileComponent {
   }
 
   getOjtInfo() {
+    const acadYear: AcademicYear = this.us.getSelectedAcademicYears();
+
     this.ds
-      .get('superadmin/students/ojt-information/', this.student.id)
+      .get(
+        `superadmin/students/ojt-information/${this.student.id}`,
+        `?acad_year=${acadYear.acad_year}&semester=${acadYear.semester}`
+      )
       .subscribe(
         (response) => {
           let data = {

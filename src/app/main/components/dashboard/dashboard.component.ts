@@ -221,7 +221,7 @@ exportToExcel = async (): Promise<void> => {
 
   addHeaderLine('Gordon College', 16, true);
   addHeaderLine('College of Computer Studies', 12);
-  addHeaderLine(`A.Y.`, 12);
+  addHeaderLine(`A.Y. ${this.academicYearFilter.acad_year || 'N/A'}`, 12);
   addHeaderLine('Dashboard Report', 12);
 
   worksheet.addRow([]);

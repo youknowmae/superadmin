@@ -468,7 +468,9 @@ export class ListComponent {
           worksheet.mergeCells(
             `A${currentPageLine + 1}:N${currentPageLine + 1}`
           );
-          worksheet.getCell(`A${currentPageLine + 1}`).value = 'A.Y. 2024-2025';
+          worksheet.getCell(
+            `A${currentPageLine + 1}`
+          ).value = `A.Y. ${this.academicYearFilter.acad_year} `;
           worksheet.getCell(`A${currentPageLine + 1}`).alignment = {
             vertical: 'middle',
             horizontal: 'center',
