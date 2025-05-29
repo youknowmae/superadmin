@@ -19,6 +19,7 @@ export class UserService {
   industryPartnerAddRequest: string = btoa('industryPartnerAddRequest');
   academicYears: string = btoa('academicYears');
   selectedAcademicYear: string = btoa('selectedAcademicYears');
+  technicalSkills: string = btoa('technicalSkills');
 
   private setData(label: string, data: any) {
     sessionStorage.setItem(label, this.encrypt(data));
@@ -79,6 +80,13 @@ export class UserService {
   }
   getSelectedAcademicYears() {
     return this.extractData(this.selectedAcademicYear);
+  }
+
+  setTechnicalSkillsData(data: any) {
+    this.setData(this.technicalSkills, data);
+  }
+  getTechnicalSkillsData() {
+    return this.extractData(this.technicalSkills);
   }
 
   encrypt(data: any): string {

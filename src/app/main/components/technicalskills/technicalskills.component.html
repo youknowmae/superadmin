@@ -5,16 +5,20 @@
 
   <div class="content">
     <!-- Skill List (Left Side) -->
-    <div class="skill-list-container">
+    <div class="card technical-skills-preview">
       <h3>Technical Skills</h3>
       <ul class="skill-list">
         <li *ngFor="let skill of skills">{{ skill }}</li>
       </ul>
-      <button class="edit-button" (click)="editSkills()">Edit</button>
+      <div class="btn">
+        <button type="button" *ngIf="!isEditing" (click)="editSkills()">
+          Edit
+        </button>
+      </div>
     </div>
 
     <!-- Add Skills (Right Side) -->
-    <div class="add-skills-container">
+    <div class="card" *ngIf="isEditing">
       <h3>Add Skills</h3>
       <div class="skill-inputs">
         <div
@@ -27,7 +31,6 @@
             placeholder="Enter a skill"
           />
 
-          <!-- Remove Button (X): show only if NOT last input and more than 1 input -->
           <button
             *ngIf="newSkills.length > 1 && i !== newSkills.length - 1"
             class="remove-icon"
@@ -37,7 +40,6 @@
             ×
           </button>
 
-          <!-- Add Button (+): show only on last input -->
           <button
             *ngIf="i === newSkills.length - 1"
             class="add-icon"
@@ -48,7 +50,11 @@
           </button>
         </div>
       </div>
-      <button class="save-button" (click)="saveSkills()">Save</button>
+
+      <div class="btn">
+        <button type="button" (click)="cancel()">Cancel</button>
+        <button type="button" (click)="saveSkills()">Save</button>
+      </div>
     </div>
   </div>
 </div>
