@@ -127,6 +127,9 @@
               <h4>Title of Seminar</h4>
             </div>
             <div class="col-md-3">
+              <h4>Organizer</h4>
+            </div>
+            <div class="col-md-3">
               <h4>Venue</h4>
             </div>
             <div class="col-md-2">
@@ -142,6 +145,9 @@
           <div class="table-row" *ngFor="let seminar of seminars">
             <div class="col-md-3">
               <p>{{ seminar.title }}</p>
+            </div>
+            <div class="col-md-3">
+              <p>{{ seminar.organizer }}</p>
             </div>
             <div class="col-md-3">
               <p>{{ seminar.venue }}</p>
