@@ -141,7 +141,7 @@
           </div>
           <div class="table-row" *ngFor="let seminar of seminars">
             <div class="col-md-3">
-              <p>{{ seminar.seminar_title }}</p>
+              <p>{{ seminar.title }}</p>
             </div>
             <div class="col-md-3">
               <p>{{ seminar.venue }}</p>
@@ -197,7 +197,7 @@
           </div>
           <div class="table-row" *ngFor="let item of other_tasks">
             <div class="col-md-3">
-              <p>{{ item.task_name }}</p>
+              <p>{{ item.title }}</p>
             </div>
             <div class="col-md-3">
               <p>{{ item.venue }}</p>
@@ -236,19 +236,16 @@
         <div class="table">
           <div class="table-row">
             <div class="col-md-2">
-              <h4>Date</h4>
+              <h4>Project Name</h4>
             </div>
             <div class="col-md-2">
-              <h4>Time in</h4>
+              <h4>Beneficiary</h4>
             </div>
-            <div class="col-md-2">
-              <h4>Time out</h4>
+            <div class="col-md-3">
+              <h4>Date End</h4>
             </div>
-            <div class="col-md-2">
-              <h4>Accomplishment</h4>
-            </div>
-            <div class="col-md-2">
-              <h4>Total Hours</h4>
+            <div class="col-md-3">
+              <h4>Date Start</h4>
             </div>
             <div class="col-md-1">
               <h4>Status</h4>
@@ -264,18 +261,11 @@
             <div class="col-md-2">
               <p>{{ community_service.beneficiary }}</p>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
               <p>{{ community_service.start_date | date : "MMM d, y" }}</p>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
               <p>{{ community_service.end_date | date : "MMM d, y" }}</p>
-            </div>
-            <div class="col-md-2">
-              <p>
-                {{
-                  community_service.is_verified ? "Verified" : "Not verified"
-                }}
-              </p>
             </div>
             <div class="col-md-1">
               <p>
