@@ -5,6 +5,7 @@ import { StudentsComponent } from './components/students/students.component';
 import { IndustrypartnersComponent } from './components/industrypartners/industrypartners.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { NewpartnersComponent } from './components/newpartners/newpartners.component';
+import { TechnicalskillsComponent } from './components/technicalskills/technicalskills.component';
 
 
 
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'settings', component: SettingsComponent },
+  { path: 'technicalskills', component: TechnicalskillsComponent },
   { 
     path: 'newpartners', 
     component: NewpartnersComponent,

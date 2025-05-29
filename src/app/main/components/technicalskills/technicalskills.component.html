@@ -1,0 +1,54 @@
+<div class="container">
+  <div class="header">
+    <h1>Technical Skills</h1>
+  </div>
+
+  <div class="content">
+    <!-- Skill List (Left Side) -->
+    <div class="skill-list-container">
+      <h3>Technical Skills</h3>
+      <ul class="skill-list">
+        <li *ngFor="let skill of skills">{{ skill }}</li>
+      </ul>
+      <button class="edit-button" (click)="editSkills()">Edit</button>
+    </div>
+
+    <!-- Add Skills (Right Side) -->
+    <div class="add-skills-container">
+      <h3>Add Skills</h3>
+      <div class="skill-inputs">
+        <div
+          *ngFor="let skill of newSkills; let i = index; trackBy: trackByIndex"
+          class="input-row"
+        >
+          <input
+            type="text"
+            [(ngModel)]="newSkills[i]"
+            placeholder="Enter a skill"
+          />
+
+          <!-- Remove Button (X): show only if NOT last input and more than 1 input -->
+          <button
+            *ngIf="newSkills.length > 1 && i !== newSkills.length - 1"
+            class="remove-icon"
+            (click)="removeInput(i)"
+            title="Remove this skill"
+          >
+            ×
+          </button>
+
+          <!-- Add Button (+): show only on last input -->
+          <button
+            *ngIf="i === newSkills.length - 1"
+            class="add-icon"
+            (click)="addInput()"
+            title="Add another input"
+          >
+            +
+          </button>
+        </div>
+      </div>
+      <button class="save-button" (click)="saveSkills()">Save</button>
+    </div>
+  </div>
+</div>

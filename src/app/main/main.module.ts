@@ -22,6 +22,7 @@ import { NewpartnersComponent } from './components/newpartners/newpartners.compo
 import { LoadingSpinnerComponent } from '../components/login/loading-spinner/loading-spinner.component';
 import { SemesterTextPipe } from '../pipes/semester-text.pipe';
 import { SharedModule } from '../modules/shared.module';
+import { TechnicalskillsComponent } from './components/technicalskills/technicalskills.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { SharedModule } from '../modules/shared.module';
     StudentsComponent,
     SettingsComponent,
     NewpartnersComponent,
+    TechnicalskillsComponent,
   ],
   imports: [
     CommonModule,
