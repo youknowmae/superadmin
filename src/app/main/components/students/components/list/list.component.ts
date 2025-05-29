@@ -287,27 +287,34 @@ export class ListComponent {
       (student: any) => student.id == id
     );
 
-    this.ds.get('superadmin/students/', id).subscribe(
-      (student) => {
-        student.ojt_class = {
-          ...student.ojt_class.adviser_class,
-          ...student.ojt_class.adviser_class.active_ojt_hours,
-        };
+    const acadYear = this.academicYearFilter;
 
-        console.log(studentDetails);
-        this.us.setStudentProfile({
-          ...student,
-          required_hours: student.ojt_class?.required_hours || 0,
-        });
-        this.us.setSelectedAcademicYears(this.academicYearFilter); //store current acad year
-        this.router.navigate(['main/students/view']);
-        this.isLoading = false;
-      },
-      (error) => {
-        console.error(error);
-        this.isLoading = false;
-      }
-    );
+    this.ds
+      .get(
+        `superadmin/students/${id}`,
+        `?acad_year=${acadYear.acad_year}&semester=${acadYear.semester}`
+      )
+      .subscribe(
+        (student) => {
+          student.ojt_class = {
+            ...student.ojt_class.adviser_class,
+            ...student.ojt_class.adviser_class.active_ojt_hours,
+          };
+
+          console.log(studentDetails);
+          this.us.setStudentProfile({
+            ...student,
+            required_hours: student.ojt_class?.required_hours || 0,
+          });
+          this.us.setSelectedAcademicYears(this.academicYearFilter); //store current acad year
+          this.router.navigate(['main/students/view']);
+          this.isLoading = false;
+        },
+        (error) => {
+          console.error(error);
+          this.isLoading = false;
+        }
+      );
   }
 
   async downloadExcel() {
