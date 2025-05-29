@@ -14,6 +14,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 })
 export class EditIndustryPartnerComponent {
   file: any = null;
+  today: Date = new Date();
 
   titles: string[] = ['Sr', 'Jr', 'II', 'III', 'IV', 'V'];
 
@@ -27,10 +28,12 @@ export class EditIndustryPartnerComponent {
   municipalities: any = [];
   barangays: any = [];
 
-  selectedFile: File | null = null;
+  selectedFile: any = null;
   isDragOver = false;
   filePreviewUrl: SafeResourceUrl | null = null;
   fileName: string | null = null;
+
+  mouSubscription: any;
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -143,7 +146,7 @@ export class EditIndustryPartnerComponent {
       ],
     });
 
-    this.mouFormDetails
+    this.mouSubscription = this.mouFormDetails
       .get('start_date')
       ?.valueChanges.subscribe((startDateValue: string) => {
         const endDateControl = this.mouFormDetails.get('expiration_date');
@@ -167,6 +170,10 @@ export class EditIndustryPartnerComponent {
           endDateControl?.disable({ emitEvent: false });
         }
       });
+  }
+
+  ngOnDestroy(): void {
+    this.mouSubscription?.unsubscribe();
   }
 
   async ngOnInit() {
@@ -305,7 +312,7 @@ export class EditIndustryPartnerComponent {
 
     var formData = new FormData();
 
-    const partnerInfo = this.formDetails.value
+    const partnerInfo = this.formDetails.value;
     formData.append('company_name', partnerInfo.company_name);
     formData.append('description', partnerInfo.description);
     formData.append('region', partnerInfo.region?.regDesc);
@@ -363,6 +370,80 @@ export class EditIndustryPartnerComponent {
 
     this.dataService
       .post('superadmin/industryPartners/', this.data.id, formData)
+      .subscribe(
+        (result) => {
+          this.isSubmitting = false;
+          this.gs.makeAlert(result.title, result.message, 'success');
+          this.ref.close(result.data);
+        },
+        (error) => {
+          this.isSubmitting = false;
+          console.error(error);
+          if (error.status == 422) {
+            this.gs.makeAlert('Error!', 'Invalid input.', 'error');
+          } else {
+            this.gs.makeAlert(
+              'Oops!',
+              'Something went wrong, please try again later.',
+              'error'
+            );
+          }
+        }
+      );
+  }
+
+  async updateMou() {
+    if (this.mouFormDetails.invalid) {
+      const firstInvalidControl: HTMLElement =
+        document.querySelector('form .ng-invalid')!;
+
+      if (firstInvalidControl) {
+        firstInvalidControl.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        });
+      }
+
+      this.mouFormDetails.markAllAsTouched();
+      return;
+    }
+
+    if (!this.selectedFile) {
+      this.gs.makeAlert(
+        'MOU Required!',
+        'The mou is need to proceed.',
+        'error'
+      );
+    }
+
+    const res = await this.gs.confirmationAlert(
+      'Update?',
+      'Are you sure you want to update the MOU?',
+      'info',
+      'Yes',
+      'confirmation'
+    );
+
+    if (!res) return;
+
+    if (this.isSubmitting) {
+      return;
+    }
+
+    this.isSubmitting = true;
+
+    var formdata: FormData = new FormData();
+
+    const mouDetails = this.mouFormDetails.value;
+    formdata.append('start_date', this.gs.formatDate(mouDetails.start_date));
+    formdata.append(
+      'expiration_date',
+      this.gs.formatDate(mouDetails.expiration_date)
+    );
+    if (this.selectedFile) formdata.append('mou', this.selectedFile);
+
+    this.dataService
+      .post('superadmin/industryPartners/mou/', this.data.id, formdata)
       .subscribe(
         (result) => {
           this.isSubmitting = false;
