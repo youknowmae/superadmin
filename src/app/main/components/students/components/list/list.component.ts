@@ -519,7 +519,9 @@ export class ListComponent {
                 ? '---'
                 : student.other_task_total_hours,
               student.practicum_level == 2
-                ? student.community_service_total
+                ? student.verified_community_service
+                  ? 150
+                  : 0
                 : '---',
               student.active_ojt_class.required_hours,
               student.progress,

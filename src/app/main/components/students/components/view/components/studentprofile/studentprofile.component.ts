@@ -148,7 +148,7 @@ export class StudentprofileComponent {
 
     this.ds
       .get(
-        `superadmin/students/community-service/this.student.id`,
+        `superadmin/students/community-service/${this.student.id}`,
         `?acad_year=${acadYear.acad_year}&semester=${acadYear.semester}`
       )
       .subscribe(
