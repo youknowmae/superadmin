@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="details-content">
+    <div class="header">
+      <h1>Edit Template</h1>
+      <i class="fa-solid fa-xmark" (click)="closePopup()"></i>
+    </div>
+    <div class="content">
+      <form [formGroup]="formDetails" (submit)="submit()">
+        <div class="form-content">
+          <div class="row">
+            <div class="col-md-5">
+              <mat-form-field [hideRequiredMarker]="true">
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="name" />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4" style="margin-right: 20px">
+              <div class="file-input-container">
+                <div class="label">Upload Docx File</div>
+                <input
+                  class="file-input"
+                  type="file"
+                  accept=".docx"
+                  (change)="uploadDocxFile($event)"
+                />
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="file-input-container">
+                <div class="label">Upload Pdf File</div>
+                <input
+                  class="file-input"
+                  type="file"
+                  accept=".pdf"
+                  (change)="uploadPdfFile($event)"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="btn">
+          <button type="submit" [disabled]="formDetails.invalid">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

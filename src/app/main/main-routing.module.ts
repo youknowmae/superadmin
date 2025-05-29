@@ -6,6 +6,7 @@ import { IndustrypartnersComponent } from './components/industrypartners/industr
 import { SettingsComponent } from './components/settings/settings.component';
 import { NewpartnersComponent } from './components/newpartners/newpartners.component';
 import { TechnicalskillsComponent } from './components/technicalskills/technicalskills.component';
+import { TemplatesComponent } from './components/templates/templates.component';
 
 
 
@@ -13,7 +14,11 @@ const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'settings', component: SettingsComponent },
-  { path: 'technicalskills', component: TechnicalskillsComponent },
+  { path: 'technical-skills', component: TechnicalskillsComponent },
+  {
+    path: 'templates',
+    component: TemplatesComponent,
+  },
   { 
     path: 'newpartners', 
     component: NewpartnersComponent,

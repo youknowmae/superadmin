@@ -27,6 +27,7 @@ export interface IndustryPartner {
   accepted_application_count?: number;
   completed_count?: number;
   latest_mou?: MOU;
+  slots: number;
 }
 
 interface MOU {
