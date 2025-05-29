@@ -21,17 +21,30 @@ h1 {
   flex-direction: column;
   border: 2px solid var(--primary-color);
   flex: 1 1 350px;
-  height: fit-content;
+  height: 700px;
   border-radius: 2rem;
   background-color: white;
-  padding: 20px 25px;
-
+  padding: 20px 0 0 0;
+  overflow-y: auto;
+  position: relative;
+  
   h3 {
     font-size: 20px;
     font-weight: 550;
     color: var(--primary-color);
     margin-bottom: 10px;
+    padding-left: 20px;
   }
+
+  .btn {
+  position: sticky;
+  bottom: 0;
+  background: white;
+  padding: 15px 0;
+  display: flex;
+  justify-content: flex-end;
+  z-index: 10;
+}
 }
 
 .btn {
@@ -59,7 +72,7 @@ h1 {
 /* Left Side */
 .skill-list {
   list-style: none;
-  padding: 0 10px;
+  padding: 0 30px;
   margin-bottom: 20px;
 }
 
@@ -80,6 +93,7 @@ h1 {
 .skill-inputs {
   display: flex;
   flex-direction: column;
+  padding: 0 30px;
 }
 
 .skill-item {
