@@ -1,78 +1,130 @@
 <main>
-    <mat-sidenav-container class="main-container">
-        <mat-sidenav #sidenav class="sidebar-container"
-        [mode]="mobileQuery.matches ? 'over' : 'side'"
-        [opened]="!mobileQuery.matches">
-            <nav class="sidebar-content">
-                <div>
-                    <div class="profile">
-                        <div class="logo">
-                            <img [src]="(user.image) ? user.image : 'assets/images/profile.png'" alt="Image">
-                        </div>
-                        <h3>{{ user.first_name }} {{ user.middle_name }} {{ user.last_name }} {{ user.ext_name }}</h3>
-                        <p>Superadmin</p>
-                    </div>
-        
-                    <div class="navigation-links">
-                        <li class="item" [routerLink]="['dashboard']" routerLinkActive="router-link-active" >
-                            <span class="side-link">
-                                <i class="fa-solid fa-handshake-angle"></i> Dashboard
-                            </span>
-                        </li>
-        
-                        <li class="item" [routerLink]="['industrypartners']" routerLinkActive="router-link-active" >
-                            <span class="side-link"> 
-                                <i class="fa-solid fa-user-group"></i> Industry Partners
-                            </span>
-                        </li>
-        
-                        <li class="item" [routerLink]="['students']" routerLinkActive="router-link-active" >
-                            <span class="side-link"> 
-                                <i class="fa-solid fa-user-group"></i> Student
-                            </span>
-                        </li>
-                        <li class="item" [routerLink]="['newpartners']" routerLinkActive="router-link-active" >
-                            <span class="side-link"> 
-                                <i class="fa-solid fa-gear"></i> Partners Approval
-                            </span>
-                        </li>
-                        <li class="item" [routerLink]="['settings']" routerLinkActive="router-link-active" >
-                            <span class="side-link"> 
-                                <i class="fa-solid fa-gear"></i> Settings
-                            </span>
-                        </li>
-                        <li class="item" [routerLink]="['technicalskills']" routerLinkActive="router-link-active" >
-                            <span class="side-link"> 
-                                <i class="fa-solid fa-laptop"></i> Technical Skills
-                            </span>
-                        </li>
-                    </div>
-                </div>
-        
-                <div class="logout">
-                    <div class="logout-icon">
-                        <i class="fa-solid fa-right-from-bracket" (click)="logout()"></i>
-                    </div>
-                </div>
-            </nav>
-        </mat-sidenav>
-        
-        <mat-sidenav-content class="body-content">
-            <div class="container">
-                 <div class="header" [class.hide]="hideHeader">
-                    <div>
-                        <button mat-icon-button *ngIf="mobileQuery.matches" (click)="sidenav.toggle()"><mat-icon>menu</mat-icon></button>
-                    </div>
-                    <div class="date-time-display">
-                        <span class="icon"><i class="fa-solid fa-calendar-days"></i></span>
-                        <span class="date-time" id="dateTime"></span>
-                    </div>
-                 </div>
-                 <div class="outlet" #bodyContent (scroll)="onScroll($event)" [class.full]="hideHeader">
-                    <router-outlet></router-outlet>
-                 </div>
+  <mat-sidenav-container class="main-container">
+    <mat-sidenav
+      #sidenav
+      class="sidebar-container"
+      [mode]="mobileQuery.matches ? 'over' : 'side'"
+      [opened]="!mobileQuery.matches"
+    >
+      <nav class="sidebar-content">
+        <div>
+          <div class="profile">
+            <div class="logo">
+              <img
+                [src]="user.image ? user.image : 'assets/images/profile.png'"
+                alt="Image"
+              />
             </div>
-        </mat-sidenav-content>
-    </mat-sidenav-container>
-</main>
+            <h3>
+              {{ user.first_name }} {{ user.middle_name }} {{ user.last_name }}
+              {{ user.ext_name }}
+            </h3>
+            <p>Superadmin</p>
+          </div>
 
+          <div class="navigation-links">
+            <li
+              class="item"
+              [routerLink]="['dashboard']"
+              routerLinkActive="router-link-active"
+            >
+              <span class="side-link">
+                <i class="fa-solid fa-handshake-angle"></i> Dashboard
+              </span>
+            </li>
+
+            <li
+              class="item"
+              [routerLink]="['industrypartners']"
+              routerLinkActive="router-link-active"
+            >
+              <span class="side-link">
+                <i class="fa-solid fa-user-group"></i> Industry Partners
+              </span>
+            </li>
+
+            <li
+              class="item"
+              [routerLink]="['students']"
+              routerLinkActive="router-link-active"
+            >
+              <span class="side-link">
+                <i class="fa-solid fa-user-group"></i> Student
+              </span>
+            </li>
+            <li
+              class="item"
+              [routerLink]="['newpartners']"
+              routerLinkActive="router-link-active"
+            >
+              <span class="side-link">
+                <i class="fa-solid fa-gear"></i> Partners Approval
+              </span>
+            </li>
+            <li
+              class="item"
+              [routerLink]="['templates']"
+              routerLinkActive="router-link-active"
+            >
+              <span class="side-link">
+                <i class="fa-solid fa-map"></i> Templates
+              </span>
+            </li>
+            <li
+              class="item"
+              [routerLink]="['technical-skills']"
+              routerLinkActive="router-link-active"
+            >
+              <span class="side-link">
+                <i class="fa-solid fa-laptop"></i> Technical Skills
+              </span>
+            </li>
+            <li
+              class="item"
+              [routerLink]="['settings']"
+              routerLinkActive="router-link-active"
+            >
+              <span class="side-link">
+                <i class="fa-solid fa-gear"></i> Settings
+              </span>
+            </li>
+          </div>
+        </div>
+
+        <div class="logout">
+          <div class="logout-icon">
+            <i class="fa-solid fa-right-from-bracket" (click)="logout()"></i>
+          </div>
+        </div>
+      </nav>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="body-content">
+      <div class="container">
+        <div class="header" [class.hide]="hideHeader">
+          <div>
+            <button
+              mat-icon-button
+              *ngIf="mobileQuery.matches"
+              (click)="sidenav.toggle()"
+            >
+              <mat-icon>menu</mat-icon>
+            </button>
+          </div>
+          <div class="date-time-display">
+            <span class="icon"><i class="fa-solid fa-calendar-days"></i></span>
+            <span class="date-time" id="dateTime"></span>
+          </div>
+        </div>
+        <div
+          class="outlet"
+          #bodyContent
+          (scroll)="onScroll($event)"
+          [class.full]="hideHeader"
+        >
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</main>

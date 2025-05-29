@@ -5,12 +5,6 @@ import { MainRoutingModule } from './main-routing.module';
 import { IndustrypartnersComponent } from './components/industrypartners/industrypartners.component';
 import { IndustrypartnersModule } from './components/industrypartners/industrypartners.module';
 
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
-import { MatOptionModule } from '@angular/material/core';
 import { MaterialsModules } from '../modules/materials.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -20,9 +14,11 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { NewpartnersModule } from './components/newpartners/newpartners.module';
 import { NewpartnersComponent } from './components/newpartners/newpartners.component';
 import { LoadingSpinnerComponent } from '../components/login/loading-spinner/loading-spinner.component';
-import { SemesterTextPipe } from '../pipes/semester-text.pipe';
+
 import { SharedModule } from '../modules/shared.module';
 import { TechnicalskillsComponent } from './components/technicalskills/technicalskills.component';
+import { TemplatesComponent } from './components/templates/templates.component';
+import { TemplatesModule } from './components/templates/templates.module';
 
 @NgModule({
   declarations: [
@@ -32,6 +28,7 @@ import { TechnicalskillsComponent } from './components/technicalskills/technical
     SettingsComponent,
     NewpartnersComponent,
     TechnicalskillsComponent,
+    TemplatesComponent
   ],
   imports: [
     CommonModule,
@@ -42,7 +39,8 @@ import { TechnicalskillsComponent } from './components/technicalskills/technical
     NewpartnersModule,
     MaterialsModules,
     LoadingSpinnerComponent,
-    SharedModule
+    SharedModule,
+    TemplatesModule
   ],
 })
 export class MainModule {}
