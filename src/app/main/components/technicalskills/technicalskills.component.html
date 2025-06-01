@@ -3,58 +3,88 @@
     <h1>Technical Skills</h1>
   </div>
 
-  <div class="content">
-    <!-- Skill List (Left Side) -->
-    <div class="card technical-skills-preview">
-      <h3>Technical Skills</h3>
-      <ul class="skill-list">
-        <li *ngFor="let skill of skills">{{ skill }}</li>
-      </ul>
-      <div class="btn">
-        <button type="button" *ngIf="!isEditing" (click)="editSkills()">
-          Edit
-        </button>
-      </div>
-    </div>
-
-    <!-- Add Skills (Right Side) -->
-    <div class="card" *ngIf="isEditing">
-      <h3>Add Skills</h3>
-      <div class="skill-inputs">
-        <div
-          *ngFor="let skill of newSkills; let i = index; trackBy: trackByIndex"
-          class="input-row"
-        >
+  <ng-container *ngIf="!isLoading; else loading">
+    <div class="content">
+      <div class="search" style="max-width: 400px">
+        <mat-form-field>
           <input
-            type="text"
-            [(ngModel)]="newSkills[i]"
-            placeholder="Enter a skill"
+            #searchValue
+            matInput
+            type="email"
+            (keyup)="search(searchValue.value)"
+            placeholder="Search..."
           />
-
-          <button
-            *ngIf="newSkills.length > 1 && i !== newSkills.length - 1"
-            class="remove-icon"
-            (click)="removeInput(i)"
-            title="Remove this skill"
+          <mat-icon
+            *ngIf="searchValue.value"
+            matIconSuffix
+            (click)="searchValue.value = ''; search('')"
+            >close</mat-icon
           >
-            ×
-          </button>
+        </mat-form-field>
+      </div>
 
-          <button
-            *ngIf="i === newSkills.length - 1"
-            class="add-icon"
-            (click)="addInput()"
-            title="Add another input"
-          >
-            +
-          </button>
+      <div class="card-container">
+        <!-- Skill List (Left Side) -->
+        <div class="card technical-skills-preview">
+          <h3>Technical Skills</h3>
+          <ul class="skill-list">
+            <li *ngFor="let skill of skills">{{ skill }}</li>
+          </ul>
+          <div class="btn">
+            <button type="button" *ngIf="!isEditing" (click)="editSkills()">
+              Edit
+            </button>
+          </div>
+        </div>
+
+        <!-- Add Skills (Right Side) -->
+        <div class="card" *ngIf="isEditing">
+          <h3>Add Skills</h3>
+          <div class="skill-inputs">
+            <div
+              *ngFor="
+                let skill of newSkills;
+                let i = index;
+                trackBy: trackByIndex
+              "
+              class="input-row"
+            >
+              <input
+                type="text"
+                [(ngModel)]="newSkills[i]"
+                placeholder="Enter a skill"
+              />
+
+              <button
+                *ngIf="newSkills.length > 1 && i !== newSkills.length - 1"
+                class="remove-icon"
+                (click)="removeInput(i)"
+                title="Remove this skill"
+              >
+                ×
+              </button>
+
+              <button
+                *ngIf="i === newSkills.length - 1"
+                class="add-icon"
+                (click)="addInput()"
+                title="Add another input"
+              >
+                +
+              </button>
+            </div>
+          </div>
+
+          <div class="btn">
+            <button type="button" (click)="cancel()">Cancel</button>
+            <button type="button" (click)="saveSkills()">Save</button>
+          </div>
         </div>
       </div>
-
-      <div class="btn">
-        <button type="button" (click)="cancel()">Cancel</button>
-        <button type="button" (click)="saveSkills()">Save</button>
-      </div>
     </div>
-  </div>
+  </ng-container>
 </div>
+
+<ng-template #loading>
+  <app-loading-spinner></app-loading-spinner>
+</ng-template>

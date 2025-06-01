@@ -10,11 +10,13 @@ import { UserService } from '../../../services/user.service';
   styleUrls: ['./technicalskills.component.scss'],
 })
 export class TechnicalskillsComponent {
+  allSkills: string[] = [];
   skills: any[] = [];
 
   newSkills: string[] = ['']; // Start with one empty input
   isSubmitting: boolean = false;
   isEditing: boolean = false;
+  isLoading: boolean = true;
 
   constructor(
     private ds: DataService,
@@ -27,18 +29,33 @@ export class TechnicalskillsComponent {
     this.getSkills();
   }
 
+  search(value: string) {
+    const searchTerm = value.toLowerCase();
+    this.skills = this.allSkills.filter((skill) =>
+      skill.toLowerCase().includes(searchTerm)
+    );
+  }
+
   getSkills() {
     const technicalSkills = this.us.getTechnicalSkillsData();
 
     if (technicalSkills) {
-      this.skills = technicalSkills;
+      this.allSkills = [...technicalSkills];
+      this.skills = [...this.allSkills];
+      this.isLoading = false;
       return;
     }
 
     this.ds.get('technical-skills').subscribe((response) => {
-      this.skills = response.map((item: any) => item.skills);
-      this.us.setTechnicalSkillsData(this.skills);
-      console.log(this.skills);
+      this.allSkills = response
+        .map((item: any) => item.skills)
+        .flat()
+        .sort((a: string, b: string) => a.localeCompare(b));
+
+      this.skills = [...this.allSkills];
+      this.isLoading = false;
+
+      this.us.setTechnicalSkillsData(this.allSkills);
     });
   }
 
@@ -74,7 +91,10 @@ export class TechnicalskillsComponent {
       .post('superadmin/technical-skills', '', { skills: nonEmpty })
       .subscribe({
         next: (res) => {
-          this.skills = [...nonEmpty];
+          this.skills = [...nonEmpty].sort((a: string, b: string) =>
+            a.localeCompare(b)
+          );
+          this.allSkills = [...this.skills];
           this.us.setTechnicalSkillsData(this.skills);
 
           this.newSkills = [''];
@@ -105,7 +125,7 @@ export class TechnicalskillsComponent {
 
   editSkills() {
     this.isEditing = true;
-    this.newSkills = [...this.skills];
+    this.newSkills = [...this.allSkills];
     if (this.newSkills.length === 0) {
       this.newSkills.push('');
     }

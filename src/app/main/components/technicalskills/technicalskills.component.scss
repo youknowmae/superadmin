@@ -7,7 +7,11 @@ h1 {
 }
 
 .content {
+  animation: fade-in 1s forwards;
   padding: 10px 20px;
+}
+
+.card-container {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
@@ -16,6 +20,7 @@ h1 {
 .technical-skills-preview {
   max-width: 680px;
 }
+
 .card {
   display: flex;
   flex-direction: column;
@@ -27,7 +32,7 @@ h1 {
   padding: 20px 0 0 0;
   overflow-y: auto;
   position: relative;
-  
+
   h3 {
     font-size: 20px;
     font-weight: 550;
@@ -37,17 +42,18 @@ h1 {
   }
 
   .btn {
-  position: sticky;
-  bottom: 0;
-  background: white;
-  padding: 15px 0;
-  display: flex;
-  justify-content: flex-end;
-  z-index: 10;
-}
+    position: sticky;
+    bottom: 0;
+    background: white;
+    padding: 15px 10px;
+    display: flex;
+    justify-content: flex-end;
+    z-index: 10;
+  }
 }
 
 .btn {
+  margin-top: auto;
   display: flex;
   gap: 15px;
   justify-content: end;
@@ -119,10 +125,16 @@ h1 {
   align-items: center;
   margin-bottom: 10px;
   gap: 10px;
+
+  &:hover {
+    background-color: rgba(var(--secondary-color-semi-transparent));
+    transition: all ease-in-out 0.2s;
+  }
 }
 
 input[type="text"] {
   flex: 1;
+  background: transparent;
   padding: 8px;
   font-size: 16px;
 }
