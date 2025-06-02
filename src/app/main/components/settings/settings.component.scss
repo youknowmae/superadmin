@@ -41,8 +41,9 @@ h1 {
   }
 
   h4 {
-    color: var(--primary-color);
-    font-size: 18px;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--main-orange);
   }
 
   .btn {
@@ -72,12 +73,6 @@ h1 {
 
   .practicum {
     // padding-bottom: 20px;
-
-    h4 {
-      font-size: 16px;
-      font-weight: 400;
-      color: var(--main-orange);
-    }
 
     .input {
       flex: 1;
@@ -136,6 +131,24 @@ h1 {
   }
 }
 
+.signatories {
+  flex-basis: 1500px;
+
+  .input-container {
+    display: flex;
+    padding: 20px;
+    gap: 30px;
+    flex-wrap: wrap;
+
+    & > * {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1 1 200px;
+    }
+  }
+}
+
 @media only screen and (max-width: 680px) {
   .card-container,
   .options {
@@ -147,6 +160,12 @@ h1 {
       .input {
         max-width: 100%;
       }
+    }
+  }
+
+  .signatories {
+    .input-container {
+      gap: 10px;
     }
   }
 }

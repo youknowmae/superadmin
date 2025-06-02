@@ -16,6 +16,8 @@ export class SettingsComponent {
   academicYearOptions: any = [];
   academicYearFilter: any;
 
+  moaSignatoriesFormDetails: FormGroup;
+
   ojtDurationFormDetails: FormGroup;
   isSubmitting: boolean = false;
   isLoading: boolean = true;
@@ -29,6 +31,13 @@ export class SettingsComponent {
     private fb: FormBuilder,
     private gs: GeneralService
   ) {
+    this.moaSignatoriesFormDetails = this.fb.group({
+      college_president: [
+        null,
+        [Validators.required, Validators.maxLength(128)],
+      ],
+      ccs_dean: [null, [Validators.required, Validators.maxLength(128)]],
+    });
     this.ojtDurationFormDetails = this.fb.group({
       duration: this.fb.array([]),
     });
@@ -59,6 +68,71 @@ export class SettingsComponent {
 
     this.getOjtHours(activeAcadYear);
     this.getModificationHistory(activeAcadYear);
+    this.getMoaSignatories();
+  }
+
+  async saveMoaSignatories() {
+    if (this.moaSignatoriesFormDetails.invalid) {
+      this.moaSignatoriesFormDetails.markAllAsTouched();
+      this.gs.makeToast('Invalid Input!', 'error');
+      return;
+    }
+
+    const res = await this.gs.confirmationAlert(
+      'Update?',
+      'Are you sure you want to update the mou signatories.',
+      'info',
+      'Yes',
+      'confirmation'
+    );
+
+    if(!res) return
+
+    this.ds
+      .post(
+        'superadmin/settings/signatories',
+        '',
+        this.moaSignatoriesFormDetails.value
+      )
+      .subscribe({
+        next: (response: any) => {
+          console.log(response);
+          this.gs.makeAlert(
+            'Updated',
+            'Moa Signatories has been updated!',
+            'success'
+          );
+        },
+        error: (err: any) => {
+          console.log(err);
+          this.gs.makeAlert(
+            'Oops!',
+            'Something went wrong. Please try again later.',
+            'error'
+          );
+        },
+      });
+  }
+
+  getMoaSignatories() {
+    this.ds.get('superadmin/settings/signatories').subscribe({
+      next: (response: any) => {
+        response.forEach((item: any) => {
+          if (item.label_type === 0) {
+            this.moaSignatoriesFormDetails.patchValue({
+              college_president: item.name,
+            });
+          } else {
+            this.moaSignatoriesFormDetails.patchValue({
+              ccs_dean: item.name,
+            });
+          }
+        });
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+    });
   }
 
   getOjtHours(acadYear: AcademicYear) {
