@@ -93,7 +93,7 @@ export class EditTemplateComponent {
       (error) => {
         this.isSubmitting = false;
         if (error.status == 422) {
-          this.gs.makeAlert('Error!', 'Invalid input.', 'error');
+          this.gs.makeAlert(error.error.title  || 'Error!', error.error.message || 'Invalid input.', 'error');
         } else {
           this.gs.makeAlert(
             'Oops!',
