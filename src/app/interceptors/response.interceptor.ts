@@ -22,10 +22,10 @@ export class ResponseInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler) {
         return next.handle(request).pipe(
           map ((event: HttpEvent<any>) => { 
-            if (event instanceof HttpResponse && event.body.data) {
+            if (event instanceof HttpResponse && event.body?.payload) {
               try {
 
-                let data = this.us.recover(event.body.data)
+                let data = this.us.recover(event.body.payload)
 
                 const response = event.clone({
                   body: data
