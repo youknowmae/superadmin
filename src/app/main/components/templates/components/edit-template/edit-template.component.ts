@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataService } from '../../../../../services/data.service';
 import { GeneralService } from '../../../../../services/general.service';
+import { UserService } from '../../../../../services/user.service';
 
 @Component({
   selector: 'app-edit-template',
@@ -24,7 +25,8 @@ export class EditTemplateComponent {
     private ref: MatDialogRef<EditTemplateComponent>,
     private fb: FormBuilder,
     private gs: GeneralService,
-    private ds: DataService
+    private ds: DataService,
+    private us: UserService
   ) {}
 
   ngOnInit() {
@@ -68,7 +70,12 @@ export class EditTemplateComponent {
     var formDetails = this.formDetails.value;
 
     var payload = new FormData();
-    payload.append('name', formDetails.name);
+
+    const data = {
+      name: formDetails.name
+    }
+
+    payload.append('payload', this.us.encryptPayload(data));
 
     if (this.docxFile) {
       payload.append('docx', this.docxFile);

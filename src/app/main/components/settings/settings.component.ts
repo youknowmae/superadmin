@@ -88,11 +88,14 @@ export class SettingsComponent {
 
     if(!res) return
 
+    const payload = {
+      payload: this.us.encryptPayload(this.moaSignatoriesFormDetails.value)
+    }
     this.ds
       .post(
         'superadmin/settings/signatories',
         '',
-        this.moaSignatoriesFormDetails.value
+        payload
       )
       .subscribe({
         next: (response: any) => {
@@ -202,12 +205,14 @@ export class SettingsComponent {
     this.isSubmitting = true;
 
     let acadYear: AcademicYear = this.academicYearFilter;
-    console.log(this.ojtDurationFormDetails.value);
+    const payload = {
+      payload: this.us.encryptPayload(this.ojtDurationFormDetails.value)
+    };
     this.ds
       .post(
         `superadmin/settings/required-ojt-hours?acad_year=${acadYear.acad_year}&semester=${acadYear.semester}`,
         '',
-        this.ojtDurationFormDetails.value
+        payload
       )
       .subscribe(
         (response) => {

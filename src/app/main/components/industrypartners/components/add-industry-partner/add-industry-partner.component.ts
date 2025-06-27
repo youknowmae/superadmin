@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataService } from '../../../../../services/data.service';
 import { GeneralService } from '../../../../../services/general.service';
 import { LocationService } from '../../../../../services/location.service';
+import { UserService } from '../../../../../services/user.service';
 
 @Component({
   selector: 'app-add-industry-partner',
@@ -96,7 +97,8 @@ export class AddIndustryPartnerComponent {
     private fb: FormBuilder,
     private ds: DataService,
     private gs: GeneralService,
-    private ls: LocationService
+    private ls: LocationService,
+    private us: UserService
   ) {
     this.mouFormDetails = this.fb.group({
       start_date: [null, Validators.required],
@@ -273,69 +275,20 @@ export class AddIndustryPartnerComponent {
 
     var formData = new FormData();
 
-    const partnerInfo = this.formDetails.value;
-    formData.append('company_name', partnerInfo.company_name);
-    formData.append('description', partnerInfo.description);
-    formData.append('region', partnerInfo.region.regDesc);
-    formData.append('province', partnerInfo.province.provDesc);
-    formData.append('municipality', partnerInfo.municipality.citymunDesc);
-    formData.append('barangay', partnerInfo.barangay.brgyDesc);
-    formData.append('street', partnerInfo.street);
-    if (partnerInfo.telephone_number)
-      formData.append('telephone_number', partnerInfo.telephone_number);
-    formData.append('mobile_number', partnerInfo.mobile_number);
-    if (this.formDetails.get('fax_number')?.value)
-      formData.append('fax_number', partnerInfo.fax_number);
-    formData.append('email', partnerInfo.email);
-    if (this.formDetails.get('website')?.value)
-      formData.append('website', partnerInfo.website);
-
-    //company head info
-    const companyHead = partnerInfo.company_head;
-    formData.append('company_head[first_name]', companyHead.first_name);
-    if (companyHead.middle_name)
-      formData.append('company_head[middle_name]', companyHead.middle_name);
-    formData.append('company_head[last_name]', companyHead.last_name);
-    formData.append('company_head[sex]', companyHead.sex);
-    if (companyHead.ext_name)
-      formData.append('company_head[ext_name]', companyHead.ext_name);
-
-    formData.append(
-      'head_position',
-      this.formDetails.get('head_position')?.value
-    );
-
-    //supervisor info
-    const supervisor = partnerInfo.immediate_supervisor;
-    formData.append('immediate_supervisor[first_name]', supervisor.first_name);
-    if (supervisor.middle_name)
-      formData.append(
-        'immediate_supervisor[middle_name]',
-        supervisor.middle_name
-      );
-    formData.append('immediate_supervisor[last_name]', supervisor.last_name);
-    formData.append('immediate_supervisor[sex]', supervisor.sex);
-    if (supervisor.ext_name)
-      formData.append('immediate_supervisor[ext_name]', supervisor.ext_name);
-
-    formData.append(
-      'supervisor_position',
-      this.formDetails.get('supervisor_position')?.value
-    );
-
-    //account details
-    formData.append('password', this.formDetails.get('password')?.value);
-    formData.append('slots', this.formDetails.get('slots')?.value);
-
-    //mou info
+    let partnerInfo = this.formDetails.value;
     const mouInfo = this.mouFormDetails.value;
 
-    formData.append('start_date', this.gs.formatDate(mouInfo.start_date));
-    formData.append(
-      'expiration_date',
-      this.gs.formatDate(mouInfo.expiration_date)
-    );
+    partnerInfo.region = partnerInfo.region?.regDesc || '';
+    partnerInfo.province = partnerInfo.province?.provDesc || '';
+    partnerInfo.municipality = partnerInfo.municipality?.citymunDesc || '';
+    partnerInfo.barangay = partnerInfo.barangay?.brgyDesc || '';
 
+    partnerInfo.start_date = this.gs.formatDate(mouInfo.start_date);
+    partnerInfo.expiration_date =this.gs.formatDate(mouInfo.expiration_date)
+
+    console.log(partnerInfo)
+
+    formData.append('payload', this.us.encryptPayload(partnerInfo));
     //files
     formData.append('mou', this.selectedFile);
     formData.append('image', this.file);

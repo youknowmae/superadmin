@@ -23,7 +23,9 @@ export class AuthService {
 
   login(credentials: { email: string; password: string }) {
     return this.http
-      .post<any>(`${this.apiUrl}login/superadmin`, credentials)
+      .post<any>(`${this.apiUrl}login/superadmin`, {
+        payload: this.us.encryptPayload(credentials),
+      })
       .pipe(
         tap((response) => {
           if (response.token) {

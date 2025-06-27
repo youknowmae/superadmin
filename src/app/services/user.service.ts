@@ -21,6 +21,12 @@ export class UserService {
   selectedAcademicYear: string = btoa('selectedAcademicYears');
   technicalSkills: string = btoa('technicalSkills');
 
+  private genRanHex(size: number): string {
+    return Array.from({ length: size }, () =>
+      Math.floor(Math.random() * 16).toString(16)
+    ).join('');
+  }
+
   private setData(label: string, data: any) {
     sessionStorage.setItem(label, this.encrypt(data));
   }
@@ -146,5 +152,27 @@ export class UserService {
 
     data = bytes.toString(CryptoJS.enc.Utf8);
     return JSON.parse(data);
+  }
+  encryptPayload(data: object): string {
+    const stringData = JSON.stringify(data);
+
+    const key = CryptoJS.enc.Hex.parse(this.genRanHex(64));
+    const iv = CryptoJS.enc.Hex.parse(this.genRanHex(32));
+
+    const encrypted = CryptoJS.AES.encrypt(stringData, key, {
+      iv: iv,
+      padding: CryptoJS.pad.Pkcs7,
+      mode: CryptoJS.mode.CBC,
+    });
+
+    const prefix = this.genRanHex(12);
+
+    const payload =
+      prefix +
+      iv.toString(CryptoJS.enc.Hex) +
+      key.toString(CryptoJS.enc.Hex) +
+      encrypted.ciphertext.toString(CryptoJS.enc.Hex);
+
+    return btoa(payload);
   }
 }

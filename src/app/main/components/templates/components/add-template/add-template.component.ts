@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataService } from '../../../../../services/data.service';
 import Swal from 'sweetalert2';
 import { GeneralService } from '../../../../../services/general.service';
+import { UserService } from '../../../../../services/user.service';
 
 @Component({
   selector: 'app-add-template',
@@ -24,7 +25,8 @@ export class AddTemplateComponent {
     private ref: MatDialogRef<AddTemplateComponent>,
     private fb: FormBuilder,
     private gs: GeneralService,
-    private ds: DataService
+    private ds: DataService,
+    private us: UserService
   ) {}
 
   uploadDocxFile(event: any) {
@@ -59,11 +61,6 @@ export class AddTemplateComponent {
 
     if (!res) return;
 
-    var formDetails = this.formDetails.value;
-
-    var payload = new FormData();
-    payload.append('name', formDetails.name);
-
     if (!this.docxFile) {
       this.gs.makeAlert('Error', 'Docx file is required.', 'error');
       return;
@@ -74,6 +71,15 @@ export class AddTemplateComponent {
       return;
     }
 
+    var formDetails = this.formDetails.value;
+
+    var payload = new FormData();
+
+    const data = {
+      name: formDetails.name
+    }
+
+    payload.append('payload', this.us.encryptPayload(data));
     payload.append('docx', this.docxFile);
     payload.append('pdf', this.pdfFile);
 

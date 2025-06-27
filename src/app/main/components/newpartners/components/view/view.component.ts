@@ -175,15 +175,17 @@ export class ViewComponent {
     const accountDetails = this.accountDetails.value;
     const mouDetails = this.mouFormDetails.value;
 
-    formdata.append('start_date', this.gs.formatDate(mouDetails.start_date));
-    formdata.append(
-      'expiration_date',
-      this.gs.formatDate(mouDetails.expiration_date)
-    );
+    const data = {
+      start_date: this.gs.formatDate(mouDetails.start_date),
+      expiration_date: this.gs.formatDate(mouDetails.expiration_date),
+      // email: accountDetails.email,
+      password: accountDetails.password,
+      slots: accountDetails.slots,
+    };
+
+    formdata.append('payload', this.us.encryptPayload(data));
+
     formdata.append('mou', this.file);
-    formdata.append('email', accountDetails.email);
-    formdata.append('password', accountDetails.password);
-    formdata.append('slots', accountDetails.slots);
 
     this.ds
       .post(

@@ -87,8 +87,12 @@ export class TechnicalskillsComponent {
 
     const nonEmpty = this.newSkills.map((s) => s.trim());
 
+    const payload = {
+      payload: this.us.encryptPayload({ skills: nonEmpty })
+    }
+
     this.ds
-      .post('superadmin/technical-skills', '', { skills: nonEmpty })
+      .post('superadmin/technical-skills', '', payload)
       .subscribe({
         next: (res) => {
           this.skills = [...nonEmpty].sort((a: string, b: string) =>
