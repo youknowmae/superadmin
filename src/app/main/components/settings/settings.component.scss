@@ -1,19 +1,4 @@
-mat-input {
-  font-size: 14px;
-}
-
-mat-form-field {
-  font-size: 14px;
-}
-
-h1 {
-  color: var(--main-orange);
-  opacity: 0.7;
-  font-size: 40px;
-  font-weight: 400;
-  padding: 10px;
-  margin-bottom: 15px;
-}
+@use "../../../themes/page-header";
 
 .card-container {
   padding: 10px 20px;
@@ -120,17 +105,6 @@ h1 {
   }
 }
 
-.options {
-  display: flex;
-  padding: 0 20px;
-  align-items: center;
-  margin-top: 30px;
-
-  .academic_year {
-    width: 300px;
-  }
-}
-
 .signatories {
   flex-basis: 1500px;
 
@@ -150,8 +124,7 @@ h1 {
 }
 
 @media only screen and (max-width: 680px) {
-  .card-container,
-  .options {
+  .card-container {
     padding: 5px;
   }
 

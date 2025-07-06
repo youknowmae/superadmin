@@ -34,7 +34,7 @@ import { PdfPreviewComponent } from './components/pdf-preview/pdf-preview.compon
     LoginComponent,
     MainComponent,
     ViewImageComponent,
-    PdfPreviewComponent
+    PdfPreviewComponent,
   ],
   imports: [
     CommonModule,

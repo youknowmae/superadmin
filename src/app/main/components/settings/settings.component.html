@@ -1,4 +1,4 @@
-<div class="header">
+<div class="header-container">
   <h1>Settings</h1>
 </div>
 
@@ -49,12 +49,7 @@
           </div>
         </form>
         <div class="btn">
-          <button
-            type="button"
-            (click)="saveMoaSignatories()"
-          >
-            Save
-          </button>
+          <button type="button" (click)="saveMoaSignatories()">Save</button>
         </div>
       </div>
       <div class="card" *ngIf="duration.length > 0">

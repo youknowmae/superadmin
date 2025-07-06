@@ -191,6 +191,10 @@ mat-paginator {
   background: none;
 }
 
+.mat-sort-header-container {
+  justify-content: center;
+}
+
 @media only screen and (max-width: 680px) {
   .col-md-1,
   .col-md-2,

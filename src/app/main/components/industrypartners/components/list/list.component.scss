@@ -1,19 +1,5 @@
-.container-header {
-  height: 70px;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  h1 {
-    color: var(--main-orange);
-    opacity: 0.7;
-    font-size: 40px;
-    font-weight: 400;
-    padding: 10px;
-    margin: 0;
-  }
-}
+@use "../../../../../themes/page-header";
+@use "../../../../../themes/custom-pagination";
 
 .search {
   width: 100%;
@@ -246,60 +232,6 @@
   }
 }
 
-.pagination-container {
-  grid-column: 1 / -1;
-  margin-top: 20px;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.pagination {
-  justify-content: center;
-  display: flex;
-  flex-direction: row;
-  padding: 30px;
-  flex-wrap: wrap;
-  align-items: center;
-
-  div {
-    padding: 20px 20px;
-  }
-
-  button {
-    margin: 0px 10px;
-    border: none;
-    background: none;
-    cursor: pointer;
-  }
-
-  button:disabled {
-    opacity: 0.5;
-    cursor: default;
-  }
-  button:disabled img {
-    background-color: transparent !important;
-  }
-
-  p {
-    font-size: large;
-  }
-}
-
-.icons img {
-  width: 30px;
-  height: 30px;
-  object-fit: none;
-  border-radius: 50%;
-  padding: 0px 10px;
-  transform: scale(1.4);
-  transition: all 0.2s ease-in-out;
-}
-
-.icons img:hover {
-  background-color: #e2e2e2;
-  transition: all 0.2s ease-in-out;
-}
-
 /* Container for nice padding and rounded corners */
 .table-wrapper {
   margin: 0px 20px;
@@ -419,25 +351,5 @@ mat-paginator {
 @media only screen and (max-width: 768px) {
   .card-container {
     grid-template-columns: repeat(1, minmax(90%, 1fr));
-  }
-
-  .pagination {
-    padding: 10px 8px;
-    div {
-      padding: 0;
-    }
-    p {
-      font-size: medium;
-    }
-
-    .icons {
-      button {
-        margin: 0 5px;
-      }
-      img {
-        padding: 8px;
-        transform: scale(1);
-      }
-    }
   }
 }

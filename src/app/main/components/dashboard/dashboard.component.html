@@ -1,6 +1,6 @@
 <div class="container">
-  <div class="header">
-    <h1 class="head">Dashboard</h1>
+  <div class="header-container">
+    <h1>Dashboard</h1>
   </div>
   <div class="options">
     <mat-form-field class="academic_year">
@@ -15,7 +15,7 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <button class="export"  (click)="exportToExcel()">Export</button>
+    <button class="export" matRipple (click)="exportToExcel()">Export</button>
   </div>
 
   <div class="content">

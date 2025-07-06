@@ -138,7 +138,6 @@ export class StudentprofileComponent {
           this.personality_test = response;
         },
         (error) => {
-          // console.error(error)
         }
       );
   }

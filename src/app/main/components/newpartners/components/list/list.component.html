@@ -1,99 +1,147 @@
 <main>
-    <div class="container-header">
-        <h1>Partners For Approval</h1>
+  <div class="header-container">
+    <h1>Partners For Approval</h1>
+  </div>
+
+  <ng-container *ngIf="!isLoading; else loading">
+    <div class="filters">
+      <div class="search-container">
+        <mat-form-field floatLabel="always">
+          <mat-label>Search</mat-label>
+          <input
+            #searchInput
+            (input)="search(searchInput.value)"
+            matInput
+            placeholder="Aa"
+          />
+          <mat-icon
+            *ngIf="searchInput.value"
+            matIconSuffix
+            (click)="searchInput.value = ''"
+          >
+            close</mat-icon
+          >
+        </mat-form-field>
+      </div>
+      <div class="select-filter">
+        <mat-form-field>
+          <mat-label>Status Filter</mat-label>
+          <mat-select
+            disableRipple
+            (selectionChange)="onStatusFilterChange($event)"
+            [(ngModel)]="statusFilter"
+          >
+            <!-- null doesn't work so... yess -->
+            <mat-option [value]="''"> All</mat-option>
+            <mat-option [value]="2"> For Approval</mat-option>
+            <mat-option [value]="3"> Declined</mat-option>
+            <mat-option [value]="4"> Approved</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
     </div>
 
-    <ng-container *ngIf="!isLoading; else loading">
-        <div class="buttons">
-            <div class="filter-container">
-                <div class="search-container">
-                    <mat-form-field floatLabel="always">
-                        <mat-label>Search</mat-label>
-                        <input #searchInput (input)="search(searchInput.value)" matInput placeholder="Aa" />
-                        <mat-icon *ngIf="searchInput.value" matIconSuffix (click)="searchInput.value = ''"> close</mat-icon>
-                    </mat-form-field>
-                </div>
-
-            </div>
-            <div class="right">
-                <div class="select-filter">
-                    <mat-form-field>
-                        <mat-label>Status Filter</mat-label>
-                        <mat-select disableRipple (selectionChange)="onStatusFilterChange($event)" [(ngModel)]="statusFilter">
-                            <!-- null doesn't work so... yess -->
-                            <mat-option [value]="''"> All</mat-option>
-                            <mat-option [value]="2"> For Approval</mat-option>
-                            <mat-option [value]="3"> Declined</mat-option>
-                            <mat-option [value]="4"> Approved</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-            </div>
+    <div
+      class="card-container"
+      *ngIf="industryPartners.length > 0; else noItems"
+    >
+      <div
+        class="card"
+        *ngFor="let industryPartner of industryPartners; let i = index"
+        [ngStyle]="{ 'animation-delay': i * 0.1 + 's' }"
+      >
+        <div
+          class="status"
+          [class.pending]="industryPartner.request_status == 2"
+          [class.rejected]="industryPartner.request_status == 3"
+          [class.approved]="industryPartner.request_status == 4"
+        >
+          <h3>{{ industryPartner.status_text }}</h3>
         </div>
 
-        <div class="card-container" *ngIf="industryPartners.length > 0; else noItems">
-            <div class="card" *ngFor="let industryPartner of industryPartners; let i = index" [ngStyle]="{'animation-delay': (i * 0.1) + 's'} ">
-                <div class="status"
-                [class.pending]="industryPartner.request_status == 2"
-                [class.rejected]="industryPartner.request_status == 3"
-                [class.approved]="industryPartner.request_status == 4"
-                >
-                    <h3>{{ industryPartner.status_text  }}</h3>
-                </div>
-
-                <img [src]="(industryPartner.image) ? industryPartner.image : 'assets/images/logo.png'" alt="logo image" class="card-image">
-                <div class="info-section">
-                    <mat-icon>apartment</mat-icon>
-                    <h2>{{ industryPartner.company_name }}</h2>
-                </div>
-
-                <div class="info-section">
-                    <mat-icon>location_on</mat-icon>
-                    <p>{{ industryPartner.municipality }}<span *ngIf="industryPartner.province">, {{ industryPartner.province }}</span></p>
-                </div>
-
-                <div class="action-buttons" *ngIf="industryPartner.request_status">
-                      <button class="view"
-                      mat-ripple
-                      mat-raised-button
-                      matTooltip="View"
-                      [matTooltipShowDelay] = "400"
-                      (click)="viewRequestDetails(industryPartner.id)">
-                          <i class='bx bx-detail' ></i>
-                      </button>
-                </div>
-            </div>
-            <div class="pagination-container">
-              <div class="pagination">
-                <div>
-                    <p> {{ pagination.from}} - {{ pagination.to }} of {{ pagination.total }} </p>
-                </div>
-                <div class="icons">
-                  <button (click)="jumpPage(1)" [disabled]="pagination.current_page === 1">
-                      <img src="assets/images/chevron-bar-left.svg" >
-                  </button>
-                  <button (click)="changePage(-1)" [disabled]="pagination.current_page === 1">
-                      <img src="assets/images/chevron-left.svg" >
-                  </button>
-                  <button (click)="changePage(1)"[disabled]="pagination.current_page === pagination.last_page">
-                      <img src="assets/images/chevron-right.svg">
-                  </button>
-                  <button (click)="jumpPage(pagination.last_page)" [disabled]="pagination.current_page === pagination.last_page">
-                      <img src="assets/images/chevron-bar-right.svg">
-                  </button>
-                </div>
-              </div>
-            </div>
+        <img
+          [src]="
+            industryPartner.image
+              ? industryPartner.image
+              : 'assets/images/logo.png'
+          "
+          alt="logo image"
+          class="card-image"
+        />
+        <div class="info-section">
+          <mat-icon>apartment</mat-icon>
+          <h2>{{ industryPartner.company_name }}</h2>
         </div>
-    </ng-container>
-  </main>
+
+        <div class="info-section">
+          <mat-icon>location_on</mat-icon>
+          <p>
+            {{ industryPartner.municipality
+            }}<span *ngIf="industryPartner.province"
+              >, {{ industryPartner.province }}</span
+            >
+          </p>
+        </div>
+
+        <div class="action-buttons" *ngIf="industryPartner.request_status">
+          <button
+            class="view"
+            mat-ripple
+            mat-raised-button
+            matTooltip="View"
+            [matTooltipShowDelay]="400"
+            (click)="viewRequestDetails(industryPartner.id)"
+          >
+            <i class="bx bx-detail"></i>
+          </button>
+        </div>
+      </div>
+      <div class="pagination-container">
+        <div class="pagination">
+          <div>
+            <p>
+              {{ pagination.from }} - {{ pagination.to }} of
+              {{ pagination.total }}
+            </p>
+          </div>
+          <div class="icons">
+            <button
+              (click)="jumpPage(1)"
+              [disabled]="pagination.current_page === 1"
+            >
+              <img src="assets/images/chevron-bar-left.svg" />
+            </button>
+            <button
+              (click)="changePage(-1)"
+              [disabled]="pagination.current_page === 1"
+            >
+              <img src="assets/images/chevron-left.svg" />
+            </button>
+            <button
+              (click)="changePage(1)"
+              [disabled]="pagination.current_page === pagination.last_page"
+            >
+              <img src="assets/images/chevron-right.svg" />
+            </button>
+            <button
+              (click)="jumpPage(pagination.last_page)"
+              [disabled]="pagination.current_page === pagination.last_page"
+            >
+              <img src="assets/images/chevron-bar-right.svg" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</main>
 
 <ng-template #loading>
-    <app-loading-spinner></app-loading-spinner>
+  <app-loading-spinner></app-loading-spinner>
 </ng-template>
 
 <ng-template #noItems>
-    <div class="no-items-container">
-        <p>Sorry, no request found</p>
-    </div>
+  <div class="no-items-container">
+    <p>Sorry, no request found</p>
+  </div>
 </ng-template>

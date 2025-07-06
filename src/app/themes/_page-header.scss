@@ -1,0 +1,60 @@
+.header-container {
+  margin-top: 20px;
+  padding: 0 10px;
+  margin-bottom: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  h1 {
+    color: var(--secondary-color);
+    opacity: 0.6;
+    font-size: 40px;
+    font-weight: 400;
+    padding: 10px 0;
+    margin: 0;
+  }
+}
+
+.options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 10px;
+  margin-top: 10px;
+
+  .export {
+    margin-bottom: 20px;
+    padding: 2px 8px;
+    font-size: 24px;
+    background-color: var(--main-bg-color);
+    border: none;
+    cursor: pointer;
+    color: var(--primary-color);
+  }
+
+  .academic_year {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .header-container {
+    margin-top: 10px;
+    h1 {
+      font-size: 28px;
+    }
+  }
+
+  .options {
+    //naming convention brahh
+    .academic_year {
+      flex: 1;
+      max-width: 100%;
+    }
+  }
+}

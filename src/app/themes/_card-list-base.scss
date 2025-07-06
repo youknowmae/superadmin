@@ -1,0 +1,108 @@
+.card-container {
+  padding: 10px 0px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(30%, 1fr));
+  gap: 8px;
+
+  .card {
+    width: auto;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    border: solid 2px var(--border-color);
+    margin: 10px;
+    padding: 20px;
+    transition: all 0.2s ease-in;
+    animation: fade-in 1s forwards;
+    opacity: 0;
+    will-change: opacity;
+
+    h2 {
+      font-size: medium;
+      margin: 0;
+    }
+
+    p {
+      font-size: small;
+    }
+
+    &:hover {
+      transform: scale(1.05);
+      transition: all 0.2s ease-in;
+    }
+  }
+
+  .card-image {
+    width: 100%;
+    height: 200px;
+    background-color: #f3f3f3;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    object-fit: contain;
+  }
+
+  .action-buttons {
+    display: flex;
+    height: 35px;
+    flex-direction: row-reverse;
+
+    button {
+      border: 2px solid;
+      border-radius: 5px;
+      color: #ffffff;
+      padding: 2px 12px;
+      text-transform: none;
+      font-size: large;
+      cursor: pointer;
+
+      i {
+        font-size: 18px;
+        transform: translateY(1px);
+      }
+
+      &:hover {
+        box-shadow: 0px 8px 15px -10px rgb(61, 61, 61);
+        transform: translate(0px, -2px);
+        background: white;
+      }
+    }
+
+    .view {
+      background-color: gray;
+      &:hover {
+        color: gray !important;
+      }
+    }
+
+    .edit {
+      background-color: var(--primary-color);
+      &:hover {
+        color: var(--primary-color) !important;
+      }
+    }
+    .delete {
+      background-color: var(--warning-color);
+      &:hover {
+        color: var(--warning-color) !important;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 1900px) {
+  .card-container {
+    grid-template-columns: repeat(4, minmax(20%, 1fr));
+  }
+}
+
+@media only screen and (max-width: 1120px) {
+  .card-container {
+    grid-template-columns: repeat(2, minmax(40%, 1fr));
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .card-container {
+    grid-template-columns: repeat(1, minmax(90%, 1fr));
+  }
+}
