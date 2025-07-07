@@ -4,7 +4,6 @@
   </div>
 
   <ng-container *ngIf="!isLoading; else loading">
-    <!-- Search & Add -->
     <div class="search">
       <form>
         <mat-form-field>
@@ -29,14 +28,29 @@
       </div>
     </div>
 
-    <!-- Filters + Toggle -->
-    <div class="buttons">
-      <div class="filter-container">
+    <div class="controls">
+      <div class="web-options">
         <div class="filter" [ngClass]="{ active: isArchiveFilter === false }">
           <button (click)="setFilter(false)">Active Partners</button>
         </div>
         <div class="filter" [ngClass]="{ active: isArchiveFilter === true }">
           <button (click)="setFilter(true)">Inactive Partners</button>
+        </div>
+      </div>
+
+      <div class="mobile-options">
+        <div class="filter-container">
+          <mat-form-field floatLabel="always">
+            <mat-label>Partner Filter</mat-label>
+            <mat-select
+              [(value)]="isArchiveFilter"
+              (selectionChange)="setFilter($event.value)"
+              disableRipple
+            >
+              <mat-option [value]="false">Active Partners</mat-option>
+              <mat-option [value]="true">Inactive Partners</mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
       </div>
 
@@ -100,7 +114,7 @@
 
             <div class="action-buttons">
               <button
-                [class]="industryPartner.is_archived ? 'unarchive' : 'delete'"
+                [class]="industryPartner.is_archived ? 'recover' : 'delete'"
                 mat-raised-button
                 [matTooltip]="
                   industryPartner.is_archived ? 'Unarchive' : 'Archive'

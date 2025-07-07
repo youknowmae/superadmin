@@ -1,11 +1,11 @@
 <div class="container">
-  <div class="details-content">
+  <div class="content">
     <div class="header">
       <h1>Edit Industry Partner</h1>
       <i class="fa-solid fa-xmark" (click)="closePopup()"></i>
     </div>
 
-    <div class="page-content">
+    <div class="body">
       <mat-tab-group>
         <mat-tab label="Company Profile">
           <div class="content">
@@ -308,9 +308,17 @@
               <form [formGroup]="mouFormDetails" (submit)="updateMou()">
                 <div
                   class="date-inputs"
-                  style="display: flex; gap: 1rem; margin-top: 15px"
+                  style="
+                    display: flex;
+                    gap: 1rem;
+                    margin-top: 15px;
+                    flex-wrap: wrap;
+                  "
                 >
-                  <mat-form-field appearance="fill" style="flex: 1">
+                  <mat-form-field
+                    appearance="fill"
+                    style="flex: 1; min-width: 200px"
+                  >
                     <mat-label>Start Date</mat-label>
                     <input
                       matInput
@@ -327,7 +335,10 @@
                     <mat-datepicker #mouStartDatePicker></mat-datepicker>
                   </mat-form-field>
 
-                  <mat-form-field appearance="fill" style="flex: 1">
+                  <mat-form-field
+                    appearance="fill"
+                    style="flex: 1; min-width: 200px"
+                  >
                     <mat-label>End Date</mat-label>
                     <input
                       matInput

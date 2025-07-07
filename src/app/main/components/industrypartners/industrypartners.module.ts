@@ -9,22 +9,14 @@ import { EditIndustryPartnerComponent } from './components/edit-industry-partner
 import { AddIndustryPartnerComponent } from './components/add-industry-partner/add-industry-partner.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoadingSpinnerComponent } from '../../../components/login/loading-spinner/loading-spinner.component';
-
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatTableModule } from '@angular/material/table'; // For tables
-import { MatButtonModule } from '@angular/material/button'; // For paginator buttons
-import { MatIconModule } from '@angular/material/icon'; // For icons in your buttons
-import { MatStepperModule } from '@angular/material/stepper';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
+import { DragScrollComponent, DragScrollItemDirective } from 'ngx-drag-scroll';
 
 @NgModule({
   declarations: [
     ViewComponent,
     ListComponent,
     EditIndustryPartnerComponent,
-    AddIndustryPartnerComponent
+    AddIndustryPartnerComponent,
   ],
   imports: [
     CommonModule,
@@ -32,15 +24,8 @@ import { MatSelectModule } from '@angular/material/select';
     IndustrypartnersRoutingModule,
     MaterialsModules,
     LoadingSpinnerComponent,
-    MatPaginatorModule,
-    MatTableModule,
-    MatButtonModule,
-    MatIconModule,
-    MatStepperModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatSelectModule,
-
-  ]
+    DragScrollComponent,
+    DragScrollItemDirective,
+  ],
 })
-export class IndustrypartnersModule { }
+export class IndustrypartnersModule {}

@@ -29,6 +29,7 @@
     "express": "^4.18.2",
     "file-saver": "^2.0.5",
     "moment-timezone": "^0.5.48",
+    "ngx-drag-scroll": "^19.0.0-rc.0",
     "rxjs": "~7.8.0",
     "sweetalert2": "^11.14.1",
     "tslib": "^2.3.0",

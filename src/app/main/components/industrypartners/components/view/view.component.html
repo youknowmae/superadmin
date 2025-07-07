@@ -11,153 +11,126 @@
       </ul>
 
       <div class="tab-content">
-        <!-- Loading State Handler -->
         <ng-container *ngIf="!isLoading; else loading">
-          <div class="container">
-            <!-- Back Button -->
-            <!-- <button class="back-btn" [routerLink]="['../list']" routerLinkActive="router-link-active">
-              <span class="icon">
-                <i class="fa-solid fa-arrow-left"></i>
-              </span>
-              <p>Back</p>
-            </button> -->
+          <div class="card card-accent">
+            <div class="image">
+              <img
+                [src]="industryPartner.image || 'assets/images/logo.png'"
+                alt="Company logo"
+              />
+            </div>
 
-            <!-- Company Information Card -->
-            <div class="card card-accent">
-              <div class="image">
-                <img
-                  [src]="industryPartner.image || 'assets/images/logo.png'"
-                  alt="Company logo"
-                />
-              </div>
+            <div class="container-info">
+              <div class="info">
+                <!-- Company Details -->
+                <div class="details-section">
+                  <h2>{{ industryPartner.company_name }}</h2>
+                  <p>{{ industryPartner.description }}</p>
+                </div>
 
-              <div class="container-info">
-                <div class="info">
-                  <!-- Company Details -->
-                  <div class="details-section">
-                    <h2>{{ industryPartner.company_name }}</h2>
-                    <p>{{ industryPartner.description }}</p>
-                  </div>
+                <!-- Company Personnel -->
+                <div class="details-section">
+                  <p>
+                    <b>Company Head:</b>
+                    {{ industryPartner.company_head.full_name }},
+                    {{ industryPartner.head_position }}
+                  </p>
+                </div>
 
-                  <!-- Company Personnel -->
-                  <div class="details-section">
-                    <p>
-                      <b>Company Head:</b>
-                      {{ industryPartner.company_head.full_name }},
-                      {{ industryPartner.head_position }}
-                    </p>
-                  </div>
+                <div class="details-section">
+                  <p>
+                    <b>Immediate Supervisor:</b>
+                    {{ industryPartner.immediate_supervisor.full_name }},
+                    {{ industryPartner.supervisor_position }}
+                  </p>
+                </div>
 
-                  <div class="details-section">
-                    <p>
-                      <b>Immediate Supervisor:</b>
-                      {{ industryPartner.immediate_supervisor.full_name }},
-                      {{ industryPartner.supervisor_position }}
-                    </p>
-                  </div>
+                <!-- Contact Information -->
+                <div class="details-section">
+                  <ul>
+                    <li>
+                      <mat-icon>location_on</mat-icon>
+                      <p>
+                        <b>Company Address:</b>
+                        {{ industryPartner.full_address }}
+                      </p>
+                    </li>
+                    <li>
+                      <mat-icon>mail</mat-icon>
+                      <p>
+                        <b>Official Email Address:</b>
+                        {{ industryPartner.email }}
+                      </p>
+                    </li>
+                    <li *ngIf="industryPartner.telephone_number">
+                      <mat-icon>call</mat-icon>
+                      <p>
+                        <b>Telephone Number:</b>
+                        {{ industryPartner.telephone_number }}
+                      </p>
+                    </li>
+                    <li *ngIf="industryPartner.fax_number">
+                      <mat-icon>fax</mat-icon>
+                      <p><b>Fax Number:</b> {{ industryPartner.fax_number }}</p>
+                    </li>
+                    <li>
+                      <mat-icon>call</mat-icon>
+                      <p>
+                        <b>Contact Number:</b>
+                        {{ industryPartner.mobile_number }}
+                      </p>
+                    </li>
+                    <li *ngIf="industryPartner.website">
+                      <mat-icon>public</mat-icon>
+                      <p><b>Website:</b> {{ industryPartner.website }}</p>
+                    </li>
+                  </ul>
+                </div>
 
-                  <!-- Contact Information -->
-                  <div class="details-section">
-                    <ul>
-                      <li>
-                        <mat-icon>location_on</mat-icon>
-                        <p>
-                          <b>Company Address:</b>
-                          {{ industryPartner.full_address }}
-                        </p>
-                      </li>
-                      <li>
-                        <mat-icon>mail</mat-icon>
-                        <p>
-                          <b>Official Email Address:</b>
-                          {{ industryPartner.email }}
-                        </p>
-                      </li>
-                      <li *ngIf="industryPartner.telephone_number">
-                        <mat-icon>call</mat-icon>
-                        <p>
-                          <b>Telephone Number:</b>
-                          {{ industryPartner.telephone_number }}
-                        </p>
-                      </li>
-                      <li *ngIf="industryPartner.fax_number">
-                        <mat-icon>fax</mat-icon>
-                        <p>
-                          <b>Fax Number:</b> {{ industryPartner.fax_number }}
-                        </p>
-                      </li>
-                      <li>
-                        <mat-icon>call</mat-icon>
-                        <p>
-                          <b>Contact Number:</b>
-                          {{ industryPartner.mobile_number }}
-                        </p>
-                      </li>
-                      <li *ngIf="industryPartner.website">
-                        <mat-icon>public</mat-icon>
-                        <p><b>Website:</b> {{ industryPartner.website }}</p>
-                      </li>
-                    </ul>
-                  </div>
+                <div
+                  class="details-section"
+                  *ngIf="industryPartner.job_requirements"
+                >
+                  <p><b>Job/Skills Requirements:</b></p>
 
-                  <div
-                    class="details-section"
-                    *ngIf="industryPartner.job_requirements"
-                  >
-                    <p><b>Job/Skills Requirements:</b></p>
+                  <mat-chip-set>
+                    <mat-chip
+                      disableRipple
+                      *ngFor="let item of industryPartner.job_requirements"
+                    >
+                      {{ item }}
+                    </mat-chip>
+                  </mat-chip-set>
+                </div>
 
-                    <mat-chip-set>
-                      <mat-chip
-                        disableRipple
-                        *ngFor="let item of industryPartner.job_requirements"
-                      >
-                        {{ item }}
-                      </mat-chip>
-                    </mat-chip-set>
-                  </div>
+                <div
+                  class="details-section"
+                  *ngIf="industryPartner.technical_skills"
+                >
+                  <p><b>Technical Skills:</b></p>
 
-                  <div
-                    class="details-section"
-                    *ngIf="industryPartner.technical_skills"
-                  >
-                    <p><b>Technical Skills:</b></p>
+                  <mat-chip-set>
+                    <mat-chip
+                      disableRipple
+                      *ngFor="let item of industryPartner.technical_skills"
+                    >
+                      {{ item }}
+                    </mat-chip>
+                  </mat-chip-set>
+                </div>
 
-                    <mat-chip-set>
-                      <mat-chip
-                        disableRipple
-                        *ngFor="let item of industryPartner.technical_skills"
-                      >
-                        {{ item }}
-                      </mat-chip>
-                    </mat-chip-set>
-                  </div>
-
-                  <!-- Slots Information -->
-                  <div class="details-section">
-                    <p><b>Total Slots:</b> {{ industryPartner.slots }}</p>
-                  </div>
-
-                  <!-- MOU Information -->
-                  <!-- <div class="mou">
-                    <p><b>MOU Duration:</b> One Year</p>
-                    <div class="date">
-                      <div class="start">
-                        <p><b>Start Date:</b></p>
-                      </div>
-                      <div class="end">
-                        <p><b>End Date:</b></p>
-                      </div>
-                    </div>
-                  </div> -->
+                <div class="details-section">
+                  <p><b>Total Slots:</b> {{ industryPartner.slots }}</p>
                 </div>
               </div>
             </div>
+          </div>
 
-            <!-- Students Information Table -->
-            <div class="students-card">
-              <div class="students-content">
-                <h2>Number of Students:</h2>
+          <div class="students-card">
+            <div class="students-content">
+              <h2>Number of Students: {{ dataSource.data.length }}</h2>
 
+              <drag-scroll style="height: 100%; width: 100%">
                 <table mat-table [dataSource]="dataSource">
                   <!-- Name Column -->
                   <ng-container matColumnDef="name">
@@ -209,85 +182,68 @@
                     *matRowDef="let row; columns: displayedColumns"
                   ></tr>
                 </table>
-              </div>
+              </drag-scroll>
             </div>
           </div>
         </ng-container>
-
-        <!-- Loading Template -->
-        <ng-template #loading>
-          <app-loading-spinner></app-loading-spinner>
-        </ng-template>
       </div>
 
       <div class="tab-content">
-        <div class="container">
-          <div class="card card-accent">
-            <div class="image">
-              <img
-                [src]="industryPartner?.image || 'assets/images/logo.png'"
-                alt="Company logo"
-              />
-            </div>
+        <div class="card card-accent">
+          <div class="image">
+            <img
+              [src]="industryPartner?.image || 'assets/images/logo.png'"
+              alt="Company logo"
+            />
+          </div>
 
-            <div class="container-info">
-              <div class="info">
-                <!-- Company Details -->
-                <div class="details-section">
-                  <h2>{{ industryPartner?.company_name }}</h2>
-                  <p>{{ industryPartner?.description }}</p>
-                </div>
+          <div class="container-info">
+            <div class="info">
+              <!-- Company Details -->
+              <div class="details-section">
+                <h2>{{ industryPartner?.company_name }}</h2>
+                <p>{{ industryPartner?.description }}</p>
+              </div>
 
-                <!-- Company Personnel -->
-                <div class="details-section">
-                  <p>
-                    <b>Company Head:</b>
-                    {{ industryPartner?.company_head.full_name }},
-                    {{ industryPartner?.head_position }}
-                  </p>
-                </div>
+              <!-- Company Personnel -->
+              <div class="details-section">
+                <p>
+                  <b>Company Head:</b>
+                  {{ industryPartner?.company_head.full_name }},
+                  {{ industryPartner?.head_position }}
+                </p>
+              </div>
 
-                <!-- MOU Information -->
-                <div class="mou">
-                  <!-- <p><b>MOU Duration:</b> One Year</p> -->
-                  <div class="date">
-                    <div class="start">
-                      <p>
-                        <b>Start Date:</b>
-                        {{
-                          industryPartner?.latest_mou.start_date
-                            | date : "MMMM d, y"
-                        }}
-                      </p>
-                    </div>
-
-                    <div class="end">
-                      <p>
-                        <b>End Date:</b>
-                        {{
-                          industryPartner?.latest_mou.expiration_date
-                            | date : "MMMM d, y"
-                        }}
-                      </p>
-                    </div>
-                  </div>
-                </div>
+              <div class="details-section mou">
+                <p>
+                  <b>Start Date:</b>
+                  {{
+                    industryPartner?.latest_mou.start_date | date : "MMMM d, y"
+                  }}
+                </p>
+                <p>
+                  <b>End Date:</b>
+                  {{
+                    industryPartner?.latest_mou.expiration_date
+                      | date : "MMMM d, y"
+                  }}
+                </p>
               </div>
             </div>
           </div>
+        </div>
 
-          <!-- MOU DOCUMENT -->
-          <div class="mou-card">
-            <div class="mou-content">
-              <h2>MOU/MOA DOCUMENT</h2>
+        <!-- MOU DOCUMENT -->
+        <div class="mou-card">
+          <div class="mou-content">
+            <h2>MOU/MOA DOCUMENT</h2>
 
-              <object
-                *ngIf="industryPartner?.latest_mou"
-                [data]="sanitizeUrl(industryPartner.latest_mou.file_location)"
-                width="100%"
-                height="100%"
-              ></object>
-            </div>
+            <object
+              *ngIf="industryPartner?.latest_mou"
+              [data]="sanitizeUrl(industryPartner.latest_mou.file_location)"
+              width="100%"
+              height="100%"
+            ></object>
           </div>
         </div>
       </div>

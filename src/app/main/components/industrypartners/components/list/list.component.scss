@@ -1,4 +1,5 @@
 @use "../../../../../themes/page-header";
+@use "../../../../../themes/card-list-base";
 @use "../../../../../themes/custom-pagination";
 
 .search {
@@ -6,13 +7,11 @@
   padding: 10px;
   display: flex;
   justify-content: space-between;
+  gap: 10px;
 
   form {
-    width: 400px;
-  }
-
-  mat-icon {
-    cursor: pointer;
+    flex: 1;
+    max-width: 400px;
   }
 
   .btn {
@@ -24,20 +23,36 @@
       padding: 10px;
       width: 120px;
       cursor: pointer;
-    }
 
-    button:hover {
-      background-color: var(--secondary-color);
-      color: #ffffff;
+      &:hover {
+        background-color: var(--secondary-color);
+        color: #ffffff;
+      }
     }
   }
 }
 
-.buttons {
+.controls {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 10px 20px;
+  align-items: center;
+  padding: 10px 20px;
+
+  .mobile-options {
+    flex: 1;
+    display: none;
+  }
+
+  .web-options {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .filter-container {
+    flex: 1 1 220px;
+    max-width: 220px;
+  }
 
   button {
     padding: 2px 8px;
@@ -46,7 +61,7 @@
     border: none;
     cursor: pointer;
     color: var(--primary-color);
-    margin-bottom: 10px;
+    margin-bottom: 20px;
   }
 
   .filter-view {
@@ -55,11 +70,6 @@
       align-items: center;
       gap: 5px;
     }
-  }
-
-  .filter-container {
-    display: flex;
-    flex-direction: row;
   }
 
   .filter {
@@ -82,6 +92,7 @@
   .filter::before {
     content: "";
     position: absolute;
+    transform: translateY(-20px);
     bottom: 0; /* Place the underline right below the button text */
     left: 0;
     width: 0;
@@ -95,140 +106,31 @@
   }
 }
 
-.card-container {
-  padding: 10px 0px;
-  height: 50%;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(30%, 1fr));
-  gap: 8px;
-
-  .card {
-    width: auto;
-    height: fit-content;
-    background-color: #ffffff; /* White background */
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /*Card shadow */
-    border: solid 2px var(--border-color);
-    margin: 10px;
-    padding: 20px;
-    transform: scale(1);
-    transition: all 0.2s ease-in;
-
-    animation: fade-in 1s forwards;
-    opacity: 0;
-    will-change: opacity;
-
-    h2 {
-      line-height: normal;
-      font-size: medium;
-      margin: 0;
-    }
-
-    p {
-      font-size: small;
-    }
-
-    .info-section {
-      display: flex;
-      align-items: center;
-      margin-bottom: 6px;
-
-      mat-icon {
-        color: rgba(0, 0, 0, 0.6);
-        margin-right: 5px;
-        overflow: visible;
-      }
-    }
-
-    .status {
-      width: 250px;
-      height: 30px;
-      margin-bottom: 15px;
-      border-radius: 5px;
-
-      h3 {
-        padding: 0;
-        text-align: center;
-        color: var(--primary-font-color);
-        width: 100%;
-      }
-    }
-  }
-
-  .card:hover {
-    transform: scale(1.05);
-    transition: all 0.2s ease-in;
-  }
-
-  /* CARD CONTENTS */
-  .card-image {
-    width: 100%; /* or any specific width */
-    height: 200px; /* or any specific height */
-    background-color: #f3f3f3; /* a light grey placeholder color */
-    border-radius: 5px; /* if you want rounded corners */
-    margin-bottom: 10px; /* space between the image and the text below */
-    object-fit: contain;
-  }
-
-  /* CARD BUTTON */
-  .action-buttons {
+.card {
+  .info-section {
     display: flex;
-    gap: 5px;
-    height: 35px;
-    flex-direction: row-reverse;
+    align-items: center;
+    margin-bottom: 6px;
 
-    .unarchive {
-      background-color: #28a745; /* Green color for unarchive button */
-      color: #ffffff;
-
-      &:hover {
-        background-color: #fff;
-        color: #28a745 !important; /* Green color on hover, matching the pattern of other buttons */
-      }
+    mat-icon {
+      color: rgba(0, 0, 0, 0.6);
+      margin-right: 5px;
+      overflow: visible;
     }
   }
 
-  .card button {
-    border: 2px solid;
+  .status {
+    width: 250px;
+    height: 30px;
+    margin-bottom: 15px;
     border-radius: 5px;
-    color: #ffffff;
-    padding: 2px 12px;
-    text-transform: none;
-    font-size: large;
-    cursor: pointer;
 
-    i {
-      font-size: 18px;
-      transform: translateY(1px);
+    h3 {
+      padding: 0;
+      text-align: center;
+      color: var(--primary-font-color);
+      width: 100%;
     }
-  }
-
-  .view {
-    background-color: gray;
-  }
-
-  .edit {
-    background-color: var(--primary-color);
-  }
-  .delete {
-    background-color: var(--warning-color);
-  }
-
-  .card button:hover {
-    box-shadow: 0px 8px 15px -10px rgb(61, 61, 61);
-    transform: translate(0px, -2px);
-    background: white;
-  }
-
-  .view:hover {
-    color: gray !important;
-  }
-
-  .edit:hover {
-    color: var(--primary-color) !important;
-  }
-  .delete:hover {
-    color: var(--warning-color) !important;
   }
 }
 
@@ -284,7 +186,7 @@
     color: var(--warning-color);
   }
   .unarchive {
-    color: #28a745; /* Green color for unarchive button in table view */
+    color: #28a745;
 
     &:hover {
       background-color: rgba(40, 167, 69, 0.1);
@@ -292,13 +194,11 @@
   }
 }
 
-/* Alternating row background (optional) */
 .table-wrapper .row:hover {
   background-color: rgba(var(--secondary-color-semi-transparent));
   transition: all ease-in-out 0.2s;
 }
 
-/* Action button */
 .table-wrapper .view-button {
   background-color: #4f7942;
   color: #fff;
@@ -314,42 +214,24 @@
   background-color: #3e6335;
 }
 
-/* Pagination footer */
-.table-wrapper .pagination-footer {
-  margin-top: 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 14px;
-  padding: 0 8px;
-}
-
-.table-wrapper .pagination-footer button {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 4px;
-  margin: 0 2px;
-}
-
-mat-paginator {
-  background: none;
-}
-
-@media only screen and (min-width: 1900px) {
-  .card-container {
-    grid-template-columns: repeat(4, minmax(20%, 1fr));
+@media only screen and (max-width: 680px) {
+  .table-wrapper {
+    padding: 0 10px;
   }
 }
 
-@media only screen and (max-width: 1120px) {
-  .card-container {
-    grid-template-columns: repeat(2, minmax(40%, 1fr));
+@media only screen and (max-width: 1080px) {
+  .controls {
+    padding: 10px;
+    .web-options {
+      display: none;
+    }
+    .mobile-options {
+      display: block;
+    }
   }
-}
 
-@media only screen and (max-width: 768px) {
-  .card-container {
-    grid-template-columns: repeat(1, minmax(90%, 1fr));
+  .table-wrapper {
+    margin: 0 10px;
   }
 }

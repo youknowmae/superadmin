@@ -13,6 +13,7 @@ import { UserService } from '../../../../../services/user.service';
 })
 export class AddIndustryPartnerComponent {
   file: any = null;
+  today: Date = new Date();
 
   titles: string[] = ['Sr', 'Jr', 'II', 'III', 'IV', 'V'];
 
@@ -284,9 +285,9 @@ export class AddIndustryPartnerComponent {
     partnerInfo.barangay = partnerInfo.barangay?.brgyDesc || '';
 
     partnerInfo.start_date = this.gs.formatDate(mouInfo.start_date);
-    partnerInfo.expiration_date =this.gs.formatDate(mouInfo.expiration_date)
+    partnerInfo.expiration_date = this.gs.formatDate(mouInfo.expiration_date);
 
-    console.log(partnerInfo)
+    console.log(partnerInfo);
 
     formData.append('payload', this.us.encryptPayload(partnerInfo));
     //files

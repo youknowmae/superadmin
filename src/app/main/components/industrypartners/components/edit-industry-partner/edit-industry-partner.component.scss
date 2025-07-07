@@ -1,2 +1,7 @@
-@use '../add-industry-partner/add-industry-partner.component.scss'
+@use "../add-industry-partner/add-industry-partner.component.scss";
 
+@media only screen and (max-width: 680px) {
+  form {
+    padding: 10px;
+  }
+}

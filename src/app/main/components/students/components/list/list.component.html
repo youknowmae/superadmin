@@ -90,174 +90,179 @@
 </div>
 
 <div class="container">
-  <table mat-table [dataSource]="dataSource" matSort>
-    <!-- inactive -->
-    <ng-container matColumnDef="class_code">
-      <th mat-header-cell *matHeaderCellDef>Class Code</th>
-      <td mat-cell *matCellDef="let element">
-        {{ element.active_ojt_class.class_code }}
-      </td>
-    </ng-container>
+  <drag-scroll  style="height: 100%; width: 100%;">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <!-- inactive -->
+      <ng-container matColumnDef="class_code">
+        <th mat-header-cell *matHeaderCellDef>Class Code</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.active_ojt_class.class_code }}
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="full_name">
-      <th
-        mat-header-cell
-        style="min-width: 200px"
-        *matHeaderCellDef
-        mat-sort-header
-      >
-        Name
-      </th>
-      <td mat-cell *matCellDef="let element" style="min-width: 200px">
-        <div style="display: flex; flex-direction: column">
-          <p>{{ element.full_name }}</p>
-          <p>{{ element.email }}</p>
-        </div>
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="full_name">
+        <th
+          mat-header-cell
+          style="min-width: 200px"
+          *matHeaderCellDef
+          mat-sort-header
+        >
+          Name
+        </th>
+        <td mat-cell *matCellDef="let element" style="min-width: 200px">
+          <div style="display: flex; flex-direction: column">
+            <p>{{ element.full_name }}</p>
+            <p>{{ element.email }}</p>
+          </div>
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="company">
-      <th
-        mat-header-cell
-        style="min-width: 350px"
-        *matHeaderCellDef
-        mat-sort-header
-      >
-        Company
-      </th>
-      <td mat-cell style="min-width: 350px" *matCellDef="let element">
-        {{ element.company }}
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="company">
+        <th
+          mat-header-cell
+          style="min-width: 350px"
+          *matHeaderCellDef
+          mat-sort-header
+        >
+          Company
+        </th>
+        <td mat-cell style="min-width: 350px" *matCellDef="let element">
+          {{ element.company }}
+        </td>
+      </ng-container>
 
-    <!-- inactive -->
-    <ng-container matColumnDef="student_number">
-      <th mat-header-cell *matHeaderCellDef>Student Number</th>
-      <td mat-cell *matCellDef="let element">
-        {{ element.email }}
-      </td>
-    </ng-container>
+      <!-- inactive -->
+      <ng-container matColumnDef="student_number">
+        <th mat-header-cell *matHeaderCellDef>Student Number</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.email }}
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="course">
-      <th mat-header-cell *matHeaderCellDef>Course</th>
-      <td mat-cell *matCellDef="let element">
-        {{ element.active_ojt_class.course_code }}
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="course">
+        <th mat-header-cell *matHeaderCellDef>Course</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.active_ojt_class.course_code }}
+        </td>
+      </ng-container>
 
-    <!-- inactive -->
-    <ng-container matColumnDef="mobile">
-      <th mat-header-cell *matHeaderCellDef>Mobile Number</th>
-      <td mat-cell *matCellDef="let element">
-        {{ element.student_profile.contact_number }}
-      </td>
-    </ng-container>
+      <!-- inactive -->
+      <ng-container matColumnDef="mobile">
+        <th mat-header-cell *matHeaderCellDef>Mobile Number</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.student_profile.contact_number }}
+        </td>
+      </ng-container>
 
-    <!-- inactive -->
-    <ng-container matColumnDef="program">
-      <th mat-header-cell *matHeaderCellDef>Program</th>
-      <td mat-cell *matCellDef="let element">
-        {{ element.student_profile.program }}
-      </td>
-    </ng-container>
+      <!-- inactive -->
+      <ng-container matColumnDef="program">
+        <th mat-header-cell *matHeaderCellDef>Program</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.student_profile.program }}
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="year_level">
-      <th mat-header-cell *matHeaderCellDef>Year</th>
-      <td mat-cell *matCellDef="let element">
-        {{ element.student_profile.year_level }}
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="year_level">
+        <th mat-header-cell *matHeaderCellDef>Year</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.student_profile.year_level }}
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="progress">
-      <th
-        mat-header-cell
-        *matHeaderCellDef
-        mat-sort-header
-        style="min-width: 150px"
-      >
-        Progress
-      </th>
-      <td
-        mat-cell
-        *matCellDef="let element"
-        style="flex-direction: column; min-width: 150px"
-      >
-        {{
-          element.status === "Pending"
-            ? "N/A"
-            : element.progress +
-              " hrs" +
-              "/" +
-              element.active_ojt_class.required_hours +
-              " hrs"
-        }}
-        <p
-          class="sub-text"
-          *ngIf="element.status == 'Ongoing' || element.status == 'Completed'"
+      <ng-container matColumnDef="progress">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          style="min-width: 150px"
+        >
+          Progress
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="flex-direction: column; min-width: 150px"
         >
           {{
-            getProgressPercentage(
-              element.progress,
-              element.active_ojt_class.required_hours
-            )
-          }}% Completed
-        </p>
-      </td>
-    </ng-container>
+            element.status === "Pending"
+              ? "N/A"
+              : element.progress +
+                " hrs" +
+                "/" +
+                element.active_ojt_class.required_hours +
+                " hrs"
+          }}
+          <p
+            class="sub-text"
+            *ngIf="element.status == 'Ongoing' || element.status == 'Completed'"
+          >
+            {{
+              getProgressPercentage(
+                element.progress,
+                element.active_ojt_class.required_hours
+              )
+            }}% Completed
+          </p>
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="student_evaluation">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        Student Evaluation
-      </th>
-      <td mat-cell *matCellDef="let element">
-        {{ element.student_evaluation }}
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="student_evaluation">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Student Evaluation
+        </th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.student_evaluation }}
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="exit_poll">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>OJT Exit Poll</th>
-      <td mat-cell *matCellDef="let element">
-        {{ element.exit_poll }}
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="exit_poll">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>OJT Exit Poll</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.exit_poll }}
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="status">
-      <th mat-header-cell style="min-width: 150px" *matHeaderCellDef>Status</th>
-      <td mat-cell style="min-width: 150px" *matCellDef="let element">
-        {{ element.status }}
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="status">
+        <th mat-header-cell style="min-width: 150px" *matHeaderCellDef>
+          Status
+        </th>
+        <td mat-cell style="min-width: 150px" *matCellDef="let element">
+          {{ element.status }}
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="grades">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Grade</th>
-      <td mat-cell *matCellDef="let element">
-        {{ element.grades }}
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="grades">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Grade</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.grades }}
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef>Action</th>
-      <td mat-cell *matCellDef="let element">
-        <div>
-          <button (click)="viewStudent(element.id)">View</button>
-        </div>
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Action</th>
+        <td mat-cell *matCellDef="let element">
+          <div>
+            <button (click)="viewStudent(element.id)">View</button>
+          </div>
+        </td>
+      </ng-container>
 
-    <tr
-      mat-header-row
-      *matHeaderRowDef="displayedColumns"
-      class="table-header"
-    ></tr>
-    <tr
-      mat-row
-      *matRowDef="let row; columns: displayedColumns"
-      class="table-items"
-    ></tr>
-  </table>
+      <tr
+        mat-header-row
+        *matHeaderRowDef="displayedColumns"
+        class="table-header"
+      ></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        class="table-items"
+      ></tr>
+    </table>
+  </drag-scroll>
 
   <mat-paginator
     [pageSizeOptions]="[15]"
+    [hidePageSize]="true"
     showFirstLastButtons
     aria-label="Select page of periodic elements"
   >
