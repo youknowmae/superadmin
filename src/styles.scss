@@ -7,14 +7,14 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$myintern-primary: mat.define-palette(mat.$green-palette, 800);
-$myintern-accent: mat.define-palette(mat.$orange-palette, A400);
+$myintern-primary: mat.m2-define-palette(mat.$m2-green-palette, 800);
+$myintern-accent: mat.m2-define-palette(mat.$m2-orange-palette, A400);
 
-$myintern-typography: mat.define-typography-config(
+$myintern-typography: mat.m2-define-typography-config(
   $font-family: "Poppins, sans-serif",
 );
 
-$myintern-theme: mat.define-light-theme(
+$myintern-theme: mat.m2-define-light-theme(
   (
     color: (
       primary: $myintern-primary,
@@ -180,7 +180,7 @@ body {
 
 mat-chip {
   background-color: white !important;
-  border: 1px solid mat.get-color-from-palette(mat.$green-palette, 800);
+  border: 1px solid mat.m2-get-color-from-palette(mat.$m2-green-palette, 800);
 }
 
 mat-form-field {
