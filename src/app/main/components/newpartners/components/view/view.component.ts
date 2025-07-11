@@ -14,6 +14,7 @@ import { saveAs } from 'file-saver';
   styleUrl: './view.component.scss',
 })
 export class ViewComponent {
+  today: Date = new Date();
   industryPartner: any;
 
   accountDetails: FormGroup;
