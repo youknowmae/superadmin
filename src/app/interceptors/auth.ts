@@ -1,12 +1,5 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
-import {
-  HttpEvent,
-  HttpInterceptor,
-  HttpHandler,
-  HttpRequest,
-  HttpErrorResponse,
-  HttpResponse,
-} from '@angular/common/http';
+import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable, throwError, tap, catchError } from 'rxjs';
 
 import { GeneralService } from '../services/general.service';

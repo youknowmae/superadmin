@@ -15,11 +15,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { LoginComponent } from './components/login/login.component';
 import { MainComponent } from './main/main.component';
 import { ViewImageComponent } from './components/login/view-image/view-image.component';
-import {
-  HTTP_INTERCEPTORS,
-  provideHttpClient,
-  withInterceptorsFromDi,
-} from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialsModules } from './modules/materials.module';
