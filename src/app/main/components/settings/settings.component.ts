@@ -91,6 +91,7 @@ export class SettingsComponent {
     const payload = {
       payload: this.us.encryptPayload(this.moaSignatoriesFormDetails.value)
     }
+    
     this.ds
       .post(
         'superadmin/settings/signatories',

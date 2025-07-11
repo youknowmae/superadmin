@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import {
   BrowserModule,
   provideClientHydration,
@@ -26,6 +26,7 @@ import { MaterialsModules } from './modules/materials.module';
 import { ResponseInterceptor } from './interceptors/response.interceptor';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { PdfPreviewComponent } from './components/pdf-preview/pdf-preview.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,12 @@ import { PdfPreviewComponent } from './components/pdf-preview/pdf-preview.compon
     AppRoutingModule,
     ReactiveFormsModule,
     MaterialsModules,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
   ],
   providers: [
     provideClientHydration(),

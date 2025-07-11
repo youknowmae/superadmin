@@ -70,7 +70,7 @@ export class AddTemplateComponent {
       this.gs.makeAlert('Error', 'Pdf file is required.', 'error');
       return;
     }
-
+    
     var formDetails = this.formDetails.value;
 
     var payload = new FormData();

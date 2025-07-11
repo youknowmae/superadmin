@@ -134,7 +134,6 @@ export class StudentprofileComponent {
       .get('superadmin/students/personality-test/', this.student.id)
       .subscribe(
         (response) => {
-          console.log(response);
           this.personality_test = response;
         },
         (error) => {

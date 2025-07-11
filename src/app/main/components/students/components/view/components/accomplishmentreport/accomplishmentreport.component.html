@@ -1,37 +1,53 @@
 <ng-container *ngIf="!isLoading; else loading">
-    <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" *ngIf="weekly_attendance.length > 0; else noItems">
-        <mat-tab class="weekly_report" *ngFor="let report of weekly_attendance; index as i">
-            <ng-template mat-tab-label>Week {{ i + 1 }}</ng-template>
-            <table>
-                <thead>
-                    <th>Date</th>
-                    <th>Accomplished Task</th>
-                    <th>Time of Work</th>
-                    <th>No. of Hours</th>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let accomplishment of report.accomplishment_report">
-                        <td>{{ accomplishment.date }}</td>
-                        <td>{{ accomplishment.activity_description }}</td>
-                        <td>{{ accomplishment.arrival_time }} - {{ accomplishment.departure_time }}</td>
-                        <td>{{ accomplishment.total_hours }}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="4"><p class="total-hours">Total: {{ report.accumulated_hours }} Hours</p></td>
-                    </tr>
-                </tbody>
-            </table>
-        </mat-tab>
-    </mat-tab-group>
-
+  <mat-tab-group
+    mat-stretch-tabs="false"
+    mat-align-tabs="start"
+    style="margin: 5px"
+    *ngIf="weekly_attendance.length > 0; else noItems"
+  >
+    <mat-tab
+      class="weekly_report"
+      *ngFor="let report of weekly_attendance; index as i"
+    >
+      <ng-template mat-tab-label>Week {{ i + 1 }}</ng-template>
+      <drag-scroll style="height: 100%; width: 100%">
+        <table>
+          <thead>
+            <th>Date</th>
+            <th>Accomplished Task</th>
+            <th>Time of Work</th>
+            <th>No. of Hours</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let accomplishment of report.accomplishment_report">
+              <td>{{ accomplishment.date }}</td>
+              <td>{{ accomplishment.activity_description }}</td>
+              <td>
+                {{ accomplishment.arrival_time }} -
+                {{ accomplishment.departure_time }}
+              </td>
+              <td>{{ accomplishment.total_hours }}</td>
+            </tr>
+            <tr>
+              <td colspan="4">
+                <p class="total-hours">
+                  Total: {{ report.accumulated_hours }} Hours
+                </p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </drag-scroll>
+    </mat-tab>
+  </mat-tab-group>
 </ng-container>
 
 <ng-template #noItems>
-    <div class="no-items-container">
-        <p>Sorry, no data found</p>
-    </div>
+  <div class="no-items-container">
+    <p>Sorry, no data found</p>
+  </div>
 </ng-template>
 
 <ng-template #loading>
-    <app-loading-spinner></app-loading-spinner>
+  <app-loading-spinner></app-loading-spinner>
 </ng-template>

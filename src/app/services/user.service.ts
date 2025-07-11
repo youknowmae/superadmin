@@ -153,6 +153,7 @@ export class UserService {
     data = bytes.toString(CryptoJS.enc.Utf8);
     return JSON.parse(data);
   }
+  
   encryptPayload(data: object): string {
     const stringData = JSON.stringify(data);
 
