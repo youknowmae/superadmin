@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "sadmin": {
+    "superadmin": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -83,10 +83,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "sadmin:build:production"
+              "buildTarget": "superadmin:build:production"
             },
             "development": {
-              "buildTarget": "sadmin:build:development"
+              "buildTarget": "superadmin:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -94,7 +94,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "sadmin:build"
+            "buildTarget": "superadmin:build"
           }
         },
         "test": {
